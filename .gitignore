@@ -38,3 +38,6 @@ captures/
 
 # Keystore files
 *.jks
+
+# Secure files
+security/video_api.properties
