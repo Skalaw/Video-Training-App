@@ -1,5 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+Properties videoApi = new Properties()
+videoApi.load(new FileInputStream("./security/video_api.properties"))
+
+ext {
+    compileSdkVersion = 19
+    configuration = [
+            applicationId: "com.skala.videotrainingapp",
+            buildTools   : "23.0.3",
+            compileSdk   : 23,
+            minSdk       : 14,
+            targetSdk    : 23,
+            versionCode  : 1,
+            versionName  : "0.0.1"
+    ]
+
+    library = [
+            androidSupport: "23.4.0",
+    ]
+
+    testing = [
+            junit      : "4.12"
+    ]
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -15,6 +39,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+    }
+    project.ext {
+        THE_MOVIE_DB_API_KEY = videoApi.theMovieDbApiKey;
     }
 }
 
