@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 Properties videoApi = new Properties()
-videoApi.load(new FileInputStream("./security/video_api.properties"))
+videoApi.load(new FileInputStream("./core/src/main/resources/video_api.properties"))
 
 ext {
     compileSdkVersion = 19
@@ -17,10 +17,11 @@ ext {
 
     library = [
             androidSupport: "23.4.0",
+            retrofit      : "2.0.2"
     ]
 
     testing = [
-            junit      : "4.12"
+            junit: "4.12"
     ]
 }
 
@@ -41,7 +42,7 @@ allprojects {
         jcenter()
     }
     project.ext {
-        THE_MOVIE_DB_API_KEY = videoApi.theMovieDbApiKey;
+        THE_MOVIE_DB_API_KEY = "\"${videoApi.apiKey}\"";
     }
 }
 

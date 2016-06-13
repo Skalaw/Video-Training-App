@@ -1,5 +1,11 @@
 apply plugin: 'java'
 
-dependencies {
+def lib = rootProject.ext.library
+def test = rootProject.ext.testing
 
+dependencies {
+    compile "com.squareup.retrofit2:retrofit:${lib.retrofit}"
+    compile "com.squareup.retrofit2:converter-gson:${lib.retrofit}"
+
+    testCompile "junit:junit:${test.junit}"
 }
