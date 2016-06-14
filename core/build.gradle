@@ -1,11 +1,16 @@
 apply plugin: 'java'
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 def lib = rootProject.ext.library
 def test = rootProject.ext.testing
 
 dependencies {
     compile "com.squareup.retrofit2:retrofit:${lib.retrofit}"
     compile "com.squareup.retrofit2:converter-gson:${lib.retrofit}"
+    compile "com.squareup.dagger:dagger:${lib.dagger}"
+    compile "com.squareup.dagger:dagger-compiler:${lib.dagger}"
 
     testCompile "junit:junit:${test.junit}"
 }
