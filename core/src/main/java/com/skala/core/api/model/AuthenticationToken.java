@@ -72,4 +72,25 @@ public class AuthenticationToken {
         this.requestToken = requestToken;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AuthenticationToken that = (AuthenticationToken) o;
+
+        if (success != null ? !success.equals(that.success) : that.success != null) return false;
+        if (expiresAt != null ? !expiresAt.equals(that.expiresAt) : that.expiresAt != null) return false;
+        if (requestToken != null ? !requestToken.equals(that.requestToken) : that.requestToken != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = success != null ? success.hashCode() : 0;
+        result = 31 * result + (expiresAt != null ? expiresAt.hashCode() : 0);
+        result = 31 * result + (requestToken != null ? requestToken.hashCode() : 0);
+        return result;
+    }
 }

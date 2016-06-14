@@ -131,4 +131,46 @@ public class Images {
         this.stillSizes = stillSizes;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Images images = (Images) o;
+
+        if (baseUrl != null ? !baseUrl.equals(images.baseUrl) : images.baseUrl != null) return false;
+        if (secureBaseUrl != null ? !secureBaseUrl.equals(images.secureBaseUrl) : images.secureBaseUrl != null) return false;
+        if (backdropSizes != null ? !backdropSizes.equals(images.backdropSizes) : images.backdropSizes != null) return false;
+        if (logoSizes != null ? !logoSizes.equals(images.logoSizes) : images.logoSizes != null) return false;
+        if (posterSizes != null ? !posterSizes.equals(images.posterSizes) : images.posterSizes != null) return false;
+        if (profileSizes != null ? !profileSizes.equals(images.profileSizes) : images.profileSizes != null) return false;
+        if (stillSizes != null ? !stillSizes.equals(images.stillSizes) : images.stillSizes != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = baseUrl != null ? baseUrl.hashCode() : 0;
+        result = 31 * result + (secureBaseUrl != null ? secureBaseUrl.hashCode() : 0);
+        result = 31 * result + (backdropSizes != null ? backdropSizes.hashCode() : 0);
+        result = 31 * result + (logoSizes != null ? logoSizes.hashCode() : 0);
+        result = 31 * result + (posterSizes != null ? posterSizes.hashCode() : 0);
+        result = 31 * result + (profileSizes != null ? profileSizes.hashCode() : 0);
+        result = 31 * result + (stillSizes != null ? stillSizes.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Images{" +
+                "baseUrl='" + baseUrl + '\'' +
+                ", secureBaseUrl='" + secureBaseUrl + '\'' +
+                ", backdropSizes=" + backdropSizes +
+                ", logoSizes=" + logoSizes +
+                ", posterSizes=" + posterSizes +
+                ", profileSizes=" + profileSizes +
+                ", stillSizes=" + stillSizes +
+                '}';
+    }
 }

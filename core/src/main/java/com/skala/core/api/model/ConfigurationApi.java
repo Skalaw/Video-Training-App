@@ -46,4 +46,31 @@ public class ConfigurationApi {
         this.changeKeys = changeKeys;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ConfigurationApi that = (ConfigurationApi) o;
+
+        if (images != null ? !images.equals(that.images) : that.images != null) return false;
+        if (changeKeys != null ? !changeKeys.equals(that.changeKeys) : that.changeKeys != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = images != null ? images.hashCode() : 0;
+        result = 31 * result + (changeKeys != null ? changeKeys.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigurationApi{" +
+                "images=" + images +
+                ", changeKeys=" + changeKeys +
+                '}';
+    }
 }
