@@ -6,6 +6,8 @@ import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
 
+import javax.inject.Inject;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -18,8 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestVideoApi implements VideoRepository {
     private static final String ENDPOINT = "http://api.themoviedb.org/3/";
     private VideoApi videoApi;
+    private String apiKey;
 
-    public RestVideoApi(OkHttpClient client) {
+    @Inject
+    public RestVideoApi(OkHttpClient client, String apiKey) {
+        this.apiKey = apiKey;
         final Gson gson = new GsonBuilder()
                 .create();
 

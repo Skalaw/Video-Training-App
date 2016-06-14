@@ -124,7 +124,7 @@ public class RestVideoApiTest {
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(InterceptorMock.newInstance(type))
                 .build();
-        return new RestVideoApi(client);
+        return new RestVideoApi(client, videoApiKey);
     }
 
     private ConfigurationApi getExpectedConfigurationApi() {
