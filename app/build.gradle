@@ -20,10 +20,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'THE_MOVIE_DB_API_KEY', THE_MOVIE_DB_API_KEY
+            buildConfigField 'String', 'THE_MOVIE_DB_USERNAME', THE_MOVIE_DB_USERNAME
+            buildConfigField 'String', 'THE_MOVIE_DB_PASSWORD', THE_MOVIE_DB_PASSWORD
         }
 
         debug {
             buildConfigField 'String', 'THE_MOVIE_DB_API_KEY', THE_MOVIE_DB_API_KEY
+            buildConfigField 'String', 'THE_MOVIE_DB_USERNAME', THE_MOVIE_DB_USERNAME
+            buildConfigField 'String', 'THE_MOVIE_DB_PASSWORD', THE_MOVIE_DB_PASSWORD
         }
     }
 }

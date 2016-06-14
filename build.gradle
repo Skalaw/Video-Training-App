@@ -44,6 +44,8 @@ allprojects {
     }
     project.ext {
         THE_MOVIE_DB_API_KEY = "\"${videoApi.apiKey}\"";
+        THE_MOVIE_DB_USERNAME = "\"${videoApi.username}\"";
+        THE_MOVIE_DB_PASSWORD = "\"${videoApi.password}\"";
     }
 }
 
