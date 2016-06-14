@@ -3,6 +3,7 @@ package com.skala.core.api;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
+import com.skala.core.api.model.DiscoverMovie;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -32,4 +33,7 @@ public interface VideoApi {
     @GET("authentication/session/new")
     Call<AuthenticationSessionId> getSessionId(@Query(QUERY_API_KEY) String apiKey,
                                                @Query(QUERY_REQUEST_TOKEN) String requestToken);
+
+    @GET("discover/movie")
+    Call<DiscoverMovie> getDiscoverMovie(@Query(QUERY_API_KEY) String apiKey);
 }

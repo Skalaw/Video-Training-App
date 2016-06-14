@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.skala.core.api.RestVideoApi;
+import com.skala.core.api.VideoRepository;
 
 import javax.inject.Singleton;
 
@@ -43,9 +44,8 @@ public class VideoApp extends Application {
 
         @Singleton
         @Provides
-        RestVideoApi provideVideoApi(OkHttpClient okHttpClient) {
+        VideoRepository provideRestVideoApi(OkHttpClient okHttpClient) {
             return new RestVideoApi(okHttpClient, BuildConfig.THE_MOVIE_DB_API_KEY);
         }
-
     }
 }

@@ -1,4 +1,5 @@
 # Video Training App
+App for training written in clean architecture
 
 ## Permissions
 - INTERNET - needed to download data

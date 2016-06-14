@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
+import com.skala.core.api.model.DiscoverMovie;
 
 import javax.inject.Inject;
 
@@ -20,9 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestVideoApi implements VideoRepository {
     private static final String ENDPOINT = "http://api.themoviedb.org/3/";
     private VideoApi videoApi;
-    private String apiKey;
+    public String apiKey;
 
-    @Inject
     public RestVideoApi(OkHttpClient client, String apiKey) {
         this.apiKey = apiKey;
         final Gson gson = new GsonBuilder()
@@ -37,22 +37,27 @@ public class RestVideoApi implements VideoRepository {
     }
 
     @Override
-    public Call<ConfigurationApi> getConfiguration(String apiKey) {
+    public Call<ConfigurationApi> getConfiguration() {
         return videoApi.getConfiguration(apiKey);
     }
 
     @Override
-    public Call<AuthenticationToken> getRequestToken(String apiKey) {
+    public Call<AuthenticationToken> getRequestToken() {
         return videoApi.getRequestToken(apiKey);
     }
 
     @Override
-    public Call<AuthenticationToken> getValidateRequestToken(String apiKey, String requestToken, String username, String password) {
+    public Call<AuthenticationToken> getValidateRequestToken(String requestToken, String username, String password) {
         return videoApi.getValidateRequestToken(apiKey, requestToken, username, password);
     }
 
     @Override
-    public Call<AuthenticationSessionId> getSessionId(String apiKey, String requestToken) {
+    public Call<AuthenticationSessionId> getSessionId(String requestToken) {
         return videoApi.getSessionId(apiKey, requestToken);
+    }
+
+    @Override
+    public Call<DiscoverMovie> getDiscoverMovie() {
+        return videoApi.getDiscoverMovie(apiKey);
     }
 }
