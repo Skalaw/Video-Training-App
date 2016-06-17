@@ -1,4 +1,4 @@
-package com.skala.core.api.ui.DiscoverMovie;
+package com.skala.core.ui.DiscoverMovie;
 
 import com.skala.core.api.model.DiscoverMovie;
 

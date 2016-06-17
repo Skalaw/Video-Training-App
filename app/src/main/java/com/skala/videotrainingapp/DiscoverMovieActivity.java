@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.skala.core.api.model.DiscoverMovie;
-import com.skala.core.api.ui.DiscoverMovie.DiscoverMoviePresenter;
-import com.skala.core.api.ui.DiscoverMovie.DiscoverMovieUi;
+import com.skala.core.ui.DiscoverMovie.DiscoverMoviePresenter;
+import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
 
 import javax.inject.Inject;
 
