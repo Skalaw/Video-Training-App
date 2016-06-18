@@ -49,7 +49,7 @@ public class RestVideoApiTest {
         final ConfigurationApi[] configurationApi = new ConfigurationApi[1];
         final ConfigurationApi expected = getExpectedConfigurationApi();
 
-        Call<ConfigurationApi> config = restVideoApi.getConfiguration(videoApiKey);
+        Call<ConfigurationApi> config = restVideoApi.getConfiguration();
         config.enqueue(new Callback<ConfigurationApi>() {
             @Override
             public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
@@ -75,7 +75,7 @@ public class RestVideoApiTest {
         final AuthenticationToken[] authenticationToken = new AuthenticationToken[1];
         final AuthenticationToken expected = getExpectedAuthenticationToken();
 
-        Call<AuthenticationToken> config = restVideoApi.getRequestToken(videoApiKey);
+        Call<AuthenticationToken> config = restVideoApi.getRequestToken();
         config.enqueue(new Callback<AuthenticationToken>() {
             @Override
             public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
@@ -101,7 +101,7 @@ public class RestVideoApiTest {
         final AuthenticationSessionId[] authenticationToken = new AuthenticationSessionId[1];
         final AuthenticationSessionId expected = getExpectedAuthenticationSessionId();
 
-        Call<AuthenticationSessionId> config = restVideoApi.getSessionId(videoApiKey, "mock_token");
+        Call<AuthenticationSessionId> config = restVideoApi.getSessionId("mock_token");
         config.enqueue(new Callback<AuthenticationSessionId>() {
             @Override
             public void onResponse(Call<AuthenticationSessionId> call, Response<AuthenticationSessionId> response) {
