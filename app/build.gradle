@@ -35,6 +35,7 @@ android {
 dependencies {
     compile project(':core')
     compile "com.android.support:appcompat-v7:${lib.androidSupport}"
+    compile "com.android.support:recyclerview-v7:${lib.androidSupport}"
 
     testCompile "junit:junit:${test.junit}"
 }
