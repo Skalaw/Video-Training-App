@@ -7,10 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.ui.DiscoverMovie.DiscoverMovieModelView;
 import com.skala.core.ui.DiscoverMovie.DiscoverMoviePresenter;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.VideoApp;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -61,8 +64,8 @@ public class DiscoverMovieActivity extends AppCompatActivity implements Discover
     }
 
     @Override
-    public void displayMovies(DiscoverMovie discoverMovie) {
-        RecyclerView.Adapter adapter = new AdapterRecyclerView(discoverMovie);
+    public void displayMovies(List<DiscoverMovieModelView> modelView) {
+        RecyclerView.Adapter adapter = new AdapterRecyclerView(modelView);
         recyclerView.setAdapter(adapter);
     }
 

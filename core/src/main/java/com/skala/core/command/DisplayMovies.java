@@ -1,20 +1,22 @@
 package com.skala.core.command;
 
-import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.ui.DiscoverMovie.DiscoverMovieModelView;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
+
+import java.util.List;
 
 /**
  * @author Skala
  */
 public class DisplayMovies implements UiCommand<DiscoverMovieUi> {
-    private DiscoverMovie discoverMovie;
+    private List<DiscoverMovieModelView> modelView;
 
-    public DisplayMovies(DiscoverMovie messages) {
-        this.discoverMovie = messages;
+    public DisplayMovies(List<DiscoverMovieModelView> modelView) {
+        this.modelView = modelView;
     }
 
     @Override
     public void execute(DiscoverMovieUi ui) {
-        ui.displayMovies(discoverMovie);
+        ui.displayMovies(modelView);
     }
 }

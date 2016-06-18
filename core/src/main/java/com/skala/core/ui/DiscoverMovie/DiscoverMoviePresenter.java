@@ -1,7 +1,9 @@
 package com.skala.core.ui.DiscoverMovie;
 
 import com.skala.core.api.VideoRepository;
+import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.api.model.Result;
 import com.skala.core.command.DisplayError;
 import com.skala.core.command.DisplayMovies;
 import com.skala.core.command.UiCommand;
@@ -22,6 +24,8 @@ public class DiscoverMoviePresenter {
     private final VideoRepository videoApi;
     private DiscoverMovieUi ui;
 
+    private ConfigurationApi configurationApi;
+
     private List<UiCommand> uiCommands = new ArrayList<>();
 
     @Inject
@@ -32,16 +36,40 @@ public class DiscoverMoviePresenter {
     public void onAttached(DiscoverMovieUi ui) {
         this.ui = ui;
 
-        loadDiscoverMovie(); // TODO: load only first time
+        loadConfig(); // TODO: load only first time & used only one when used app
 
         executePendingUiCommands();
+    }
+
+    private void loadConfig() {
+        videoApi.getConfiguration().enqueue(new Callback<ConfigurationApi>() {
+            @Override
+            public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
+                configurationApi = response.body();
+                loadDiscoverMovie(); // TODO: move this onAttached when config download in other place
+            }
+
+            @Override
+            public void onFailure(Call<ConfigurationApi> call, Throwable t) {
+
+            }
+        });
     }
 
     private void loadDiscoverMovie() {
         videoApi.getDiscoverMovie().enqueue(new Callback<DiscoverMovie>() {
             @Override
             public void onResponse(Call<DiscoverMovie> call, Response<DiscoverMovie> response) {
-                DisplayMovies displayMovies = new DisplayMovies(response.body());
+                DiscoverMovie discoverMovie = response.body();
+
+                List<DiscoverMovieModelView> modelViews = new ArrayList<>();
+                int size = discoverMovie.getResults().size();
+                for (int i = 0; i < size; i++) {
+                    Result movie = discoverMovie.getResults().get(i);
+                    modelViews.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(3) + movie.getPosterPath())); // TODO: delete .get(3)
+                }
+
+                DisplayMovies displayMovies = new DisplayMovies(modelViews);
                 execute(displayMovies);
             }
 

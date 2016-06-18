@@ -7,8 +7,10 @@ App for training written in clean architecture
 - ACCESS_WIFI_STATE - needed to download data
 
 ## Used tools & libraries
+- dagger 1
 - retrofit2
 - gson
 - http://www.jsonschema2pojo.org/
+- picasso
 
 ## Release notes:

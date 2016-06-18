@@ -1,12 +1,12 @@
 package com.skala.core.ui.DiscoverMovie;
 
-import com.skala.core.api.model.DiscoverMovie;
+import java.util.List;
 
 /**
  * @author Skala
  */
 public interface DiscoverMovieUi {
-    void displayMovies(DiscoverMovie discoverMovie);
+    void displayMovies(List<DiscoverMovieModelView> modelView);
 
     void displayError(String message);
 }

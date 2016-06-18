@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.skala.core.api.model.DiscoverMovie;
-import com.skala.core.api.model.Result;
+import com.skala.core.ui.DiscoverMovie.DiscoverMovieModelView;
 import com.skala.videotrainingapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -17,13 +17,10 @@ import java.util.List;
  * @author Skala
  */
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.MoviesViewHolder> {
-    private DiscoverMovie discoverMovie;
-    private List<Result> movies;
+    private List<DiscoverMovieModelView> modelViewList;
 
-    public AdapterRecyclerView(DiscoverMovie discoverMovie) {
-        this.discoverMovie = discoverMovie;
-
-        movies = discoverMovie.getResults();
+    public AdapterRecyclerView(List<DiscoverMovieModelView> modelView) {
+        this.modelViewList = modelView;
     }
 
     @Override
@@ -35,16 +32,16 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
 
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, int position) {
-        Result result = movies.get(position);
+        DiscoverMovieModelView modelView = modelViewList.get(position);
 
-        holder.title.setText(result.getTitle());
-        holder.description.setText(result.getOverview());
-        // TODO: fill image for poster
+        holder.title.setText(modelView.getTitle());
+        holder.description.setText(modelView.getDescription());
+        Picasso.with(holder.poster.getContext()).load(modelView.getUrlImage()).into(holder.poster); // TODO: remove picasso from here
     }
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return modelViewList.size();
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
