@@ -1,21 +1,58 @@
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
+apply plugin: 'findbugs'
 
-build.dependsOn 'checkstyle', 'pmd'
+check.dependsOn 'checkstyle', 'pmd'
+
+checkstyle {
+    toolVersion = '6.19'
+    configFile = file("${project.rootDir}/quality/checkstyle.xml")
+}
 
 task checkstyle(type: Checkstyle) {
-    configFile file("./quality/checkstyle.xml")
-    source 'core/src', 'app/src'
+    source 'src'
     include '**/*.java'
     exclude '**/gen/**'
     classpath = files()
 }
 
-pmd { toolVersion = '5.4.2' }
+pmd {
+    toolVersion = '5.4.2'
+}
 
 task pmd(type: Pmd) {
     //ignoreFailures = false // Fail early.
     ruleSetFiles = files("${project.rootDir}/quality/pmd.xml")
     ruleSets = []
-    source(['app/src/main/java', 'core/src/mobile/java'])
+    source 'src/main/java'
+}
+
+findbugs {
+    toolVersion = '3.0.1'
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+task findbugs(type: FindBugs, dependsOn: assemble) {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = new File("${project.rootDir}/quality/findbugs-exclude.xml")
+
+    if (file("/build/classes").exists()) { // workaround, java class generate /build/classes , android generate /build/intermediates/classes
+        classes = files("/build/classes")
+    } else {
+        classes = files("/build/intermediates/classes")
+    }
+
+    source "src/main/java"
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
 }

@@ -28,6 +28,7 @@
 
     <module name="TreeWalker">
         <!--<property name="cacheFile" value="${checkstyle.cache.file}"/>-->
+        <property name="tabWidth" value="4"/>
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
@@ -39,7 +40,8 @@
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See http://checkstyle.sf.net/config_naming.html -->
-        <!--<module name="ConstantName"/>-->
+        <module name="SuppressWarningsHolder"/>
+        <module name="ConstantName"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
         <module name="MemberName"/>
@@ -49,7 +51,9 @@
         <module name="PackageName"/>
         <module name="ParameterName"/>
         <module name="StaticVariableName"/>
-        <module name="TypeName"/>
+        <module name="TypeName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9_]*$"/>
+        </module>
 
 
         <!-- Checks for imports                              -->
@@ -87,16 +91,20 @@
 
         <!-- Modifier Checks                                    -->
         <!-- See http://checkstyle.sf.net/config_modifiers.html -->
-        <module name="ModifierOrder"/>
+        <!--<module name="ModifierOrder"/>-->
         <module name="RedundantModifier"/>
 
 
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
-        <!--module name="AvoidNestedBlocks"/-->
-        <!--module name="EmptyBlock"/-->
+        <module name="AvoidNestedBlocks">
+            <property name="allowInSwitchCase" value="true"/>
+        </module>
+        <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
-        <!--module name="NeedBraces"/-->
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_IF, LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_WHILE"/>
+        </module>
         <module name="RightCurly"/>
 
 
@@ -104,15 +112,16 @@
         <!-- See http://checkstyle.sf.net/config_coding.html -->
         <!--module name="AvoidInlineConditionals"/-->
         <module name="CovariantEquals"/>
+        <!-- module name="DoubleCheckedLocking"/-->
         <module name="EmptyStatement"/>
-        <!--<module name="EqualsAvoidNull"/>-->
+        <module name="EqualsAvoidNull"/>
         <module name="EqualsHashCode"/>
         <!--module name="HiddenField"/-->
         <module name="IllegalInstantiation"/>
-        <!--<module name="InnerAssignment"/>-->
-        <!--module name="MagicNumber"/-->
+        <module name="InnerAssignment"/>
+        <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>
-        <module name="RedundantThrows"/>
+        <!--<module name="RedundantThrows"/>-->
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
 
@@ -120,14 +129,14 @@
         <!-- See http://checkstyle.sf.net/config_design.html -->
         <!--module name="DesignForExtension"/-->
         <!--module name="FinalClass"/-->
-        <!--module name="HideUtilityClassConstructor"/-->
-        <!--module name="InterfaceIsType"/-->
+        <module name="HideUtilityClassConstructor"/>
+        <module name="InterfaceIsType"/>
         <!--module name="VisibilityModifier"/-->
 
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
-        <!--module name="ArrayTypeStyle"/-->
+        <module name="ArrayTypeStyle"/>
         <!--module name="FinalParameters"/-->
         <!--module name="TodoComment"/-->
         <module name="UpperEll"/>

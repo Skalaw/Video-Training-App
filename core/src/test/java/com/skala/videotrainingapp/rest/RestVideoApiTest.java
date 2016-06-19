@@ -141,7 +141,8 @@ public class RestVideoApiTest {
             }
         });
 
-        lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
+        boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
+        Assert.assertTrue(isStillWaiting);
         Assert.assertEquals("Configuration api is not parsed properly", expected, configurationApi[0]);
     }
 
@@ -167,7 +168,8 @@ public class RestVideoApiTest {
             }
         });
 
-        lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
+        boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
+        Assert.assertTrue(isStillWaiting);
         Assert.assertEquals("AuthenticationToken is not parsed properly", expected, authenticationToken[0]);
     }
 
@@ -193,7 +195,8 @@ public class RestVideoApiTest {
             }
         });
 
-        lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
+        boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
+        Assert.assertTrue(isStillWaiting);
         Assert.assertEquals("AuthenticationSessionId is not parsed properly", expected, authenticationToken[0]);
     }
 

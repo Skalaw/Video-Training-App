@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -133,32 +134,25 @@ public class Images {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Images images = (Images) o;
-
-        if (baseUrl != null ? !baseUrl.equals(images.baseUrl) : images.baseUrl != null) return false;
-        if (secureBaseUrl != null ? !secureBaseUrl.equals(images.secureBaseUrl) : images.secureBaseUrl != null) return false;
-        if (backdropSizes != null ? !backdropSizes.equals(images.backdropSizes) : images.backdropSizes != null) return false;
-        if (logoSizes != null ? !logoSizes.equals(images.logoSizes) : images.logoSizes != null) return false;
-        if (posterSizes != null ? !posterSizes.equals(images.posterSizes) : images.posterSizes != null) return false;
-        if (profileSizes != null ? !profileSizes.equals(images.profileSizes) : images.profileSizes != null) return false;
-        if (stillSizes != null ? !stillSizes.equals(images.stillSizes) : images.stillSizes != null) return false;
-
-        return true;
+        return Objects.equals(baseUrl, images.baseUrl)
+                && Objects.equals(secureBaseUrl, images.secureBaseUrl)
+                && Objects.equals(backdropSizes, images.backdropSizes)
+                && Objects.equals(logoSizes, images.logoSizes)
+                && Objects.equals(posterSizes, images.posterSizes)
+                && Objects.equals(profileSizes, images.profileSizes)
+                && Objects.equals(stillSizes, images.stillSizes);
     }
 
     @Override
     public int hashCode() {
-        int result = baseUrl != null ? baseUrl.hashCode() : 0;
-        result = 31 * result + (secureBaseUrl != null ? secureBaseUrl.hashCode() : 0);
-        result = 31 * result + (backdropSizes != null ? backdropSizes.hashCode() : 0);
-        result = 31 * result + (logoSizes != null ? logoSizes.hashCode() : 0);
-        result = 31 * result + (posterSizes != null ? posterSizes.hashCode() : 0);
-        result = 31 * result + (profileSizes != null ? profileSizes.hashCode() : 0);
-        result = 31 * result + (stillSizes != null ? stillSizes.hashCode() : 0);
-        return result;
+        return Objects.hash(baseUrl, secureBaseUrl, backdropSizes, logoSizes, posterSizes, profileSizes, stillSizes);
     }
 
     @Override

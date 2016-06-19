@@ -21,12 +21,14 @@ import retrofit2.Response;
  * @author Skala
  */
 public class DiscoverMoviePresenter {
+    private static final int SIZE_IMAGE = 4; // TODO: delete this
+
     private final VideoRepository videoApi;
     private DiscoverMovieUi ui;
 
     private ConfigurationApi configurationApi;
 
-    private List<UiCommand> uiCommands = new ArrayList<>();
+    private final List<UiCommand> uiCommands = new ArrayList<>();
 
     @Inject
     public DiscoverMoviePresenter(VideoRepository videoApi) {
@@ -51,7 +53,8 @@ public class DiscoverMoviePresenter {
 
             @Override
             public void onFailure(Call<ConfigurationApi> call, Throwable t) {
-
+                DisplayError displayError = new DisplayError(t.getMessage());
+                execute(displayError);
             }
         });
     }
@@ -62,8 +65,7 @@ public class DiscoverMoviePresenter {
             public void onResponse(Call<DiscoverMovie> call, Response<DiscoverMovie> response) {
                 DiscoverMovie discoverMovie = response.body();
 
-                // TODO: delete .get(4)
-                String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(4);
+                String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(SIZE_IMAGE);
 
                 List<DiscoverMovieModelView> modelViews = new ArrayList<>();
                 int size = discoverMovie.getResults().size();

@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -48,22 +49,20 @@ public class ConfigurationApi {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ConfigurationApi that = (ConfigurationApi) o;
-
-        if (images != null ? !images.equals(that.images) : that.images != null) return false;
-        if (changeKeys != null ? !changeKeys.equals(that.changeKeys) : that.changeKeys != null) return false;
-
-        return true;
+        return Objects.equals(images, that.images)
+                && Objects.equals(changeKeys, that.changeKeys);
     }
 
     @Override
     public int hashCode() {
-        int result = images != null ? images.hashCode() : 0;
-        result = 31 * result + (changeKeys != null ? changeKeys.hashCode() : 0);
-        return result;
+        return Objects.hash(images, changeKeys);
     }
 
     @Override

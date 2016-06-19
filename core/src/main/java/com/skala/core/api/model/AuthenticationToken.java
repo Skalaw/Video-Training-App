@@ -4,6 +4,8 @@ package com.skala.core.api.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -63,23 +65,20 @@ public class AuthenticationToken {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AuthenticationToken that = (AuthenticationToken) o;
-
-        if (success != null ? !success.equals(that.success) : that.success != null) return false;
-        if (expiresAt != null ? !expiresAt.equals(that.expiresAt) : that.expiresAt != null) return false;
-        if (requestToken != null ? !requestToken.equals(that.requestToken) : that.requestToken != null) return false;
-
-        return true;
+        return Objects.equals(success, that.success)
+                && Objects.equals(expiresAt, that.expiresAt)
+                && Objects.equals(requestToken, that.requestToken);
     }
 
     @Override
     public int hashCode() {
-        int result = success != null ? success.hashCode() : 0;
-        result = 31 * result + (expiresAt != null ? expiresAt.hashCode() : 0);
-        result = 31 * result + (requestToken != null ? requestToken.hashCode() : 0);
-        return result;
+        return Objects.hash(success, expiresAt, requestToken);
     }
 }

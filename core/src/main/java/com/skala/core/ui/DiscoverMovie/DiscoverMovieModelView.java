@@ -4,10 +4,10 @@ package com.skala.core.ui.DiscoverMovie;
  * @author Skala
  */
 public class DiscoverMovieModelView {
-    private String title;
-    private String description;
-    private String urlImage;
-    private String releaseDate;
+    private final String title;
+    private final String description;
+    private final String urlImage;
+    private final String releaseDate;
 
     public DiscoverMovieModelView(String title, String description, String urlImage, String releaseDate) {
         this.title = title;

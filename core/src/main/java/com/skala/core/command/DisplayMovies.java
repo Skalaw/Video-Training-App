@@ -9,7 +9,7 @@ import java.util.List;
  * @author Skala
  */
 public class DisplayMovies implements UiCommand<DiscoverMovieUi> {
-    private List<DiscoverMovieModelView> modelView;
+    private final List<DiscoverMovieModelView> modelView;
 
     public DisplayMovies(List<DiscoverMovieModelView> modelView) {
         this.modelView = modelView;

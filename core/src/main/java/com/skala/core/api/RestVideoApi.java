@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RestVideoApi implements VideoRepository {
     private static final String ENDPOINT = "http://api.themoviedb.org/3/";
-    private VideoApi videoApi;
+    private final VideoApi videoApi;
     public String apiKey;
 
     public RestVideoApi(OkHttpClient client, String apiKey) {

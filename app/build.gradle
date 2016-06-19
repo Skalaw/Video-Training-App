@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: '../quality/quality.gradle'
 
 def config = rootProject.ext.configuration
 def lib = rootProject.ext.library

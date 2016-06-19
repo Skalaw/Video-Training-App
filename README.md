@@ -9,7 +9,7 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 
 ## Used tools & libraries
 - dagger 1
-- retrofit2
+- retrofit
 - gson
 - http://www.jsonschema2pojo.org/
 - picasso
@@ -18,5 +18,6 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 - lint
 - checkstyle
 - pmd
+- findbugs
 
 ## Release notes:
