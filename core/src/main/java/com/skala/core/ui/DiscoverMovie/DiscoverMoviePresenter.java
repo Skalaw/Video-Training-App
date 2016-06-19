@@ -62,11 +62,15 @@ public class DiscoverMoviePresenter {
             public void onResponse(Call<DiscoverMovie> call, Response<DiscoverMovie> response) {
                 DiscoverMovie discoverMovie = response.body();
 
+                // TODO: delete .get(4)
+                String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(4);
+
                 List<DiscoverMovieModelView> modelViews = new ArrayList<>();
                 int size = discoverMovie.getResults().size();
                 for (int i = 0; i < size; i++) {
                     Result movie = discoverMovie.getResults().get(i);
-                    modelViews.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(3) + movie.getPosterPath())); // TODO: delete .get(3)
+                    modelViews.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
+                            movie.getReleaseDate()));
                 }
 
                 DisplayMovies displayMovies = new DisplayMovies(modelViews);

@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.skala.core.api.model.DiscoverMovie;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieModelView;
 import com.skala.core.ui.DiscoverMovie.DiscoverMoviePresenter;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
@@ -44,6 +43,7 @@ public class DiscoverMovieActivity extends AppCompatActivity implements Discover
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // TODO add divider for recycler view
+        // TODO make adapter clickable
     }
 
     @Override

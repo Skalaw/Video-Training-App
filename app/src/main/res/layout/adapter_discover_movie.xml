@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/adapter_discover_movie_height"
+                android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="@dimen/adapter_discover_movie_image_width"
+        android:layout_height="@dimen/adapter_discover_movie_image_height"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/title"
+        android:layout_margin="@dimen/adapter_discover_movie_image_margin"/>
+
+    <TextView
+        android:id="@+id/releaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/poster"
+        android:layout_below="@id/poster"
+        android:gravity="center_horizontal"
+        tools:text="@string/release_date"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/adapter_discover_movie_title_font"
+        tools:text="Title"/>
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <ImageView
-        android:id="@+id/poster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_toStartOf="@+id/poster"
+        tools:text="Material design is guided by print-based design elements – such as typography, grids, space, scale, color, and imagery – to create hierarchy, meaning, and focus that immerse the user in the experience. Material design adopts tools from the field of print design, like baseline grids and structural templates, encouraging consistency across environments by repeating visual elements, structural grids, and spacing across platforms and screen sizes. These layouts scale to fit any screen size, which simplifies the process of creating scalable apps."/>
+</RelativeLayout>

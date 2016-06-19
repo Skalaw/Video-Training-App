@@ -25,7 +25,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
 
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_discover_movie, parent, false); // TODO: reposition layout
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_discover_movie, parent, false); // TODO: reposition layout // TODO: add dimens for other sizes
         MoviesViewHolder holder = new MoviesViewHolder(view);
         return holder;
     }
@@ -37,6 +37,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         holder.title.setText(modelView.getTitle());
         holder.description.setText(modelView.getDescription());
         Picasso.with(holder.poster.getContext()).load(modelView.getUrlImage()).into(holder.poster); // TODO: remove picasso from here
+        holder.releaseDate.setText(holder.title.getContext().getString(R.string.release_date, modelView.getReleaseDate()));
     }
 
     @Override
@@ -48,12 +49,14 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         public TextView title;
         public TextView description;
         public ImageView poster;
+        public TextView releaseDate;
 
         public MoviesViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
             poster = (ImageView) itemView.findViewById(R.id.poster);
+            releaseDate = (TextView) itemView.findViewById(R.id.releaseDate);
         }
     }
 }

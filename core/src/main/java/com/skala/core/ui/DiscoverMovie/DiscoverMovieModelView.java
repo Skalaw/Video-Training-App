@@ -7,11 +7,13 @@ public class DiscoverMovieModelView {
     private String title;
     private String description;
     private String urlImage;
+    private String releaseDate;
 
-    public DiscoverMovieModelView(String title, String description, String urlImage) {
+    public DiscoverMovieModelView(String title, String description, String urlImage, String releaseDate) {
         this.title = title;
         this.description = description;
         this.urlImage = urlImage;
+        this.releaseDate = releaseDate;
     }
 
     public String getTitle() {
@@ -24,5 +26,9 @@ public class DiscoverMovieModelView {
 
     public String getUrlImage() {
         return urlImage;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 }
