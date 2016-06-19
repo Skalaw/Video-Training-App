@@ -1,4 +1,8 @@
+apply plugin: 'java'
 apply from: './quality/quality.gradle'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
 Properties videoApi = new Properties()
 videoApi.load(new FileInputStream("./core/src/main/resources/video_api.properties"))

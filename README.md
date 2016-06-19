@@ -17,5 +17,6 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 ## Used tools for quality code
 - lint
 - checkstyle
+- pmd
 
 ## Release notes:

@@ -17,7 +17,7 @@ import java.util.List;
  * @author Skala
  */
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.MoviesViewHolder> {
-    private List<DiscoverMovieModelView> modelViewList;
+    private final List<DiscoverMovieModelView> modelViewList;
 
     public AdapterRecyclerView(List<DiscoverMovieModelView> modelView) {
         this.modelViewList = modelView;
@@ -26,8 +26,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_discover_movie, parent, false); // TODO: add dimens for other sizes
-        MoviesViewHolder holder = new MoviesViewHolder(view);
-        return holder;
+        return new MoviesViewHolder(view);
     }
 
     @Override

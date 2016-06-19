@@ -1,4 +1,7 @@
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+
+build.dependsOn 'checkstyle', 'pmd'
 
 task checkstyle(type: Checkstyle) {
     configFile file("./quality/checkstyle.xml")
@@ -6,4 +9,13 @@ task checkstyle(type: Checkstyle) {
     include '**/*.java'
     exclude '**/gen/**'
     classpath = files()
+}
+
+pmd { toolVersion = '5.4.2' }
+
+task pmd(type: Pmd) {
+    //ignoreFailures = false // Fail early.
+    ruleSetFiles = files("${project.rootDir}/quality/pmd.xml")
+    ruleSets = []
+    source(['app/src/main/java', 'core/src/mobile/java'])
 }
