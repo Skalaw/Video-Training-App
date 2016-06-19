@@ -11,7 +11,8 @@
         android:layout_height="@dimen/adapter_discover_movie_image_height"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/title"
-        android:layout_margin="@dimen/adapter_discover_movie_image_margin"/>
+        android:layout_margin="@dimen/adapter_discover_movie_image_margin"
+        android:contentDescription="@string/poster"/>
 
     <TextView
         android:id="@+id/releaseDate"

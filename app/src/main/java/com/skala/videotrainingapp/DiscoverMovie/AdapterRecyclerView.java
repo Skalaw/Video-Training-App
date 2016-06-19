@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp.DiscoverMovie;
+package com.skala.videotrainingapp.discovermovie;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
