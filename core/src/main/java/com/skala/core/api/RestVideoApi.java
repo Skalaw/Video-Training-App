@@ -7,8 +7,6 @@ import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.DiscoverMovie;
 
-import javax.inject.Inject;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;

@@ -14,4 +14,8 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 - http://www.jsonschema2pojo.org/
 - picasso
 
+## Used tools for quality code
+- lint
+- checkstyle
+
 ## Release notes:

@@ -163,14 +163,14 @@ public class Images {
 
     @Override
     public String toString() {
-        return "Images{" +
-                "baseUrl='" + baseUrl + '\'' +
-                ", secureBaseUrl='" + secureBaseUrl + '\'' +
-                ", backdropSizes=" + backdropSizes +
-                ", logoSizes=" + logoSizes +
-                ", posterSizes=" + posterSizes +
-                ", profileSizes=" + profileSizes +
-                ", stillSizes=" + stillSizes +
-                '}';
+        return "Images{"
+                + "baseUrl='" + baseUrl + '\''
+                + ", secureBaseUrl='" + secureBaseUrl + '\''
+                + ", backdropSizes=" + backdropSizes
+                + ", logoSizes=" + logoSizes
+                + ", posterSizes=" + posterSizes
+                + ", profileSizes=" + profileSizes
+                + ", stillSizes=" + stillSizes
+                + '}';
     }
 }

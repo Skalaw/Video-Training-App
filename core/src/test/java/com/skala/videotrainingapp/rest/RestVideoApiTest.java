@@ -27,7 +27,84 @@ import retrofit2.Response;
  * @author Skala
  */
 public class RestVideoApiTest {
-    private final static int DURATION_LOCK_IN_MILLISECOND = 6000;
+    private static final String TYPE_CONFIG = "{\n"
+            + "  \"images\": {\n"
+            + "    \"base_url\": \"http://image.tmdb.org/t/p/\",\n"
+            + "    \"secure_base_url\": \"https://image.tmdb.org/t/p/\",\n"
+            + "    \"backdrop_sizes\": [\n"
+            + "      \"w300\",\n"
+            + "      \"w780\",\n"
+            + "      \"w1280\",\n"
+            + "      \"original\"\n"
+            + "    ],\n"
+            + "    \"logo_sizes\": [\n"
+            + "      \"w45\",\n"
+            + "      \"w92\",\n"
+            + "      \"w154\",\n"
+            + "      \"w185\",\n"
+            + "      \"w300\",\n"
+            + "      \"w500\",\n"
+            + "      \"original\"\n"
+            + "    ],\n"
+            + "    \"poster_sizes\": [\n"
+            + "      \"w92\",\n"
+            + "      \"w154\",\n"
+            + "      \"w185\",\n"
+            + "      \"w342\",\n"
+            + "      \"w500\",\n"
+            + "      \"w780\",\n"
+            + "      \"original\"\n"
+            + "    ],\n"
+            + "    \"profile_sizes\": [\n"
+            + "      \"w45\",\n"
+            + "      \"w185\",\n"
+            + "      \"h632\",\n"
+            + "      \"original\"\n"
+            + "    ],\n"
+            + "    \"still_sizes\": [\n"
+            + "      \"w92\",\n"
+            + "      \"w185\",\n"
+            + "      \"w300\",\n"
+            + "      \"original\"\n"
+            + "    ]\n"
+            + "  },\n"
+            + "  \"change_keys\": [\n"
+            + "    \"adult\",\n"
+            + "    \"also_known_as\",\n"
+            + "    \"alternative_titles\",\n"
+            + "    \"biography\",\n"
+            + "    \"birthday\",\n"
+            + "    \"budget\",\n"
+            + "    \"cast\",\n"
+            + "    \"character_names\",\n"
+            + "    \"crew\",\n"
+            + "    \"deathday\",\n"
+            + "    \"general\",\n"
+            + "    \"genres\",\n"
+            + "    \"homepage\",\n"
+            + "    \"images\",\n"
+            + "    \"imdb_id\",\n"
+            + "    \"name\",\n"
+            + "    \"original_title\",\n"
+            + "    \"overview\",\n"
+            + "    \"plot_keywords\",\n"
+            + "    \"production_companies\",\n"
+            + "    \"production_countries\",\n"
+            + "    \"releases\",\n"
+            + "    \"revenue\",\n"
+            + "    \"runtime\",\n"
+            + "    \"spoken_languages\",\n"
+            + "    \"status\",\n"
+            + "    \"tagline\",\n"
+            + "    \"title\",\n"
+            + "    \"trailers\",\n"
+            + "    \"translations\"\n"
+            + "  ]\n"
+            + "}";
+    private static final String TYPE_AUTHENTICATION_TOKEN = "{\"success\":true,\"expires_at\":\"2016-06-13 21:46:13 UTC\",\"request_token\":\"1111111111111\"}";
+    private static final String TYPE_AUTHENTICATION_SESSION_ID = "{  \"session_id\": \"80b2bf99520cd795ff54e31af97917bc9e3a7c8c\",  \"success\": true}";
+
+    private static final int DURATION_LOCK_IN_MILLISECOND = 6000;
     private CountDownLatch lock;
     private static String videoApiKey;
 
@@ -44,7 +121,7 @@ public class RestVideoApiTest {
 
     @Test
     public void testGetConfigurationFromMock() throws Exception {
-        RestVideoApi restVideoApi = getRestVideoApi(InterceptorMock.TYPE_CONFIG);
+        RestVideoApi restVideoApi = getRestVideoApi(TYPE_CONFIG);
 
         final ConfigurationApi[] configurationApi = new ConfigurationApi[1];
         final ConfigurationApi expected = getExpectedConfigurationApi();
@@ -70,7 +147,7 @@ public class RestVideoApiTest {
 
     @Test
     public void testGetRequestTokenFromMock() throws Exception {
-        RestVideoApi restVideoApi = getRestVideoApi(InterceptorMock.TYPE_AUTHENTICATION_TOKEN);
+        RestVideoApi restVideoApi = getRestVideoApi(TYPE_AUTHENTICATION_TOKEN);
 
         final AuthenticationToken[] authenticationToken = new AuthenticationToken[1];
         final AuthenticationToken expected = getExpectedAuthenticationToken();
@@ -96,7 +173,7 @@ public class RestVideoApiTest {
 
     @Test
     public void testGetSessionIdFromMock() throws Exception {
-        RestVideoApi restVideoApi = getRestVideoApi(InterceptorMock.TYPE_AUTHENTICATION_SESSION_ID);
+        RestVideoApi restVideoApi = getRestVideoApi(TYPE_AUTHENTICATION_SESSION_ID);
 
         final AuthenticationSessionId[] authenticationToken = new AuthenticationSessionId[1];
         final AuthenticationSessionId expected = getExpectedAuthenticationSessionId();
@@ -216,7 +293,7 @@ public class RestVideoApiTest {
         AuthenticationToken expected = new AuthenticationToken();
         expected.setSuccess(true);
         expected.setExpiresAt("2016-06-13 21:46:13 UTC");
-        expected.setRequestToken("111111111111111111111111111111111");
+        expected.setRequestToken("1111111111111");
         return expected;
     }
 

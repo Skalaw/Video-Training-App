@@ -68,9 +68,9 @@ public class ConfigurationApi {
 
     @Override
     public String toString() {
-        return "ConfigurationApi{" +
-                "images=" + images +
-                ", changeKeys=" + changeKeys +
-                '}';
+        return "ConfigurationApi{"
+                + "images=" + images
+                + ", changeKeys=" + changeKeys
+                + '}';
     }
 }
