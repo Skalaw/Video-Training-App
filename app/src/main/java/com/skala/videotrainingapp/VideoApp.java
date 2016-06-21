@@ -15,7 +15,7 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by user on 14/06/16.
+ * @author Skala
  */
 public class VideoApp extends Application {
     private ObjectGraph objectGraph;

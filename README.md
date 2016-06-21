@@ -21,3 +21,7 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 - findbugs
 
 ## Release notes:
+
+0.0.1:
+- initial version
+- added DiscoverMovieActivity

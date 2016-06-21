@@ -19,6 +19,9 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 
+/**
+ * @author Skala
+ */
 public class DiscoverMovieActivity extends AppCompatActivity implements DiscoverMovieUi {
 
     @Inject
@@ -42,7 +45,7 @@ public class DiscoverMovieActivity extends AppCompatActivity implements Discover
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // TODO add divider for recycler view
+        recyclerView.addItemDecoration(new VerticalDividerRecyclerView(this));
         // TODO make adapter clickable
     }
 
