@@ -6,12 +6,13 @@ import com.skala.core.api.model.DiscoverMovie;
 import com.skala.core.api.model.Result;
 import com.skala.core.command.DisplayError;
 import com.skala.core.command.DisplayMovies;
-import com.skala.core.command.UiCommand;
+import com.skala.core.ui.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,27 +21,22 @@ import retrofit2.Response;
 /**
  * @author Skala
  */
-public class DiscoverMoviePresenter {
+@Singleton
+public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     private static final int SIZE_IMAGE = 4; // TODO: delete this
 
     private final VideoRepository videoApi;
-    private DiscoverMovieUi ui;
 
     private ConfigurationApi configurationApi;
-
-    private final List<UiCommand> uiCommands = new ArrayList<>();
 
     @Inject
     public DiscoverMoviePresenter(VideoRepository videoApi) {
         this.videoApi = videoApi;
     }
 
-    public void onAttached(DiscoverMovieUi ui) {
-        this.ui = ui;
-
-        loadConfig(); // TODO: load only first time & used only one when used app
-
-        executePendingUiCommands();
+    @Override
+    protected void onFirstUiAttachment() {
+        loadConfig(); // TODO: cache config + discoverMovie list & add command what should reloaded on view when for example rotate screen
     }
 
     private void loadConfig() {
@@ -85,26 +81,5 @@ public class DiscoverMoviePresenter {
                 execute(displayError);
             }
         });
-    }
-
-    private void executePendingUiCommands() {
-        int size = uiCommands.size();
-        for (int i = 0; i < size; i++) {
-            uiCommands.get(i).execute(ui);
-        }
-
-        uiCommands.clear();
-    }
-
-    public void onDetach() {
-        ui = null;
-    }
-
-    private void execute(UiCommand uiCommand) {
-        if (ui == null) {
-            uiCommands.add(uiCommand);
-        } else {
-            uiCommand.execute(ui);
-        }
     }
 }

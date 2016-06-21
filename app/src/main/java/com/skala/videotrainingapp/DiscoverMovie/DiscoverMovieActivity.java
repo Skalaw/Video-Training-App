@@ -1,7 +1,7 @@
 package com.skala.videotrainingapp.discovermovie;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieModelView;
 import com.skala.core.ui.DiscoverMovie.DiscoverMoviePresenter;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
+import com.skala.core.ui.base.BasePresenter;
+import com.skala.videotrainingapp.BaseActivity;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.VideoApp;
 
@@ -17,29 +19,20 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.ObjectGraph;
 
 /**
  * @author Skala
  */
-public class DiscoverMovieActivity extends AppCompatActivity implements DiscoverMovieUi {
+public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovieUi {
 
     @Inject
     DiscoverMoviePresenter discoverMoviePresenter;
-    private ObjectGraph presenterObjectGraph;
 
     private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        presenterObjectGraph = (ObjectGraph) getLastCustomNonConfigurationInstance(); // TODO: move this to baseActivity
-        if (presenterObjectGraph == null) {
-            presenterObjectGraph = VideoApp.getApp(this).getObjectGraph().plus(new PresenterModule());
-        }
-        presenterObjectGraph.inject(this);
-
         setContentView(R.layout.activity_discover_movie);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -49,21 +42,16 @@ public class DiscoverMovieActivity extends AppCompatActivity implements Discover
         // TODO make adapter clickable
     }
 
+    @NonNull
     @Override
-    protected void onStart() {
-        super.onStart();
-        discoverMoviePresenter.onAttached(this);
+    protected Object getPresenterModule() {
+        return new PresenterModule();
     }
 
+    @NonNull
     @Override
-    protected void onStop() {
-        super.onStop();
-        discoverMoviePresenter.onDetach();
-    }
-
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return presenterObjectGraph;
+    protected BasePresenter getPresenter() {
+        return discoverMoviePresenter;
     }
 
     @Override
