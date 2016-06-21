@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BasePresenter<T extends Ui> {
     protected T ui;
-    private final List<UiCommand> uiCommands = new ArrayList<>();
+    private final List<UiCommand<T>> uiCommands = new ArrayList<>();
     private boolean uiAttachedBefore = false;
 
     public void onAttached(T ui) {
@@ -39,7 +39,7 @@ public class BasePresenter<T extends Ui> {
         uiCommands.clear();
     }
 
-    protected void execute(UiCommand uiCommand) {
+    protected void execute(UiCommand<T> uiCommand) {
         if (ui == null) {
             uiCommands.add(uiCommand);
         } else {

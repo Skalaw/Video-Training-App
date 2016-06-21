@@ -12,13 +12,10 @@ import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.videotrainingapp.BaseActivity;
 import com.skala.videotrainingapp.R;
-import com.skala.videotrainingapp.VideoApp;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import dagger.Module;
 
 /**
  * @author Skala
@@ -45,7 +42,7 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
     @NonNull
     @Override
     protected Object getPresenterModule() {
-        return new PresenterModule();
+        return new DiscoverMovieModulePresenter();
     }
 
     @NonNull
@@ -56,7 +53,7 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
 
     @Override
     public void displayMovies(List<DiscoverMovieModelView> modelView) {
-        RecyclerView.Adapter adapter = new AdapterRecyclerView(modelView);
+        RecyclerView.Adapter adapter = new AdapterRecyclerView(modelView); // todo keep list in presenter
         recyclerView.setAdapter(adapter);
     }
 
@@ -64,9 +61,5 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
     public void displayError(String message) {
         // TODO: add button with refresh
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Module(injects = {DiscoverMovieActivity.class}, addsTo = VideoApp.AppModule.class)
-    public class PresenterModule {
     }
 }
