@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda' //https://github.com/evant/gradle-retrolambda
 apply from: '../quality/quality.gradle'
 
 def config = rootProject.ext.configuration
@@ -30,6 +31,11 @@ android {
             buildConfigField 'String', 'THE_MOVIE_DB_USERNAME', THE_MOVIE_DB_USERNAME
             buildConfigField 'String', 'THE_MOVIE_DB_PASSWORD', THE_MOVIE_DB_PASSWORD
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
