@@ -47,7 +47,7 @@ public class DiscoverMoviePresenter {
         videoApi.getConfiguration().enqueue(new Callback<ConfigurationApi>() {
             @Override
             public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
-                configurationApi = response.body();
+                configurationApi = response.body(); // TODO: handle errors (for example when we don't have correct apiKey)
                 loadDiscoverMovie(); // TODO: move this onAttached when config download in other place
             }
 

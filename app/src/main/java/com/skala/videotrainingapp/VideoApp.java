@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.skala.core.api.RestVideoApi;
 import com.skala.core.api.VideoRepository;
+import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Singleton;
 
@@ -23,6 +24,7 @@ public class VideoApp extends Application {
     public void onCreate() {
         super.onCreate();
         objectGraph = ObjectGraph.create(new AppModule());
+        LeakCanary.install(this);
     }
 
     public ObjectGraph getObjectGraph() {
