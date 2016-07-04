@@ -1,6 +1,6 @@
 package com.skala.core.command;
 
-import com.skala.core.ui.discovermoviefix.DiscoverMovieUi;
+import com.skala.core.ui.discovermovie.DiscoverMovieUi;
 
 /**
  * @author Skala

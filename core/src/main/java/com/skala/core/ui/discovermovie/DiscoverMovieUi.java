@@ -1,8 +1,6 @@
-package com.skala.core.ui.discovermoviefix;
+package com.skala.core.ui.discovermovie;
 
 import com.skala.core.ui.base.Ui;
-
-import java.util.List;
 
 /**
  * @author Skala

@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp.discovermoviefix;
+package com.skala.videotrainingapp.discovermovie;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.skala.core.ui.discovermoviefix.DiscoverMovieModelView;
+import com.skala.core.ui.discovermovie.DiscoverMovieModelView;
 import com.skala.videotrainingapp.R;
 import com.squareup.picasso.Picasso;
 

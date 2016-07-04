@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp.discovermoviefix;
+package com.skala.videotrainingapp.discovermovie;
 
 import android.content.Context;
 import android.content.res.TypedArray;

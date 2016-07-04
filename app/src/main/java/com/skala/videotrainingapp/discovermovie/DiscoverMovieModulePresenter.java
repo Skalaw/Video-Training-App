@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp.discovermoviefix;
+package com.skala.videotrainingapp.discovermovie;
 
 import com.skala.videotrainingapp.VideoApp;
 

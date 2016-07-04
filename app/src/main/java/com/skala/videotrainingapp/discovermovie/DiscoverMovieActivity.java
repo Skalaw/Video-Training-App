@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp.discovermoviefix;
+package com.skala.videotrainingapp.discovermovie;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,8 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.skala.core.ui.discovermoviefix.DiscoverMoviePresenter;
-import com.skala.core.ui.discovermoviefix.DiscoverMovieUi;
+import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
+import com.skala.core.ui.discovermovie.DiscoverMovieUi;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.videotrainingapp.BaseActivity;
 import com.skala.videotrainingapp.R;
@@ -69,7 +69,6 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
 
     @Override
     public void displayError(String message) {
-        // TODO: add button with refresh
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
