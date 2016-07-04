@@ -7,13 +7,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
-import com.skala.core.ui.base.BasePresenter;
 import com.skala.videotrainingapp.BaseActivity;
 import com.skala.videotrainingapp.R;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author Skala
@@ -23,9 +26,13 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
     @Inject
     DiscoverMoviePresenter presenter;
 
-    private RecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    protected RecyclerView recyclerView;
+
+    @BindView(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout swipeRefreshLayout;
+
     private RecyclerView.Adapter discoverMovieAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +42,12 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
 
     private void initView() {
         setContentView(R.layout.activity_discover_movie);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        ButterKnife.bind(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new VerticalDividerRecyclerView(this));
         // TODO make discoverMovieAdapter clickable
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadConfig());
 
         discoverMovieAdapter = new AdapterRecyclerView(presenter.getDiscoverMovie());

@@ -17,7 +17,9 @@ ext {
             androidSupport: "24.0.0",
             retrofit      : "2.1.0",
             picasso       : "2.5.2",
-            dagger        : "1.2.5"
+            dagger        : "1.2.5",
+            leakcanary    : "1.4-beta2",
+            butterKnife   : "8.1.0"
     ]
 
     testing = [
@@ -32,9 +34,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 

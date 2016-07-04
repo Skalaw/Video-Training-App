@@ -13,6 +13,9 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 - gson
 - http://www.jsonschema2pojo.org/
 - picasso
+- retrolambda
+- butterknife
+- leakcanary
 
 ## Used tools for quality code
 - lint

@@ -27,7 +27,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
     private final VideoRepository videoApi;
     private ConfigurationApi configurationApi;
-    private List<com.skala.core.ui.discovermovie.DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
+    private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
     public DiscoverMoviePresenter(VideoRepository videoApi) {
@@ -66,7 +66,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                 int size = discoverMovie.getResults().size();
                 for (int i = 0; i < size; i++) {
                     Result movie = discoverMovie.getResults().get(i);
-                    discoverMovieList.add(new com.skala.core.ui.discovermovie.DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
+                    discoverMovieList.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
                             movie.getReleaseDate()));
                 }
 
@@ -81,7 +81,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         });
     }
 
-    public List<com.skala.core.ui.discovermovie.DiscoverMovieModelView> getDiscoverMovie() {
+    public List<DiscoverMovieModelView> getDiscoverMovie() {
         return discoverMovieList;
     }
 }

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda' //https://github.com/evant/gradle-retrolambda
 apply from: '../quality/quality.gradle'
 
@@ -49,10 +50,12 @@ dependencies {
     compile "com.android.support:appcompat-v7:${lib.androidSupport}"
     compile "com.android.support:recyclerview-v7:${lib.androidSupport}"
     compile "com.squareup.picasso:picasso:${lib.picasso}"
+    compile "com.jakewharton:butterknife:${lib.butterKnife}"
+    apt  "com.jakewharton:butterknife-compiler:${lib.butterKnife}"
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    debugCompile "com.squareup.leakcanary:leakcanary-android:${lib.leakcanary}"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${lib.leakcanary}"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${lib.leakcanary}"
 
     testCompile "junit:junit:${test.junit}"
 }
