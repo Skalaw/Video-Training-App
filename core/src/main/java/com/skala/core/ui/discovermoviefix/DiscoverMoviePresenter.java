@@ -1,4 +1,4 @@
-package com.skala.core.ui.DiscoverMovie;
+package com.skala.core.ui.discovermoviefix;
 
 import com.skala.core.api.VideoRepository;
 import com.skala.core.api.model.ConfigurationApi;
@@ -27,7 +27,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
     private final VideoRepository videoApi;
     private ConfigurationApi configurationApi;
-    private List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
+    private List<com.skala.core.ui.discovermoviefix.DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
     public DiscoverMoviePresenter(VideoRepository videoApi) {
@@ -39,7 +39,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         loadConfig(); // TODO: cache config
     }
 
-    private void loadConfig() {
+    public void loadConfig() {
         videoApi.getConfiguration().enqueue(new Callback<ConfigurationApi>() {
             @Override
             public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
@@ -66,7 +66,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                 int size = discoverMovie.getResults().size();
                 for (int i = 0; i < size; i++) {
                     Result movie = discoverMovie.getResults().get(i);
-                    discoverMovieList.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
+                    discoverMovieList.add(new com.skala.core.ui.discovermoviefix.DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
                             movie.getReleaseDate()));
                 }
 
@@ -81,7 +81,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         });
     }
 
-    public List<DiscoverMovieModelView> getDiscoverMovie() {
+    public List<com.skala.core.ui.discovermoviefix.DiscoverMovieModelView> getDiscoverMovie() {
         return discoverMovieList;
     }
 }

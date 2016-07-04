@@ -1,13 +1,14 @@
-package com.skala.videotrainingapp.discovermovie;
+package com.skala.videotrainingapp.discovermoviefix;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.skala.core.ui.DiscoverMovie.DiscoverMoviePresenter;
-import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
+import com.skala.core.ui.discovermoviefix.DiscoverMoviePresenter;
+import com.skala.core.ui.discovermoviefix.DiscoverMovieUi;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.videotrainingapp.BaseActivity;
 import com.skala.videotrainingapp.R;
@@ -20,10 +21,11 @@ import javax.inject.Inject;
 public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovieUi {
 
     @Inject
-    DiscoverMoviePresenter discoverMoviePresenter;
+    DiscoverMoviePresenter presenter;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter discoverMovieAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,10 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
         recyclerView.addItemDecoration(new VerticalDividerRecyclerView(this));
         // TODO make discoverMovieAdapter clickable
 
-        discoverMovieAdapter = new AdapterRecyclerView(discoverMoviePresenter.getDiscoverMovie());
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadConfig());
+
+        discoverMovieAdapter = new AdapterRecyclerView(presenter.getDiscoverMovie());
         recyclerView.setAdapter(discoverMovieAdapter);
     }
 
@@ -52,17 +57,20 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
     @NonNull
     @Override
     protected BasePresenter getPresenter() {
-        return discoverMoviePresenter;
+        return presenter;
     }
 
     @Override
     public void notifyDataChange() {
         discoverMovieAdapter.notifyDataSetChanged();
+
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void displayError(String message) {
         // TODO: add button with refresh
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

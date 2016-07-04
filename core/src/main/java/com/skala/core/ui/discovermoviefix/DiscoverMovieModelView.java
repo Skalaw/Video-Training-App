@@ -1,4 +1,4 @@
-package com.skala.core.ui.DiscoverMovie;
+package com.skala.core.ui.discovermoviefix;
 
 /**
  * @author Skala
