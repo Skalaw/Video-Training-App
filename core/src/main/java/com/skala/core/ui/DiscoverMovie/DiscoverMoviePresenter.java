@@ -26,8 +26,8 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     private static final int SIZE_IMAGE = 4; // TODO: delete this
 
     private final VideoRepository videoApi;
-
     private ConfigurationApi configurationApi;
+    private List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
     public DiscoverMoviePresenter(VideoRepository videoApi) {
@@ -36,7 +36,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
     @Override
     protected void onFirstUiAttachment() {
-        loadConfig(); // TODO: cache config + discoverMovie list & add command what should reloaded on view when for example rotate screen
+        loadConfig(); // TODO: cache config
     }
 
     private void loadConfig() {
@@ -49,8 +49,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
             @Override
             public void onFailure(Call<ConfigurationApi> call, Throwable t) {
-                DisplayError displayError = new DisplayError(t.getMessage());
-                execute(displayError);
+                execute(new DisplayError(t.getMessage()));
             }
         });
     }
@@ -63,16 +62,15 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
                 String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(SIZE_IMAGE);
 
-                List<DiscoverMovieModelView> modelViews = new ArrayList<>();
+                discoverMovieList.clear();
                 int size = discoverMovie.getResults().size();
                 for (int i = 0; i < size; i++) {
                     Result movie = discoverMovie.getResults().get(i);
-                    modelViews.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
+                    discoverMovieList.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
                             movie.getReleaseDate()));
                 }
 
-                DisplayMovies displayMovies = new DisplayMovies(modelViews);
-                execute(displayMovies);
+                execute(new DisplayMovies());
             }
 
             @Override
@@ -81,5 +79,9 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                 execute(displayError);
             }
         });
+    }
+
+    public List<DiscoverMovieModelView> getDiscoverMovie() {
+        return discoverMovieList;
     }
 }

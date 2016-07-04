@@ -8,7 +8,7 @@ import java.util.List;
  * @author Skala
  */
 public interface DiscoverMovieUi extends Ui {
-    void displayMovies(List<DiscoverMovieModelView> modelView);
+    void notifyDataChange();
 
     void displayError(String message);
 }

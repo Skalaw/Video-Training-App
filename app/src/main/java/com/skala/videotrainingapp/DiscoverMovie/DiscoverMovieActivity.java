@@ -6,14 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.skala.core.ui.DiscoverMovie.DiscoverMovieModelView;
 import com.skala.core.ui.DiscoverMovie.DiscoverMoviePresenter;
 import com.skala.core.ui.DiscoverMovie.DiscoverMovieUi;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.videotrainingapp.BaseActivity;
 import com.skala.videotrainingapp.R;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,17 +23,24 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
     DiscoverMoviePresenter discoverMoviePresenter;
 
     private RecyclerView recyclerView;
+    private RecyclerView.Adapter discoverMovieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_discover_movie);
+        initView();
+    }
 
+    private void initView() {
+        setContentView(R.layout.activity_discover_movie);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new VerticalDividerRecyclerView(this));
-        // TODO make adapter clickable
+        // TODO make discoverMovieAdapter clickable
+
+        discoverMovieAdapter = new AdapterRecyclerView(discoverMoviePresenter.getDiscoverMovie());
+        recyclerView.setAdapter(discoverMovieAdapter);
     }
 
     @NonNull
@@ -52,9 +56,8 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
     }
 
     @Override
-    public void displayMovies(List<DiscoverMovieModelView> modelView) {
-        RecyclerView.Adapter adapter = new AdapterRecyclerView(modelView); // todo keep list in presenter
-        recyclerView.setAdapter(adapter);
+    public void notifyDataChange() {
+        discoverMovieAdapter.notifyDataSetChanged();
     }
 
     @Override
