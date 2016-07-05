@@ -24,7 +24,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     private static final int SIZE_IMAGE = 4; // TODO: delete this
 
     private final VideoRepository videoApi;
-    private ConfigurationRepository configurationRepository;
+    private final ConfigurationRepository configurationRepository;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
@@ -35,29 +35,14 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
     @Override
     protected void onFirstUiAttachment() {
-        loadDiscoverMovie(); // TODO: cache config
+        loadDiscoverMovie();
     }
-
-    /*public void loadConfig() {
-        videoApi.getConfiguration().enqueue(new Callback<ConfigurationApi>() {
-            @Override
-            public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
-                configurationApi = response.body(); // TODO: handle errors (for example when we don't have correct apiKey)
-                loadDiscoverMovie(); // TODO: move this onAttached when config download in other place
-            }
-
-            @Override
-            public void onFailure(Call<ConfigurationApi> call, Throwable t) {
-                execute(new DisplayError(t.getMessage()));
-            }
-        });
-    }*/
 
     public void loadDiscoverMovie() {
         configurationRepository.getConfiguration(new CallApi<ConfigurationApi, String>() {
             @Override
             public void onSuccess(ConfigurationApi configurationApi) {
-                loadRealDiscoverMoview(configurationApi);
+                loadRealDiscoverMovie(configurationApi);
             }
 
             @Override
@@ -67,7 +52,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         });
     }
 
-    public void loadRealDiscoverMoview(ConfigurationApi configurationApi) {
+    public void loadRealDiscoverMovie(ConfigurationApi configurationApi) {
         videoApi.getDiscoverMovie(new CallApi<DiscoverMovie, String>() {
             @Override
             public void onSuccess(DiscoverMovie discoverMovie) {

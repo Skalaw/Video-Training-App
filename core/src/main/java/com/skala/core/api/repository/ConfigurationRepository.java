@@ -3,8 +3,6 @@ package com.skala.core.api.repository;
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.net.CallApi;
 
-import retrofit2.Call;
-
 /**
  * @author Skala
  */

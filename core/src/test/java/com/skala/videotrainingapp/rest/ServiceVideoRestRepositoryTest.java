@@ -1,10 +1,13 @@
 package com.skala.videotrainingapp.rest;
 
+import com.google.gson.Gson;
+import com.skala.core.api.ConfigurationServiceApi;
 import com.skala.core.api.VideoServiceApi;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.Images;
+import com.skala.core.api.net.CallApi;
 import com.skala.videotrainingapp.rest.helper.ApiKeyProperties;
 import com.skala.videotrainingapp.rest.helper.InterceptorMock;
 
@@ -22,11 +25,14 @@ import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author Skala
  */
 public class ServiceVideoRestRepositoryTest {
+    private static final String ENDPOINT = "http://api.themoviedb.org/3/";
     private static final String TYPE_CONFIG = "{\n"
             + "  \"images\": {\n"
             + "    \"base_url\": \"http://image.tmdb.org/t/p/\",\n"
@@ -121,22 +127,21 @@ public class ServiceVideoRestRepositoryTest {
 
     @Test
     public void testGetConfigurationFromMock() throws Exception {
-        VideoServiceApi videoServiceApi = getRestVideoApi(TYPE_CONFIG);
+        ConfigurationServiceApi configurationServiceApi = getConfigurationServiceApi(TYPE_CONFIG);
 
         final ConfigurationApi[] configurationApi = new ConfigurationApi[1];
         final ConfigurationApi expected = getExpectedConfigurationApi();
 
-        Call<ConfigurationApi> config = videoServiceApi.getConfiguration();
-        config.enqueue(new Callback<ConfigurationApi>() {
+        configurationServiceApi.getConfiguration(new CallApi<ConfigurationApi, String>() {
             @Override
-            public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
-                configurationApi[0] = response.body();
+            public void onSuccess(ConfigurationApi config) {
+                configurationApi[0] = config;
                 lock.countDown();
             }
 
             @Override
-            public void onFailure(Call<ConfigurationApi> call, Throwable t) {
-                System.out.print(t.toString());
+            public void onFailed(String error) {
+                System.out.print(error);
                 lock.countDown();
             }
         });
@@ -200,11 +205,26 @@ public class ServiceVideoRestRepositoryTest {
         Assert.assertEquals("AuthenticationSessionId is not parsed properly", expected, authenticationToken[0]);
     }
 
+    private ConfigurationServiceApi getConfigurationServiceApi(String type) {
+        Retrofit retrofit = getRetrofit(type);
+        return new ConfigurationServiceApi(retrofit, videoApiKey);
+    }
+
     private VideoServiceApi getRestVideoApi(String type) {
+        Retrofit retrofit = getRetrofit(type);
+        return new VideoServiceApi(retrofit, videoApiKey);
+    }
+
+    private Retrofit getRetrofit(String type) {
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(InterceptorMock.newInstance(type))
                 .build();
-        return new VideoServiceApi(client, videoApiKey);
+
+        return new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                .baseUrl(ENDPOINT)
+                .client(client)
+                .build();
     }
 
     private ConfigurationApi getExpectedConfigurationApi() {
