@@ -3,8 +3,9 @@ package com.skala.videotrainingapp;
 import android.app.Application;
 import android.content.Context;
 
-import com.skala.core.api.RestVideoApi;
-import com.skala.core.api.VideoRepository;
+import com.google.gson.Gson;
+import com.skala.core.api.VideoServiceApi;
+import com.skala.core.api.repository.VideoRepository;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Singleton;
@@ -13,6 +14,8 @@ import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author Skala
@@ -23,7 +26,7 @@ public class VideoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        objectGraph = ObjectGraph.create(new AppModule());
+        objectGraph = ObjectGraph.create(new NetModule());
         LeakCanary.install(this);
     }
 
@@ -33,21 +36,5 @@ public class VideoApp extends Application {
 
     public static VideoApp getApp(Context context) {
         return (VideoApp) context.getApplicationContext();
-    }
-
-    @Module(library = true)
-    public static class AppModule {
-
-        @Singleton
-        @Provides
-        OkHttpClient provideOkHttpClient() {
-            return new OkHttpClient();
-        }
-
-        @Singleton
-        @Provides
-        VideoRepository provideRestVideoApi(OkHttpClient okHttpClient) {
-            return new RestVideoApi(okHttpClient, BuildConfig.THE_MOVIE_DB_API_KEY);
-        }
     }
 }

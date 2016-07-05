@@ -1,11 +1,13 @@
 package com.skala.core.ui.discovermovie;
 
-import com.skala.core.api.VideoRepository;
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.DiscoverMovie;
 import com.skala.core.api.model.Result;
+import com.skala.core.api.net.CallApi;
+import com.skala.core.api.repository.ConfigurationRepository;
+import com.skala.core.api.repository.VideoRepository;
 import com.skala.core.command.DisplayError;
-import com.skala.core.command.DisplayMovies;
+import com.skala.core.command.NotifyDataChange;
 import com.skala.core.ui.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -13,10 +15,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * @author Skala
@@ -26,20 +24,21 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     private static final int SIZE_IMAGE = 4; // TODO: delete this
 
     private final VideoRepository videoApi;
-    private ConfigurationApi configurationApi;
+    private ConfigurationRepository configurationRepository;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
-    public DiscoverMoviePresenter(VideoRepository videoApi) {
+    public DiscoverMoviePresenter(VideoRepository videoApi, ConfigurationRepository configurationRepository) {
         this.videoApi = videoApi;
+        this.configurationRepository = configurationRepository;
     }
 
     @Override
     protected void onFirstUiAttachment() {
-        loadConfig(); // TODO: cache config
+        loadDiscoverMovie(); // TODO: cache config
     }
 
-    public void loadConfig() {
+    /*public void loadConfig() {
         videoApi.getConfiguration().enqueue(new Callback<ConfigurationApi>() {
             @Override
             public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
@@ -52,14 +51,26 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                 execute(new DisplayError(t.getMessage()));
             }
         });
+    }*/
+
+    public void loadDiscoverMovie() {
+        configurationRepository.getConfiguration(new CallApi<ConfigurationApi, String>() {
+            @Override
+            public void onSuccess(ConfigurationApi configurationApi) {
+                loadRealDiscoverMoview(configurationApi);
+            }
+
+            @Override
+            public void onFailed(String error) {
+                execute(new DisplayError(error));
+            }
+        });
     }
 
-    private void loadDiscoverMovie() {
-        videoApi.getDiscoverMovie().enqueue(new Callback<DiscoverMovie>() {
+    public void loadRealDiscoverMoview(ConfigurationApi configurationApi) {
+        videoApi.getDiscoverMovie(new CallApi<DiscoverMovie, String>() {
             @Override
-            public void onResponse(Call<DiscoverMovie> call, Response<DiscoverMovie> response) {
-                DiscoverMovie discoverMovie = response.body();
-
+            public void onSuccess(DiscoverMovie discoverMovie) {
                 String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(SIZE_IMAGE);
 
                 discoverMovieList.clear();
@@ -70,13 +81,12 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                             movie.getReleaseDate()));
                 }
 
-                execute(new DisplayMovies());
+                execute(new NotifyDataChange());
             }
 
             @Override
-            public void onFailure(Call<DiscoverMovie> call, Throwable t) {
-                DisplayError displayError = new DisplayError(t.getMessage());
-                execute(displayError);
+            public void onFailed(String error) {
+                execute(new DisplayError(error));
             }
         });
     }

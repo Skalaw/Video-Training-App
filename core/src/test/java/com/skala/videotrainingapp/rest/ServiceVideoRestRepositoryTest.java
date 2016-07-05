@@ -1,6 +1,6 @@
 package com.skala.videotrainingapp.rest;
 
-import com.skala.core.api.RestVideoApi;
+import com.skala.core.api.VideoServiceApi;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
@@ -26,7 +26,7 @@ import retrofit2.Response;
 /**
  * @author Skala
  */
-public class RestVideoApiTest {
+public class ServiceVideoRestRepositoryTest {
     private static final String TYPE_CONFIG = "{\n"
             + "  \"images\": {\n"
             + "    \"base_url\": \"http://image.tmdb.org/t/p/\",\n"
@@ -121,12 +121,12 @@ public class RestVideoApiTest {
 
     @Test
     public void testGetConfigurationFromMock() throws Exception {
-        RestVideoApi restVideoApi = getRestVideoApi(TYPE_CONFIG);
+        VideoServiceApi videoServiceApi = getRestVideoApi(TYPE_CONFIG);
 
         final ConfigurationApi[] configurationApi = new ConfigurationApi[1];
         final ConfigurationApi expected = getExpectedConfigurationApi();
 
-        Call<ConfigurationApi> config = restVideoApi.getConfiguration();
+        Call<ConfigurationApi> config = videoServiceApi.getConfiguration();
         config.enqueue(new Callback<ConfigurationApi>() {
             @Override
             public void onResponse(Call<ConfigurationApi> call, Response<ConfigurationApi> response) {
@@ -148,12 +148,12 @@ public class RestVideoApiTest {
 
     @Test
     public void testGetRequestTokenFromMock() throws Exception {
-        RestVideoApi restVideoApi = getRestVideoApi(TYPE_AUTHENTICATION_TOKEN);
+        VideoServiceApi videoServiceApi = getRestVideoApi(TYPE_AUTHENTICATION_TOKEN);
 
         final AuthenticationToken[] authenticationToken = new AuthenticationToken[1];
         final AuthenticationToken expected = getExpectedAuthenticationToken();
 
-        Call<AuthenticationToken> config = restVideoApi.getRequestToken();
+        Call<AuthenticationToken> config = videoServiceApi.getRequestToken();
         config.enqueue(new Callback<AuthenticationToken>() {
             @Override
             public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
@@ -175,12 +175,12 @@ public class RestVideoApiTest {
 
     @Test
     public void testGetSessionIdFromMock() throws Exception {
-        RestVideoApi restVideoApi = getRestVideoApi(TYPE_AUTHENTICATION_SESSION_ID);
+        VideoServiceApi videoServiceApi = getRestVideoApi(TYPE_AUTHENTICATION_SESSION_ID);
 
         final AuthenticationSessionId[] authenticationToken = new AuthenticationSessionId[1];
         final AuthenticationSessionId expected = getExpectedAuthenticationSessionId();
 
-        Call<AuthenticationSessionId> config = restVideoApi.getSessionId("mock_token");
+        Call<AuthenticationSessionId> config = videoServiceApi.getSessionId("mock_token");
         config.enqueue(new Callback<AuthenticationSessionId>() {
             @Override
             public void onResponse(Call<AuthenticationSessionId> call, Response<AuthenticationSessionId> response) {
@@ -200,11 +200,11 @@ public class RestVideoApiTest {
         Assert.assertEquals("AuthenticationSessionId is not parsed properly", expected, authenticationToken[0]);
     }
 
-    private RestVideoApi getRestVideoApi(String type) {
+    private VideoServiceApi getRestVideoApi(String type) {
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(InterceptorMock.newInstance(type))
                 .build();
-        return new RestVideoApi(client, videoApiKey);
+        return new VideoServiceApi(client, videoApiKey);
     }
 
     private ConfigurationApi getExpectedConfigurationApi() {

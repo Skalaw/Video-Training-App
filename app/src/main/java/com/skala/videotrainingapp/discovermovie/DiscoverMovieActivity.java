@@ -48,7 +48,7 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
         recyclerView.addItemDecoration(new VerticalDividerRecyclerView(this));
         // TODO make discoverMovieAdapter clickable
 
-        swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadConfig());
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
 
         discoverMovieAdapter = new AdapterRecyclerView(presenter.getDiscoverMovie());
         recyclerView.setAdapter(discoverMovieAdapter);

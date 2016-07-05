@@ -1,9 +1,9 @@
-package com.skala.core.api;
+package com.skala.core.api.repository;
 
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
-import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.api.net.CallApi;
 
 import retrofit2.Call;
 
@@ -11,8 +11,6 @@ import retrofit2.Call;
  * @author Skala
  */
 public interface VideoRepository {
-    Call<ConfigurationApi> getConfiguration();
-
     Call<AuthenticationToken> getRequestToken();
 
     Call<AuthenticationToken> getValidateRequestToken(String requestToken,
@@ -21,5 +19,5 @@ public interface VideoRepository {
 
     Call<AuthenticationSessionId> getSessionId(String requestToken);
 
-    Call<DiscoverMovie> getDiscoverMovie();
+    void getDiscoverMovie(CallApi<DiscoverMovie, String> callApi);
 }
