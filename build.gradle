@@ -5,7 +5,7 @@ ext {
     compileSdkVersion = 19
     configuration = [
             applicationId: "com.skala.videotrainingapp",
-            buildTools   : "23.0.3",
+            buildTools   : "24.0.1",
             compileSdk   : 23,
             minSdk       : 17,
             targetSdk    : 23,
@@ -14,12 +14,12 @@ ext {
     ]
 
     library = [
-            androidSupport: "24.0.0",
+            androidSupport: "24.1.1",
             retrofit      : "2.1.0",
             picasso       : "2.5.2",
             dagger        : "1.2.5",
             leakcanary    : "1.4-beta2",
-            butterKnife   : "8.1.0"
+            butterKnife   : "8.2.1"
     ]
 
     testing = [

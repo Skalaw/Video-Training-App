@@ -41,7 +41,7 @@ android {
 
     lintOptions {
         disable 'InvalidPackage' // i disabled this because lib from square have problem here
-        disable 'GoogleAppIndexingWarning' // we dont need now
+        disable 'GoogleAppIndexingWarning' // we don't need now
     }
 }
 
