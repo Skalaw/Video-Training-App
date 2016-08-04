@@ -13,6 +13,6 @@ public class HomeActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_discover_movie);
+        setContentView(R.layout.activity_home);
     }
 }

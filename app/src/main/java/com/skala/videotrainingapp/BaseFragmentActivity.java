@@ -3,6 +3,7 @@ package com.skala.videotrainingapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import dagger.ObjectGraph;
 /**
  * @author Skała
  */
-public class BaseFragmentActivity extends AppCompatActivity { // todo interface for fragmentlifecycle
+public class BaseFragmentActivity extends AppCompatActivity implements OnFragmentLifecycle {
     private Map<String, ObjectGraph> fragmentPresenterGraphs;
 
     @Override
@@ -31,6 +32,18 @@ public class BaseFragmentActivity extends AppCompatActivity { // todo interface 
         return fragmentPresenterGraphs;
     }
 
+    @Override
+    public void onFragmentCreate(BaseFragment baseFragment, String fragmentUUID) {
+        ObjectGraph objectGraph = getObjectGraph(baseFragment, fragmentUUID);
+        objectGraph.inject(baseFragment);
+        Log.d("ObjectGraph", "ObjectGraph: " + objectGraph); // todo remove this when always objectgraph is the same / check about behaviour with twice fragment
+    }
+
+    @Override
+    public void onFragmentDestroy(String fragmentUUID) {
+        clearPresenterGraphForFragment(fragmentUUID);
+    }
+
     public ObjectGraph getPresenterGraphForFragment(String id) {
         return fragmentPresenterGraphs.get(id);
     }
@@ -41,10 +54,6 @@ public class BaseFragmentActivity extends AppCompatActivity { // todo interface 
 
     public void setPresenterGraphForFragment(String id, ObjectGraph presenterGraph) {
         fragmentPresenterGraphs.put(id, presenterGraph);
-    }
-
-    public void onFragmentDestroy(String fragmentUUID) {
-        clearPresenterGraphForFragment(fragmentUUID);
     }
 
     public ObjectGraph getObjectGraph(BaseFragment fragment, String fragmentUUID) {

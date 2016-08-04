@@ -18,7 +18,7 @@ dependencies {
 }
 // is not reason why suddenly retrolamda doesn't work only for command ":core:test"
 retrolambda {
-    jdk System.getenv("JAVA8_HOME")
-    oldJdk System.getenv("JAVA7_HOME")
+    jdk System.getenv("JAVA_HOME")
+    oldJdk System.getenv("JAVA_HOME")
     javaVersion JavaVersion.VERSION_1_7
 }
