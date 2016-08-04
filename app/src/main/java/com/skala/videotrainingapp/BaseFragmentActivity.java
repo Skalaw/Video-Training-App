@@ -3,7 +3,6 @@ package com.skala.videotrainingapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +35,6 @@ public class BaseFragmentActivity extends AppCompatActivity implements OnFragmen
     public void onFragmentCreate(BaseFragment baseFragment, String fragmentUUID) {
         ObjectGraph objectGraph = getObjectGraph(baseFragment, fragmentUUID);
         objectGraph.inject(baseFragment);
-        Log.d("ObjectGraph", "ObjectGraph: " + objectGraph); // todo remove this when always objectgraph is the same / check about behaviour with twice fragment
     }
 
     @Override
