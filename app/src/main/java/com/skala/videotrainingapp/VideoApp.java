@@ -16,7 +16,7 @@ public class VideoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        objectGraph = ObjectGraph.create(new NetModule(getApplicationContext()));
+        objectGraph = ObjectGraph.create(new AndroidModule(getApplicationContext()), new AppModule());
         LeakCanary.install(this);
     }
 

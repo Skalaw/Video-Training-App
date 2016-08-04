@@ -25,23 +25,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * @author Skala
  */
-@Module(library = true)
+@Module(library = true, includes = AndroidModule.class)
 public class NetModule {
     private static final String ENDPOINT = "http://api.themoviedb.org/3/";
     private static final int SIZE_OF_CACHE = 10 * 1024 * 1024; // 10 MiB
     private static final String CACHE_CONTROL = "Cache-Control";
     private static final int CACHE_MAX_AGE_HOURS = 12;
-    private final Context appContext;
-
-    public NetModule(Context appContext) {
-        this.appContext = appContext;
-    }
-
-    @Provides
-    @Singleton
-    Context provideContext() {
-        return appContext;
-    }
 
     @Provides
     @Singleton

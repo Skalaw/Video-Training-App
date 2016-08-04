@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.skala.core.ui.discovermovie.DiscoverMovieModelView;
 import com.skala.videotrainingapp.R;
-import com.squareup.picasso.Picasso;
+import com.skala.videotrainingapp.image.ImageLoader;
 
 import java.util.List;
 
@@ -21,8 +21,10 @@ import butterknife.ButterKnife;
  */
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.MoviesViewHolder> {
     private final List<DiscoverMovieModelView> modelViewList;
+    private final ImageLoader imageLoader;
 
-    public AdapterRecyclerView(List<DiscoverMovieModelView> modelView) {
+    public AdapterRecyclerView(ImageLoader imageLoader, List<DiscoverMovieModelView> modelView) {
+        this.imageLoader = imageLoader;
         this.modelViewList = modelView;
     }
 
@@ -38,8 +40,8 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
 
         holder.title.setText(modelView.getTitle());
         holder.description.setText(modelView.getDescription());
-        Picasso.with(holder.poster.getContext()).load(modelView.getUrlImage()).into(holder.poster); // TODO: remove picasso from here
         holder.releaseDate.setText(holder.title.getContext().getString(R.string.release_date, modelView.getReleaseDate()));
+        imageLoader.load(modelView.getUrlImage(), holder.poster);
     }
 
     @Override

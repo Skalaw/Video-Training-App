@@ -16,6 +16,7 @@ import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
 import com.skala.videotrainingapp.BaseFragment;
 import com.skala.videotrainingapp.R;
+import com.skala.videotrainingapp.image.ImageLoader;
 
 import javax.inject.Inject;
 
@@ -28,6 +29,9 @@ import butterknife.ButterKnife;
 public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovieUi {
     @Inject
     DiscoverMoviePresenter presenter;
+
+    @Inject
+    ImageLoader imageLoader;
 
     @BindView(R.id.recyclerView)
     protected RecyclerView recyclerView;
@@ -55,7 +59,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
 
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
 
-        discoverMovieAdapter = new AdapterRecyclerView(presenter.getDiscoverMovie());
+        discoverMovieAdapter = new AdapterRecyclerView(imageLoader, presenter.getDiscoverMovie());
         recyclerView.setAdapter(discoverMovieAdapter);
     }
 
