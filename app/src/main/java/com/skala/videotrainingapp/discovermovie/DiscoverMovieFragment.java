@@ -2,15 +2,19 @@ package com.skala.videotrainingapp.discovermovie;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
-import com.skala.videotrainingapp.BaseActivity;
+import com.skala.videotrainingapp.BaseFragment;
 import com.skala.videotrainingapp.R;
 
 import javax.inject.Inject;
@@ -19,10 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * @author Skala
+ * @author Skała
  */
-public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovieUi {
-
+public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovieUi {
     @Inject
     DiscoverMoviePresenter presenter;
 
@@ -34,18 +37,20 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
 
     private RecyclerView.Adapter discoverMovieAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initView();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_discover_movie, container, true);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
-    private void initView() {
-        setContentView(R.layout.activity_discover_movie);
-        ButterKnife.bind(this);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new VerticalDividerRecyclerView(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new VerticalDividerRecyclerView(getContext()));
         // TODO make discoverMovieAdapter clickable
 
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
@@ -75,7 +80,7 @@ public class DiscoverMovieActivity extends BaseActivity implements DiscoverMovie
 
     @Override
     public void displayError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
 }

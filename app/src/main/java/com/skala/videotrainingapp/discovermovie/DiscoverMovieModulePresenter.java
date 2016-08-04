@@ -7,6 +7,6 @@ import dagger.Module;
 /**
  * @author Skala
  */
-@Module(injects = {DiscoverMovieActivity.class}, addsTo = NetModule.class)
+@Module(injects = {DiscoverMovieFragment.class}, addsTo = NetModule.class)
 public class DiscoverMovieModulePresenter {
 }
