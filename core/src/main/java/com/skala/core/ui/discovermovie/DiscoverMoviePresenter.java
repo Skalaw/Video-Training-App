@@ -1,11 +1,7 @@
 package com.skala.core.ui.discovermovie;
 
-import com.skala.core.api.model.ConfigurationApi;
-import com.skala.core.api.model.DiscoverMovie;
-import com.skala.core.api.model.Result;
+import com.skala.core.api.GetVideoListUseCase;
 import com.skala.core.api.net.CallApi;
-import com.skala.core.api.repository.ConfigurationRepository;
-import com.skala.core.api.repository.VideoRepository;
 import com.skala.core.ui.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -19,16 +15,12 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
-    private static final int SIZE_IMAGE = 4; // TODO: delete this
-
-    private final VideoRepository videoApi;
-    private final ConfigurationRepository configurationRepository;
+    private final GetVideoListUseCase getVideoListUseCase;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
-    public DiscoverMoviePresenter(VideoRepository videoApi, ConfigurationRepository configurationRepository) {
-        this.videoApi = videoApi;
-        this.configurationRepository = configurationRepository;
+    public DiscoverMoviePresenter(GetVideoListUseCase getVideoListUseCase) {
+        this.getVideoListUseCase = getVideoListUseCase;
     }
 
     @Override
@@ -37,32 +29,11 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     }
 
     public void loadDiscoverMovie() {
-        configurationRepository.getConfiguration(new CallApi<ConfigurationApi, String>() {
+        getVideoListUseCase.loadDiscoverMovie(new CallApi<List<DiscoverMovieModelView>, String>() {
             @Override
-            public void onSuccess(ConfigurationApi configurationApi) {
-                loadRealDiscoverMovie(configurationApi);
-            }
-
-            @Override
-            public void onFailed(String error) {
-                execute(ui -> ui.displayError(error));
-            }
-        });
-    }
-
-    public void loadRealDiscoverMovie(ConfigurationApi configurationApi) {
-        videoApi.getDiscoverMovie(new CallApi<DiscoverMovie, String>() {
-            @Override
-            public void onSuccess(DiscoverMovie discoverMovie) {
-                String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(SIZE_IMAGE);
-
+            public void onSuccess(List<DiscoverMovieModelView> discoverMovieModelView) {
                 discoverMovieList.clear();
-                int size = discoverMovie.getResults().size();
-                for (int i = 0; i < size; i++) {
-                    Result movie = discoverMovie.getResults().get(i);
-                    discoverMovieList.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
-                            movie.getReleaseDate()));
-                }
+                discoverMovieList.addAll(discoverMovieModelView);
 
                 execute(DiscoverMovieUi::notifyDataChange);
             }
