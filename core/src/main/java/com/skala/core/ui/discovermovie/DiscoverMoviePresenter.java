@@ -6,8 +6,6 @@ import com.skala.core.api.model.Result;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
-import com.skala.core.command.DisplayError;
-import com.skala.core.command.NotifyDataChange;
 import com.skala.core.ui.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -47,7 +45,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
             @Override
             public void onFailed(String error) {
-                execute(new DisplayError(error));
+                execute(ui -> ui.displayError(error));
             }
         });
     }
@@ -66,12 +64,12 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                             movie.getReleaseDate()));
                 }
 
-                execute(new NotifyDataChange());
+                execute(DiscoverMovieUi::notifyDataChange);
             }
 
             @Override
             public void onFailed(String error) {
-                execute(new DisplayError(error));
+                execute(ui -> ui.displayError(error));
             }
         });
     }
