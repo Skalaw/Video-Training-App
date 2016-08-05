@@ -22,9 +22,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -158,17 +155,16 @@ public class ServiceVideoRestRepositoryTest {
         final AuthenticationToken[] authenticationToken = new AuthenticationToken[1];
         final AuthenticationToken expected = getExpectedAuthenticationToken();
 
-        Call<AuthenticationToken> config = videoServiceApi.getRequestToken();
-        config.enqueue(new Callback<AuthenticationToken>() {
+        videoServiceApi.getRequestToken(new CallApi<AuthenticationToken, String>() {
             @Override
-            public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
-                authenticationToken[0] = response.body();
+            public void onSuccess(AuthenticationToken responseAuthToken) {
+                authenticationToken[0] = responseAuthToken;
                 lock.countDown();
             }
 
             @Override
-            public void onFailure(Call<AuthenticationToken> call, Throwable t) {
-                System.out.print(t.toString());
+            public void onFailed(String error) {
+                System.out.print(error);
                 lock.countDown();
             }
         });
@@ -182,27 +178,26 @@ public class ServiceVideoRestRepositoryTest {
     public void testGetSessionIdFromMock() throws Exception {
         VideoServiceApi videoServiceApi = getRestVideoApi(TYPE_AUTHENTICATION_SESSION_ID);
 
-        final AuthenticationSessionId[] authenticationToken = new AuthenticationSessionId[1];
+        final AuthenticationSessionId[] authenticationSessionId = new AuthenticationSessionId[1];
         final AuthenticationSessionId expected = getExpectedAuthenticationSessionId();
 
-        Call<AuthenticationSessionId> config = videoServiceApi.getSessionId("mock_token");
-        config.enqueue(new Callback<AuthenticationSessionId>() {
+        videoServiceApi.getSessionId(new CallApi<AuthenticationSessionId, String>() {
             @Override
-            public void onResponse(Call<AuthenticationSessionId> call, Response<AuthenticationSessionId> response) {
-                authenticationToken[0] = response.body();
+            public void onSuccess(AuthenticationSessionId responseAuthSession) {
+                authenticationSessionId[0] = responseAuthSession;
                 lock.countDown();
             }
 
             @Override
-            public void onFailure(Call<AuthenticationSessionId> call, Throwable t) {
-                System.out.print(t.toString());
+            public void onFailed(String error) {
+                System.out.print(error);
                 lock.countDown();
             }
-        });
+        }, "mock_token");
 
         boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
         Assert.assertTrue(isStillWaiting);
-        Assert.assertEquals("AuthenticationSessionId is not parsed properly", expected, authenticationToken[0]);
+        Assert.assertEquals("AuthenticationSessionId is not parsed properly", expected, authenticationSessionId[0]);
     }
 
     private ConfigurationServiceApi getConfigurationServiceApi(String type) {

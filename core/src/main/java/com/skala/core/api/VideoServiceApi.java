@@ -28,18 +28,48 @@ public class VideoServiceApi implements VideoRepository {
     }
 
     @Override
-    public Call<AuthenticationToken> getRequestToken() {
-        return videoRestRepository.getRequestToken(apiKey);
+    public void getRequestToken(CallApi<AuthenticationToken, String> callResponse) {
+        videoRestRepository.getRequestToken(apiKey).enqueue(new Callback<AuthenticationToken>() {
+            @Override
+            public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
+                callResponse.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationToken> call, Throwable t) {
+                callResponse.onFailed(t.getMessage());
+            }
+        });
     }
 
     @Override
-    public Call<AuthenticationToken> getValidateRequestToken(String requestToken, String username, String password) {
-        return videoRestRepository.getValidateRequestToken(apiKey, requestToken, username, password);
+    public void getValidateRequestToken(CallApi<AuthenticationToken, String> callResponse, String requestToken, String username, String password) {
+        videoRestRepository.getValidateRequestToken(apiKey, requestToken, username, password).enqueue(new Callback<AuthenticationToken>() {
+            @Override
+            public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
+                callResponse.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationToken> call, Throwable t) {
+                callResponse.onFailed(t.getMessage());
+            }
+        });
     }
 
     @Override
-    public Call<AuthenticationSessionId> getSessionId(String requestToken) {
-        return videoRestRepository.getSessionId(apiKey, requestToken);
+    public void getSessionId(CallApi<AuthenticationSessionId, String> callResponse, String requestToken) {
+        videoRestRepository.getSessionId(apiKey, requestToken).enqueue(new Callback<AuthenticationSessionId>() {
+            @Override
+            public void onResponse(Call<AuthenticationSessionId> call, Response<AuthenticationSessionId> response) {
+                callResponse.onSuccess(response.body());  // TODO: handle errors (for example when we don't have correct apiKey)
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationSessionId> call, Throwable t) {
+                callResponse.onFailed(t.getMessage());
+            }
+        });
     }
 
     @Override
