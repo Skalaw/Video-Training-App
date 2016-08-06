@@ -15,7 +15,6 @@ import dagger.ObjectGraph;
  */
 public abstract class BaseActivity extends AppCompatActivity implements Ui {
     private ObjectGraph presenterObjectGraph;
-    private BasePresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,12 +24,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Ui {
             presenterObjectGraph = VideoApp.getApp(this).getObjectGraph().plus(getPresenterModule());
         }
         presenterObjectGraph.inject(this);
-
-        setupPresenter(getPresenter());
-    }
-
-    private void setupPresenter(BasePresenter presenter) {
-        this.presenter = presenter;
     }
 
     @NonNull
@@ -42,13 +35,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Ui {
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.onAttached(this);
+        getPresenter().onAttached(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.onDetach();
+        getPresenter().onDetach();
     }
 
     @Override

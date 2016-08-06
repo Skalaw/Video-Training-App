@@ -18,7 +18,6 @@ import java.util.UUID;
 public abstract class BaseFragment extends Fragment implements Ui {
     private static final String STATE_UUID = "STATE_UUID";
 
-    private BasePresenter presenter;
     private String fragmentUUID;
     private OnFragmentLifecycle onFragmentLifecycle;
 
@@ -52,13 +51,12 @@ public abstract class BaseFragment extends Fragment implements Ui {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setupPresenter(getPresenter());
-        presenter.onAttached(this);
+        getPresenter().onAttached(this);
     }
 
     @Override
     public void onDestroyView() {
-        presenter.onDetach();
+        getPresenter().onDetach();
         super.onDestroyView();
     }
 
@@ -68,10 +66,6 @@ public abstract class BaseFragment extends Fragment implements Ui {
         if (!getActivity().isChangingConfigurations()) {
             onFragmentLifecycle.onFragmentDestroy(fragmentUUID);
         }
-    }
-
-    private void setupPresenter(BasePresenter presenter) {
-        this.presenter = presenter;
     }
 
     @NonNull
