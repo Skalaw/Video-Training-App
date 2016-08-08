@@ -6,12 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.moviedescription.MovieDescriptionPresenter;
 import com.skala.core.ui.moviedescription.MovieDescriptionUi;
-import com.skala.videotrainingapp.BaseFragment;
 import com.skala.videotrainingapp.R;
+import com.skala.videotrainingapp.base.BaseFragment;
 
 import javax.inject.Inject;
 
@@ -41,7 +42,8 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int movieId = getArguments() != null ? getArguments().getInt(MOVIE_ID_KEY, MOVIE_ID_ERROR) : MOVIE_ID_ERROR;
+        int movieId = getArguments() == null ? MOVIE_ID_ERROR : getArguments().getInt(MOVIE_ID_KEY, MOVIE_ID_ERROR);
+        presenter.setMovieId(movieId);
     }
 
     @Nullable
@@ -62,5 +64,10 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @Override
     protected BasePresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

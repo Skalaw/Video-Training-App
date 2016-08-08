@@ -3,9 +3,12 @@ package com.skala.core.api;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.api.model.MovieInfo;
+import com.skala.core.api.model.movievideos.MovieVideos;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -16,6 +19,7 @@ public interface VideoRestRepository {
     String QUERY_REQUEST_TOKEN = "request_token";
     String QUERY_USER_NAME = "username";
     String QUERY_PASSWORD = "password";
+    String QUERY_MOVIE_ID = "movieId";
 
     @GET("authentication/token/new")
     Call<AuthenticationToken> getRequestToken(@Query(QUERY_API_KEY) String apiKey);
@@ -32,4 +36,12 @@ public interface VideoRestRepository {
 
     @GET("discover/movie")
     Call<DiscoverMovie> getDiscoverMovie(@Query(QUERY_API_KEY) String apiKey);
+
+    @GET("movie/{movieId}")
+    Call<MovieInfo> getMovieInfo(@Path(QUERY_MOVIE_ID) int movieId,
+                                 @Query(QUERY_API_KEY) String apiKey);
+
+    @GET("movie/{movieId}/videos")
+    Call<MovieVideos> getMovieVideos(@Path(QUERY_MOVIE_ID) int movieId,
+                                     @Query(QUERY_API_KEY) String apiKey);
 }

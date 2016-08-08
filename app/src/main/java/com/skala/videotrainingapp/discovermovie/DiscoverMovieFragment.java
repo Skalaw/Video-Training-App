@@ -16,7 +16,7 @@ import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieModelView;
 import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
-import com.skala.videotrainingapp.BaseFragment;
+import com.skala.videotrainingapp.base.BaseFragment;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.image.ImageLoader;
 import com.skala.videotrainingapp.moviedescription.MovieDescriptionFragment;

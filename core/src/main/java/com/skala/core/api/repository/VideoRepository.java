@@ -3,6 +3,8 @@ package com.skala.core.api.repository;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.api.model.MovieInfo;
+import com.skala.core.api.model.movievideos.MovieVideos;
 import com.skala.core.api.net.CallApi;
 
 /**
@@ -19,4 +21,8 @@ public interface VideoRepository {
     void getSessionId(CallApi<AuthenticationSessionId, String> callResponse, String requestToken);
 
     void getDiscoverMovie(CallApi<DiscoverMovie, String> callResponse);
+
+    void getMovieInfo(CallApi<MovieInfo, String> callResponse, int movieId);
+
+    void getMovieVideos(CallApi<MovieVideos, String> callResponse, int movieId);
 }

@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp;
+package com.skala.videotrainingapp.base;
 
 import android.content.Context;
 import android.os.Bundle;

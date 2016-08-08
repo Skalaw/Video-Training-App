@@ -3,6 +3,8 @@ package com.skala.core.api;
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.api.model.MovieInfo;
+import com.skala.core.api.model.movievideos.MovieVideos;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.VideoRepository;
 
@@ -82,6 +84,36 @@ public class VideoServiceApi implements VideoRepository {
 
             @Override
             public void onFailure(Call<DiscoverMovie> call, Throwable t) {
+                callResponse.onFailed(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getMovieInfo(CallApi<MovieInfo, String> callResponse, int movieId) {
+        videoRestRepository.getMovieInfo(movieId, apiKey).enqueue(new Callback<MovieInfo>() {
+            @Override
+            public void onResponse(Call<MovieInfo> call, Response<MovieInfo> response) {
+                callResponse.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MovieInfo> call, Throwable t) {
+                callResponse.onFailed(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getMovieVideos(CallApi<MovieVideos, String> callResponse, int movieId) {
+        videoRestRepository.getMovieVideos(movieId, apiKey).enqueue(new Callback<MovieVideos>() {
+            @Override
+            public void onResponse(Call<MovieVideos> call, Response<MovieVideos> response) {
+                callResponse.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MovieVideos> call, Throwable t) {
                 callResponse.onFailed(t.getMessage());
             }
         });

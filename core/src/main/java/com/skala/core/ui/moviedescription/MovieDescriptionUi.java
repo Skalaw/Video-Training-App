@@ -6,4 +6,5 @@ import com.skala.core.ui.base.Ui;
  * @author Skała
  */
 public interface MovieDescriptionUi extends Ui {
+    void displayError(String error);
 }

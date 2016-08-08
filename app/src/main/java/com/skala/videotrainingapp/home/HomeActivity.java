@@ -2,7 +2,7 @@ package com.skala.videotrainingapp.home;
 
 import android.os.Bundle;
 
-import com.skala.videotrainingapp.BaseFragmentActivity;
+import com.skala.videotrainingapp.base.BaseFragmentActivity;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.discovermovie.DiscoverMovieFragment;
 
@@ -16,9 +16,11 @@ public class HomeActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.contentFragment, new DiscoverMovieFragment(), DiscoverMovieFragment.FRAGMENT_TAG)
-                .commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contentFragment, new DiscoverMovieFragment(), DiscoverMovieFragment.FRAGMENT_TAG)
+                    .commit();
+        }
     }
 }
