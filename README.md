@@ -29,3 +29,4 @@ Version 0.0.1 (2016-xx-xx):
 -------------
 - Add: initial version
 - Add: DiscoverMovie
+- Add: MovieDescription

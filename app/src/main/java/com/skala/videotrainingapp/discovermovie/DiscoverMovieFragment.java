@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.skala.core.ui.base.BasePresenter;
+import com.skala.core.ui.discovermovie.DiscoverMovieModelView;
 import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
 import com.skala.videotrainingapp.BaseFragment;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.image.ImageLoader;
+import com.skala.videotrainingapp.moviedescription.MovieDescriptionFragment;
 import com.skala.videotrainingapp.recyclerview.SpacesItemDecorationColumns;
 
 import javax.inject.Inject;
@@ -29,6 +31,7 @@ import butterknife.ButterKnife;
  * @author Skała
  */
 public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovieUi {
+    public static final String FRAGMENT_TAG = "DiscoverMovieFragment";
     @Inject
     DiscoverMoviePresenter presenter;
 
@@ -46,7 +49,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_discover_movie, container, true);
+        View view = inflater.inflate(R.layout.fragment_discover_movie, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -65,8 +68,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
 
         discoverMovieAdapter = new AdapterRecyclerView(imageLoader, presenter.getDiscoverMovie());
-        discoverMovieAdapter.setOnItemClickListener(discoverMovieModelView ->
-                Toast.makeText(getContext(), discoverMovieModelView.getTitle(), Toast.LENGTH_SHORT).show());
+        discoverMovieAdapter.setOnItemClickListener(this::openMovieDescription);
         recyclerView.setAdapter(discoverMovieAdapter);
     }
 
@@ -92,5 +94,15 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     public void displayError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void openMovieDescription(DiscoverMovieModelView discoverMovieModelView) {
+        MovieDescriptionFragment fragment = MovieDescriptionFragment.newInstance(discoverMovieModelView.getId()); // todo move this to activity
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contentFragment, fragment, MovieDescriptionFragment.FRAGMENT_TAG)
+                .addToBackStack(MovieDescriptionFragment.FRAGMENT_TAG)
+                .commit();
     }
 }

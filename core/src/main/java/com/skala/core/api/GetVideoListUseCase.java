@@ -54,8 +54,8 @@ public class GetVideoListUseCase {
                 int size = discoverMovie.getResults().size();
                 for (int i = 0; i < size; i++) {
                     Result movie = discoverMovie.getResults().get(i);
-                    discoverMovieModelView.add(new DiscoverMovieModelView(movie.getTitle(), movie.getOverview(), prefixPoster + movie.getPosterPath(),
-                            movie.getReleaseDate()));
+                    discoverMovieModelView.add(new DiscoverMovieModelView(movie.getId(), movie.getTitle(), movie.getOverview(),
+                            prefixPoster + movie.getPosterPath(), movie.getReleaseDate()));
                 }
 
                 callApiResponse.onSuccess(discoverMovieModelView);
