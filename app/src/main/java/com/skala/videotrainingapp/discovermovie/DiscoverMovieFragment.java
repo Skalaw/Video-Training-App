@@ -39,7 +39,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     @BindView(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout swipeRefreshLayout;
 
-    private RecyclerView.Adapter discoverMovieAdapter;
+    private AdapterRecyclerView discoverMovieAdapter;
 
     @Nullable
     @Override
@@ -55,11 +55,12 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new VerticalDividerRecyclerView(getContext()));
-        // TODO make discoverMovieAdapter clickable
 
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
 
         discoverMovieAdapter = new AdapterRecyclerView(imageLoader, presenter.getDiscoverMovie());
+        discoverMovieAdapter.setOnItemClickListener(discoverMovieModelView ->
+                Toast.makeText(getContext(), discoverMovieModelView.getTitle(), Toast.LENGTH_SHORT).show());
         recyclerView.setAdapter(discoverMovieAdapter);
     }
 

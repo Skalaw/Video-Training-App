@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.MoviesViewHolder> {
     private final List<DiscoverMovieModelView> modelViewList;
     private final ImageLoader imageLoader;
+    private OnItemClickListener onItemClickListener;
 
     public AdapterRecyclerView(ImageLoader imageLoader, List<DiscoverMovieModelView> modelView) {
         this.imageLoader = imageLoader;
@@ -37,11 +38,11 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, int position) {
         DiscoverMovieModelView modelView = modelViewList.get(position);
+        holder.bind(modelView);
+    }
 
-        holder.title.setText(modelView.getTitle());
-        holder.description.setText(modelView.getDescription());
-        holder.releaseDate.setText(holder.title.getContext().getString(R.string.release_date, modelView.getReleaseDate()));
-        imageLoader.load(modelView.getUrlImage(), holder.poster);
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -49,7 +50,13 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         return modelViewList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(DiscoverMovieModelView discoverMovieModelView);
+    }
+
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
+        private View root;
+
         @BindView(R.id.title)
         public TextView title;
 
@@ -65,6 +72,15 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         public MoviesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            root = itemView;
+        }
+
+        public void bind(DiscoverMovieModelView modelView) {
+            title.setText(modelView.getTitle());
+            description.setText(modelView.getDescription());
+            releaseDate.setText(title.getContext().getString(R.string.release_date, modelView.getReleaseDate()));
+            imageLoader.load(modelView.getUrlImage(), poster);
+            root.setOnClickListener(v -> onItemClickListener.onItemClick(modelView));
         }
     }
 }
