@@ -1,8 +1,12 @@
 <resources>
+    <integer name="discover_movie_list_columns">1</integer>
+    <dimen name="discover_movie_recycler_view_padding">16dp</dimen>
+
     <!-- DiscoverMovieAdapter -->
     <dimen name="adapter_discover_movie_height">228dp</dimen>
     <dimen name="adapter_discover_movie_image_height">128dp</dimen>
     <dimen name="adapter_discover_movie_image_width">96dp</dimen>
     <dimen name="adapter_discover_movie_image_margin">4dp</dimen>
     <dimen name="adapter_discover_movie_title_font">24sp</dimen>
+    <dimen name="adapter_discover_movie_space">16dp</dimen>
 </resources>

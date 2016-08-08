@@ -31,7 +31,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
 
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_discover_movie, parent, false); // TODO: add dimens for other sizes
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_discover_movie, parent, false);
         return new MoviesViewHolder(view);
     }
 
@@ -55,7 +55,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder {
-        private View root;
+        private final View root;
 
         @BindView(R.id.title)
         public TextView title;

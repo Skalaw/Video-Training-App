@@ -1,10 +1,11 @@
 package com.skala.videotrainingapp.discovermovie;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.skala.core.ui.discovermovie.DiscoverMovieUi;
 import com.skala.videotrainingapp.BaseFragment;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.image.ImageLoader;
+import com.skala.videotrainingapp.recyclerview.SpacesItemDecorationColumns;
 
 import javax.inject.Inject;
 
@@ -53,8 +55,12 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new VerticalDividerRecyclerView(getContext()));
+
+        Resources resources = getResources();
+        int columns = resources.getInteger(R.integer.discover_movie_list_columns);
+        int space = resources.getDimensionPixelSize(R.dimen.adapter_discover_movie_space);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
+        recyclerView.addItemDecoration(new SpacesItemDecorationColumns(space, columns));
 
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
 
@@ -79,7 +85,6 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     @Override
     public void notifyDataChange() {
         discoverMovieAdapter.notifyDataSetChanged();
-
         swipeRefreshLayout.setRefreshing(false);
     }
 

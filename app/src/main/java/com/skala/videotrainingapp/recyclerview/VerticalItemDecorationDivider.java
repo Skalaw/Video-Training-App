@@ -1,4 +1,4 @@
-package com.skala.videotrainingapp.discovermovie;
+package com.skala.videotrainingapp.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,17 +11,17 @@ import android.view.View;
 /**
  * @author Skala
  */
-public class VerticalDividerRecyclerView extends RecyclerView.ItemDecoration {
+public class VerticalItemDecorationDivider extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private final Drawable divider;
 
-    public VerticalDividerRecyclerView(Context context) {
+    public VerticalItemDecorationDivider(Context context) {
         final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
         divider = styledAttributes.getDrawable(0);
         styledAttributes.recycle();
     }
 
-    public VerticalDividerRecyclerView(Context context, int resId) {
+    public VerticalItemDecorationDivider(Context context, int resId) {
         divider = ContextCompat.getDrawable(context, resId);
     }
 
