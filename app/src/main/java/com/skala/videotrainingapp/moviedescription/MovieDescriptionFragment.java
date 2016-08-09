@@ -6,16 +6,23 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.skala.core.api.model.ConfigurationApi;
+import com.skala.core.api.model.MovieInfo;
+import com.skala.core.api.model.movievideos.MovieVideos;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.moviedescription.MovieDescriptionPresenter;
 import com.skala.core.ui.moviedescription.MovieDescriptionUi;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragment;
+import com.skala.videotrainingapp.image.ImageLoader;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -29,6 +36,27 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
 
     @Inject
     MovieDescriptionPresenter presenter;
+
+    @Inject
+    ImageLoader imageLoader;
+
+    @BindView(R.id.title)
+    protected TextView title;
+
+    @BindView(R.id.description)
+    protected TextView description;
+
+    @BindView(R.id.voteAverage)
+    protected TextView voteAverage;
+
+    @BindView(R.id.releaseDate)
+    protected TextView releaseDate;
+
+    @BindView(R.id.imageBackdrop)
+    protected ImageView imageBackdrop;
+
+    @BindView(R.id.imagePoster)
+    protected ImageView imagePoster;
 
     public static MovieDescriptionFragment newInstance(int id) {
         MovieDescriptionFragment movieDescriptionFragment = new MovieDescriptionFragment();
@@ -64,6 +92,24 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @Override
     protected BasePresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    public void displayMovieInfo(MovieInfo movieInfo, ConfigurationApi configurationApi) {
+        title.setText(movieInfo.getTitle());
+        description.setText(movieInfo.getOverview());
+        voteAverage.setText("Vote average: " + movieInfo.getVoteAverage()); // todo move in resource
+        releaseDate.setText(movieInfo.getReleaseDate());
+
+        imageLoader.load(configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getBackdropSizes().get(2)
+                + movieInfo.getBackdropPath(), imageBackdrop);
+        imageLoader.load(configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(4)
+                + movieInfo.getPosterPath(), imagePoster);
+    }
+
+    @Override
+    public void displayMovieVideos(MovieVideos movieVideos) {
+
     }
 
     @Override
