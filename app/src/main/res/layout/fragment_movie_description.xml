@@ -38,12 +38,14 @@
         <ImageView
             android:id="@+id/imageBackdrop"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/poster"/>
 
         <ImageView
             android:id="@+id/imagePoster"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/backdrop"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/videos"

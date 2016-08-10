@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.skala.core.api.model.ConfigurationApi;
-import com.skala.core.api.model.MovieInfo;
-import com.skala.core.api.model.movievideos.MovieVideos;
 import com.skala.core.ui.base.BasePresenter;
+import com.skala.core.ui.moviedescription.MovieDescriptionModelView;
 import com.skala.core.ui.moviedescription.MovieDescriptionPresenter;
 import com.skala.core.ui.moviedescription.MovieDescriptionUi;
 import com.skala.videotrainingapp.R;
@@ -95,21 +93,13 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     }
 
     @Override
-    public void displayMovieInfo(MovieInfo movieInfo, ConfigurationApi configurationApi) {
-        title.setText(movieInfo.getTitle());
-        description.setText(movieInfo.getOverview());
-        voteAverage.setText("Vote average: " + movieInfo.getVoteAverage()); // todo move in resource
-        releaseDate.setText(movieInfo.getReleaseDate());
-
-        imageLoader.load(configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getBackdropSizes().get(2)
-                + movieInfo.getBackdropPath(), imageBackdrop);
-        imageLoader.load(configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(4)
-                + movieInfo.getPosterPath(), imagePoster);
-    }
-
-    @Override
-    public void displayMovieVideos(MovieVideos movieVideos) {
-
+    public void displayMovieDescription(MovieDescriptionModelView movieVideos) {
+        title.setText(movieVideos.getTitle());
+        description.setText(movieVideos.getDescription());
+        voteAverage.setText(getString(R.string.vote_average, movieVideos.getVoteAverage()));
+        releaseDate.setText(getString(R.string.release_date, movieVideos.getReleaseDate()));
+        imageLoader.load(movieVideos.getUrlImageBackdrop(), imageBackdrop);
+        imageLoader.load(movieVideos.getUrlImagePoster(), imagePoster);
     }
 
     @Override

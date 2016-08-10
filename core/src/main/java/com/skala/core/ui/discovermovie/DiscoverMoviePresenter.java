@@ -1,6 +1,5 @@
 package com.skala.core.ui.discovermovie;
 
-import com.skala.core.api.GetVideoListUseCase;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.ui.base.BasePresenter;
 
@@ -15,12 +14,12 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
-    private final GetVideoListUseCase getVideoListUseCase;
+    private final DiscoverMovieListUseCase discoverMovieListUseCase;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
-    public DiscoverMoviePresenter(GetVideoListUseCase getVideoListUseCase) {
-        this.getVideoListUseCase = getVideoListUseCase;
+    public DiscoverMoviePresenter(DiscoverMovieListUseCase discoverMovieListUseCase) {
+        this.discoverMovieListUseCase = discoverMovieListUseCase;
     }
 
     @Override
@@ -29,7 +28,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     }
 
     public void loadDiscoverMovie() {
-        getVideoListUseCase.loadDiscoverMovie(new CallApi<List<DiscoverMovieModelView>, String>() {
+        discoverMovieListUseCase.loadDiscoverMovie(new CallApi<List<DiscoverMovieModelView>, String>() {
             @Override
             public void onSuccess(List<DiscoverMovieModelView> discoverMovieModelView) {
                 discoverMovieList.clear();

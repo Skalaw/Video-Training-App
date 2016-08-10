@@ -1,4 +1,4 @@
-package com.skala.core.api;
+package com.skala.core.ui.discovermovie;
 
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.DiscoverMovie;
@@ -6,7 +6,6 @@ import com.skala.core.api.model.Result;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
-import com.skala.core.ui.discovermovie.DiscoverMovieModelView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,14 +17,14 @@ import javax.inject.Singleton;
  * @author Skała
  */
 @Singleton
-public class GetVideoListUseCase {
+public class DiscoverMovieListUseCase {
     private static final int SIZE_IMAGE = 4; // TODO: delete this
 
     private final VideoRepository videoApi;
     private final ConfigurationRepository configurationRepository;
 
     @Inject
-    public GetVideoListUseCase(VideoRepository videoApi, ConfigurationRepository configurationRepository) {
+    public DiscoverMovieListUseCase(VideoRepository videoApi, ConfigurationRepository configurationRepository) {
         this.videoApi = videoApi;
         this.configurationRepository = configurationRepository;
     }
