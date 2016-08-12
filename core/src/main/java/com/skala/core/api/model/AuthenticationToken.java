@@ -6,11 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
+/**
+ * @author Skala
+ */
 public class AuthenticationToken {
-
     @SerializedName("success")
     @Expose
     private Boolean success;

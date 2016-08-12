@@ -1,8 +1,8 @@
 package com.skala.core.ui.discovermovie;
 
 import com.skala.core.api.model.ConfigurationApi;
-import com.skala.core.api.model.DiscoverMovie;
-import com.skala.core.api.model.Result;
+import com.skala.core.api.model.discovermovie.DiscoverMovie;
+import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
@@ -44,15 +44,15 @@ public class DiscoverMovieListUseCase {
     }
 
     public void loadDiscoverMovie(CallApi<List<DiscoverMovieModelView>, String> callApiResponse, ConfigurationApi configurationApi) {
-        videoApi.getDiscoverMovie(new CallApi<DiscoverMovie, String>() {
+        videoApi.getDiscoverMovie(new CallApi<DiscoverMoviePages, String>() {
             @Override
-            public void onSuccess(DiscoverMovie discoverMovie) {
+            public void onSuccess(DiscoverMoviePages discoverMovies) {
                 String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(SIZE_IMAGE);
                 List<DiscoverMovieModelView> discoverMovieModelView = new LinkedList<>();
 
-                int size = discoverMovie.getResults().size();
+                int size = discoverMovies.getResults().size();
                 for (int i = 0; i < size; i++) {
-                    Result movie = discoverMovie.getResults().get(i);
+                    DiscoverMovie movie = discoverMovies.getResults().get(i);
                     discoverMovieModelView.add(new DiscoverMovieModelView(movie.getId(), movie.getTitle(), movie.getOverview(),
                             prefixPoster + movie.getPosterPath(), movie.getReleaseDate()));
                 }

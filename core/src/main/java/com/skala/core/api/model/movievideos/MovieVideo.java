@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * @author Skala
  */
-public class Result {
-
+public class MovieVideo {
     @SerializedName("id")
     @Expose
     private String id;

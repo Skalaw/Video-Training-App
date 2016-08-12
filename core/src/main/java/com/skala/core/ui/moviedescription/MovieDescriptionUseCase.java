@@ -3,7 +3,7 @@ package com.skala.core.ui.moviedescription;
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.Images;
 import com.skala.core.api.model.MovieInfo;
-import com.skala.core.api.model.movievideos.MovieVideos;
+import com.skala.core.api.model.movievideos.MovieVideoPages;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
@@ -66,9 +66,9 @@ public class MovieDescriptionUseCase {
     }
 
     private void loadVideosMovie(CallApi<MovieDescriptionModelView, String> callApiResponse, int movieId) {
-        videoRepository.getMovieVideos(new CallApi<MovieVideos, String>() {
+        videoRepository.getMovieVideos(new CallApi<MovieVideoPages, String>() {
             @Override
-            public void onSuccess(MovieVideos movieVideos) {
+            public void onSuccess(MovieVideoPages movieVideoPages) {
                 // todo: add implementation / ignore this at the moment
             }
 

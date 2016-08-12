@@ -2,9 +2,9 @@ package com.skala.core.api;
 
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
-import com.skala.core.api.model.DiscoverMovie;
+import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.MovieInfo;
-import com.skala.core.api.model.movievideos.MovieVideos;
+import com.skala.core.api.model.movievideos.MovieVideoPages;
 import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.VideoRepository;
 
@@ -75,15 +75,15 @@ public class VideoServiceApi implements VideoRepository {
     }
 
     @Override
-    public void getDiscoverMovie(CallApi<DiscoverMovie, String> callResponse) {
-        videoRestRepository.getDiscoverMovie(apiKey).enqueue(new Callback<DiscoverMovie>() {
+    public void getDiscoverMovie(CallApi<DiscoverMoviePages, String> callResponse) {
+        videoRestRepository.getDiscoverMovie(apiKey).enqueue(new Callback<DiscoverMoviePages>() {
             @Override
-            public void onResponse(Call<DiscoverMovie> call, Response<DiscoverMovie> response) {
+            public void onResponse(Call<DiscoverMoviePages> call, Response<DiscoverMoviePages> response) {
                 callResponse.onSuccess(response.body());  // TODO: handle errors (for example when we don't have correct apiKey)
             }
 
             @Override
-            public void onFailure(Call<DiscoverMovie> call, Throwable t) {
+            public void onFailure(Call<DiscoverMoviePages> call, Throwable t) {
                 callResponse.onFailed(t.getMessage());
             }
         });
@@ -105,15 +105,15 @@ public class VideoServiceApi implements VideoRepository {
     }
 
     @Override
-    public void getMovieVideos(CallApi<MovieVideos, String> callResponse, int movieId) {
-        videoRestRepository.getMovieVideos(movieId, apiKey).enqueue(new Callback<MovieVideos>() {
+    public void getMovieVideos(CallApi<MovieVideoPages, String> callResponse, int movieId) {
+        videoRestRepository.getMovieVideos(movieId, apiKey).enqueue(new Callback<MovieVideoPages>() {
             @Override
-            public void onResponse(Call<MovieVideos> call, Response<MovieVideos> response) {
+            public void onResponse(Call<MovieVideoPages> call, Response<MovieVideoPages> response) {
                 callResponse.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<MovieVideos> call, Throwable t) {
+            public void onFailure(Call<MovieVideoPages> call, Throwable t) {
                 callResponse.onFailed(t.getMessage());
             }
         });

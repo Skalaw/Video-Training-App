@@ -7,17 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
+/**
+ * @author Skala
+ */
 public class ConfigurationApi {
-
     @SerializedName("images")
     @Expose
     private Images images;
     @SerializedName("change_keys")
     @Expose
-    private List<String> changeKeys = new ArrayList<String>();
+    private List<String> changeKeys = new ArrayList<>();
 
     /**
      * @return The images

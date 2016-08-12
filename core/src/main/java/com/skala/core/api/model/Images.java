@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
+/**
+ * @author Skala
+ */
 public class Images {
-
     @SerializedName("base_url")
     @Expose
     private String baseUrl;
@@ -20,19 +19,19 @@ public class Images {
     private String secureBaseUrl;
     @SerializedName("backdrop_sizes")
     @Expose
-    private List<String> backdropSizes = new ArrayList<String>();
+    private List<String> backdropSizes = new ArrayList<>();
     @SerializedName("logo_sizes")
     @Expose
-    private List<String> logoSizes = new ArrayList<String>();
+    private List<String> logoSizes = new ArrayList<>();
     @SerializedName("poster_sizes")
     @Expose
-    private List<String> posterSizes = new ArrayList<String>();
+    private List<String> posterSizes = new ArrayList<>();
     @SerializedName("profile_sizes")
     @Expose
-    private List<String> profileSizes = new ArrayList<String>();
+    private List<String> profileSizes = new ArrayList<>();
     @SerializedName("still_sizes")
     @Expose
-    private List<String> stillSizes = new ArrayList<String>();
+    private List<String> stillSizes = new ArrayList<>();
 
     /**
      * @return The baseUrl

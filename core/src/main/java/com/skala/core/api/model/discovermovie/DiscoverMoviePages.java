@@ -1,5 +1,5 @@
 
-package com.skala.core.api.model;
+package com.skala.core.api.model.discovermovie;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,17 +7,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
-public class DiscoverMovie {
-
+/**
+ * @author Skala
+ */
+public class DiscoverMoviePages {
     @SerializedName("page")
     @Expose
     private Integer page;
     @SerializedName("results")
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private List<DiscoverMovie> discoverMovies = new ArrayList<>();
     @SerializedName("total_results")
     @Expose
     private Integer totalResults;
@@ -40,17 +39,17 @@ public class DiscoverMovie {
     }
 
     /**
-     * @return The results
+     * @return The discoverMovies
      */
-    public List<Result> getResults() {
-        return results;
+    public List<DiscoverMovie> getResults() {
+        return discoverMovies;
     }
 
     /**
-     * @param results The results
+     * @param discoverMovies The discoverMovies
      */
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setResults(List<DiscoverMovie> discoverMovies) {
+        this.discoverMovies = discoverMovies;
     }
 
     /**

@@ -5,11 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
+/**
+ * @author Skala
+ */
 public class AuthenticationSessionId {
-
     @SerializedName("session_id")
     @Expose
     private String sessionId;

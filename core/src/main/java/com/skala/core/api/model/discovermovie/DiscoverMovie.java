@@ -1,5 +1,5 @@
 
-package com.skala.core.api.model;
+package com.skala.core.api.model.discovermovie;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,11 +7,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
-public class Result { // TODO: rename Result.class
-
+/**
+ * @author Skala
+ */
+public class DiscoverMovie {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
@@ -26,7 +25,7 @@ public class Result { // TODO: rename Result.class
     private String releaseDate;
     @SerializedName("genre_ids")
     @Expose
-    private List<Integer> genreIds = new ArrayList<Integer>();
+    private List<Integer> genreIds = new ArrayList<>();
     @SerializedName("id")
     @Expose
     private Integer id;

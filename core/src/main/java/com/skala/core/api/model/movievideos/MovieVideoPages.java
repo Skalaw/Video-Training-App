@@ -9,15 +9,13 @@ import java.util.List;
 /**
  * @author Skala
  */
-
-public class MovieVideos {
-
+public class MovieVideoPages {
     @SerializedName("id")
     @Expose
     private Integer id;
     @SerializedName("results")
     @Expose
-    private List<Result> results = new ArrayList<>();
+    private List<MovieVideo> movieVideos = new ArrayList<>();
 
     /**
      * @return The id
@@ -34,17 +32,17 @@ public class MovieVideos {
     }
 
     /**
-     * @return The results
+     * @return The movieVideos
      */
-    public List<Result> getResults() {
-        return results;
+    public List<MovieVideo> getMovieVideos() {
+        return movieVideos;
     }
 
     /**
-     * @param results The results
+     * @param movieVideos The movieVideos
      */
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setMovieVideos(List<MovieVideo> movieVideos) {
+        this.movieVideos = movieVideos;
     }
 
 }
