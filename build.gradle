@@ -19,7 +19,9 @@ ext {
             picasso       : "2.5.2",
             dagger        : "1.2.5",
             leakcanary    : "1.4-beta2",
-            butterKnife   : "8.2.1"
+            butterKnife   : "8.2.1",
+            rxjava        : "1.1.6",
+            rxandroid     : "1.2.1"
     ]
 
     testing = [

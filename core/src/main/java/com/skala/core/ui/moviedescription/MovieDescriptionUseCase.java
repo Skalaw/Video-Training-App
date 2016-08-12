@@ -4,12 +4,14 @@ import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.Images;
 import com.skala.core.api.model.MovieInfo;
 import com.skala.core.api.model.movievideos.MovieVideoPages;
-import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * @author Skała
@@ -28,54 +30,28 @@ public class MovieDescriptionUseCase {
         this.configurationRepository = configurationRepository;
     }
 
-    public void loadInfoMovie(CallApi<MovieDescriptionModelView, String> callApiResponse, int movieId) {
-        configurationRepository.getConfiguration(new CallApi<ConfigurationApi, String>() {
+    public Observable<MovieDescriptionModelView> loadInfoMovie(int movieId) {
+        return configurationRepository.getConfiguration().flatMap(new Func1<ConfigurationApi, Observable<MovieDescriptionModelView>>() {
             @Override
-            public void onSuccess(ConfigurationApi configurationApi) {
-                loadInfoMovie(callApiResponse, movieId, configurationApi);
+            public Observable<MovieDescriptionModelView> call(ConfigurationApi configurationApi) {
+                return videoRepository.getMovieInfo(movieId)
+                        .map(movieInfo -> parseMovieDescriptionModelView(configurationApi, movieInfo, movieId));
                 //loadVideosMovie(callApiResponse, movieId); // todo: add implementation / ignore this at the moment
-            }
-
-            @Override
-            public void onFailed(String error) {
-                callApiResponse.onFailed(error);
             }
         });
     }
 
-    private void loadInfoMovie(CallApi<MovieDescriptionModelView, String> callApiResponse, int movieId, ConfigurationApi configurationApi) {
-        videoRepository.getMovieInfo(new CallApi<MovieInfo, String>() {
-            @Override
-            public void onSuccess(MovieInfo movieInfo) {
-                Images images = configurationApi.getImages();
-                String secureBaseUrl = images.getSecureBaseUrl();
-                String urlBackdrop = secureBaseUrl + images.getBackdropSizes().get(SIZE_IMAGE_BACKDROP) + movieInfo.getBackdropPath();
-                String urlPoster = secureBaseUrl + images.getPosterSizes().get(SIZE_IMAGE_POSTER) + movieInfo.getPosterPath();
+    private MovieDescriptionModelView parseMovieDescriptionModelView(ConfigurationApi configurationApi, MovieInfo movieInfo, int movieId) {
+        Images images = configurationApi.getImages();
+        String secureBaseUrl = images.getSecureBaseUrl();
+        String urlBackdrop = secureBaseUrl + images.getBackdropSizes().get(SIZE_IMAGE_BACKDROP) + movieInfo.getBackdropPath();
+        String urlPoster = secureBaseUrl + images.getPosterSizes().get(SIZE_IMAGE_POSTER) + movieInfo.getPosterPath();
 
-                MovieDescriptionModelView movieDescription = new MovieDescriptionModelView(movieId, movieInfo.getTitle(), movieInfo.getOverview(),
-                        movieInfo.getReleaseDate(), movieInfo.getVoteAverage(), urlBackdrop, urlPoster);
-
-                callApiResponse.onSuccess(movieDescription);
-            }
-
-            @Override
-            public void onFailed(String error) {
-                callApiResponse.onFailed(error);
-            }
-        }, movieId);
+        return new MovieDescriptionModelView(movieId, movieInfo.getTitle(), movieInfo.getOverview(),
+                movieInfo.getReleaseDate(), movieInfo.getVoteAverage(), urlBackdrop, urlPoster);
     }
 
-    private void loadVideosMovie(CallApi<MovieDescriptionModelView, String> callApiResponse, int movieId) {
-        videoRepository.getMovieVideos(new CallApi<MovieVideoPages, String>() {
-            @Override
-            public void onSuccess(MovieVideoPages movieVideoPages) {
-                // todo: add implementation / ignore this at the moment
-            }
-
-            @Override
-            public void onFailed(String error) {
-                callApiResponse.onFailed(error);
-            }
-        }, movieId);
+    private Observable<MovieVideoPages> loadVideosMovie(int movieId) {
+        return videoRepository.getMovieVideos(movieId);
     }
 }

@@ -2,10 +2,12 @@ package com.skala.core.api.repository;
 
 import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
-import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.MovieInfo;
+import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.movievideos.MovieVideoPages;
 import com.skala.core.api.net.CallApi;
+
+import rx.Observable;
 
 /**
  * @author Skala
@@ -20,9 +22,9 @@ public interface VideoRepository {
 
     void getSessionId(CallApi<AuthenticationSessionId, String> callResponse, String requestToken);
 
-    void getDiscoverMovie(CallApi<DiscoverMoviePages, String> callResponse);
+    Observable<DiscoverMoviePages> getDiscoverMovie();
 
-    void getMovieInfo(CallApi<MovieInfo, String> callResponse, int movieId);
+    Observable<MovieInfo> getMovieInfo(int movieId);
 
-    void getMovieVideos(CallApi<MovieVideoPages, String> callResponse, int movieId);
+    Observable<MovieVideoPages> getMovieVideos(int movieId);
 }

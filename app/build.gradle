@@ -53,6 +53,7 @@ dependencies {
     compile "com.squareup.picasso:picasso:${lib.picasso}"
     compile "com.jakewharton:butterknife:${lib.butterKnife}"
     apt "com.jakewharton:butterknife-compiler:${lib.butterKnife}"
+    compile "io.reactivex:rxandroid:${lib.rxandroid}"
 
     debugCompile "com.squareup.leakcanary:leakcanary-android:${lib.leakcanary}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${lib.leakcanary}"

@@ -11,8 +11,10 @@ def test = rootProject.ext.testing
 dependencies {
     compile "com.squareup.retrofit2:retrofit:${lib.retrofit}"
     compile "com.squareup.retrofit2:converter-gson:${lib.retrofit}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${lib.retrofit}"
     compile "com.squareup.dagger:dagger:${lib.dagger}"
     compile "com.squareup.dagger:dagger-compiler:${lib.dagger}"
+    compile "io.reactivex:rxjava:${lib.rxjava}"
 
     testCompile "junit:junit:${test.junit}"
 }

@@ -1,6 +1,5 @@
 package com.skala.core.ui.moviedescription;
 
-import com.skala.core.api.net.CallApi;
 import com.skala.core.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -23,17 +22,11 @@ public class MovieDescriptionPresenter extends BasePresenter<MovieDescriptionUi>
     }
 
     public void loadVideoDescription() {
-        movieDescriptionUseCase.loadInfoMovie(new CallApi<MovieDescriptionModelView, String>() {
-            @Override
-            public void onSuccess(MovieDescriptionModelView movieDescriptionModelViews) {
-                execute(ui -> ui.displayMovieDescription(movieDescriptionModelViews));
-            }
-
-            @Override
-            public void onFailed(String message) {
-                execute(ui -> ui.displayError(message));
-            }
-        }, movieId);
+        movieDescriptionUseCase.loadInfoMovie(movieId).subscribe(movieDescriptionModelView -> {
+            execute(ui1 -> ui1.displayMovieDescription(movieDescriptionModelView));
+        }, throwable -> {
+            execute(ui1 -> ui1.displayError(throwable.toString()));
+        });
     }
 
     public void setMovieId(int movieId) {

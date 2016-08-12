@@ -1,4 +1,3 @@
-
 package com.skala.core.api.model.discovermovie;
 
 import com.google.gson.annotations.Expose;
