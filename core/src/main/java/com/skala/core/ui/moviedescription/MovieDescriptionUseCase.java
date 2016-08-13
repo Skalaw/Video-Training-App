@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
-import rx.functions.Func1;
 
 /**
  * @author Skała
@@ -31,23 +30,21 @@ public class MovieDescriptionUseCase {
     }
 
     public Observable<MovieDescriptionModelView> loadInfoMovie(int movieId) {
-        return configurationRepository.getConfiguration().flatMap(new Func1<ConfigurationApi, Observable<MovieDescriptionModelView>>() {
-            @Override
-            public Observable<MovieDescriptionModelView> call(ConfigurationApi configurationApi) {
-                return videoRepository.getMovieInfo(movieId)
-                        .map(movieInfo -> parseMovieDescriptionModelView(configurationApi, movieInfo, movieId));
-                //loadVideosMovie(callApiResponse, movieId); // todo: add implementation / ignore this at the moment
-            }
-        });
+        return configurationRepository.getConfiguration()
+                .flatMap(configurationApi -> videoRepository.getMovieInfo(movieId)
+                        .zipWith(loadVideosMovie(movieId), (movieInfo, movieVideoPages) -> {
+                            return parseMovieDescriptionModelView(configurationApi, movieInfo, movieVideoPages, movieId);
+                        }));
     }
 
-    private MovieDescriptionModelView parseMovieDescriptionModelView(ConfigurationApi configurationApi, MovieInfo movieInfo, int movieId) {
+    private MovieDescriptionModelView parseMovieDescriptionModelView(ConfigurationApi configurationApi, MovieInfo movieInfo, MovieVideoPages movieVideoPages,
+                                                                     int movieId) {
         Images images = configurationApi.getImages();
         String secureBaseUrl = images.getSecureBaseUrl();
         String urlBackdrop = secureBaseUrl + images.getBackdropSizes().get(SIZE_IMAGE_BACKDROP) + movieInfo.getBackdropPath();
         String urlPoster = secureBaseUrl + images.getPosterSizes().get(SIZE_IMAGE_POSTER) + movieInfo.getPosterPath();
         return new MovieDescriptionModelView(movieId, movieInfo.getTitle(), movieInfo.getOverview(), movieInfo.getReleaseDate(), movieInfo.getVoteAverage(),
-                urlBackdrop, urlPoster);
+                urlBackdrop, urlPoster, movieVideoPages.getMovieVideos());
     }
 
     private Observable<MovieVideoPages> loadVideosMovie(int movieId) {

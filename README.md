@@ -9,6 +9,7 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
 
 ## Used tools & libraries
 - dagger 1
+- rxjava, rxandroid
 - retrofit
 - gson
 - http://www.jsonschema2pojo.org/
