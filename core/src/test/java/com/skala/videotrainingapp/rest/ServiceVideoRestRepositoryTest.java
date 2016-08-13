@@ -7,19 +7,15 @@ import com.skala.core.api.model.AuthenticationSessionId;
 import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.ConfigurationApi;
 import com.skala.core.api.model.Images;
-import com.skala.core.api.net.CallApi;
 import com.skala.videotrainingapp.rest.helper.ApiKeyProperties;
 import com.skala.videotrainingapp.rest.helper.InterceptorMock;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -108,19 +104,12 @@ public class ServiceVideoRestRepositoryTest {
     private static final String TYPE_AUTHENTICATION_TOKEN = "{\"success\":true,\"expires_at\":\"2016-06-13 21:46:13 UTC\",\"request_token\":\"1111111111111\"}";
     private static final String TYPE_AUTHENTICATION_SESSION_ID = "{  \"session_id\": \"80b2bf99520cd795ff54e31af97917bc9e3a7c8c\",  \"success\": true}";
 
-    private static final int DURATION_LOCK_IN_MILLISECOND = 6000;
-    private CountDownLatch lock;
     private static String videoApiKey;
 
     @BeforeClass
     public static void setUpBeforeClass() {
         ApiKeyProperties apiKeyProperties = new ApiKeyProperties();
         videoApiKey = apiKeyProperties.getApiKey();
-    }
-
-    @Before
-    public void setUp() {
-        lock = new CountDownLatch(1);
     }
 
     @Test
@@ -146,22 +135,12 @@ public class ServiceVideoRestRepositoryTest {
         final AuthenticationToken[] authenticationToken = new AuthenticationToken[1];
         final AuthenticationToken expected = getExpectedAuthenticationToken();
 
-        videoServiceApi.getRequestToken(new CallApi<AuthenticationToken, String>() {
-            @Override
-            public void onSuccess(AuthenticationToken responseAuthToken) {
-                authenticationToken[0] = responseAuthToken;
-                lock.countDown();
-            }
-
-            @Override
-            public void onFailed(String error) {
-                System.out.print(error);
-                lock.countDown();
-            }
+        videoServiceApi.getRequestToken().subscribe(responseAuthToken -> {
+            authenticationToken[0] = responseAuthToken;
+        }, throwable -> {
+            System.out.print(throwable.toString());
         });
 
-        boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
-        Assert.assertTrue(isStillWaiting);
         Assert.assertEquals("AuthenticationToken is not parsed properly", expected, authenticationToken[0]);
     }
 
@@ -172,22 +151,12 @@ public class ServiceVideoRestRepositoryTest {
         final AuthenticationSessionId[] authenticationSessionId = new AuthenticationSessionId[1];
         final AuthenticationSessionId expected = getExpectedAuthenticationSessionId();
 
-        videoServiceApi.getSessionId(new CallApi<AuthenticationSessionId, String>() {
-            @Override
-            public void onSuccess(AuthenticationSessionId responseAuthSession) {
-                authenticationSessionId[0] = responseAuthSession;
-                lock.countDown();
-            }
+        videoServiceApi.getSessionId("mock_token").subscribe(responseAuthSession -> {
+            authenticationSessionId[0] = responseAuthSession;
+        }, throwable -> {
+            System.out.print(throwable.toString());
+        });
 
-            @Override
-            public void onFailed(String error) {
-                System.out.print(error);
-                lock.countDown();
-            }
-        }, "mock_token");
-
-        boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
-        Assert.assertTrue(isStillWaiting);
         Assert.assertEquals("AuthenticationSessionId is not parsed properly", expected, authenticationSessionId[0]);
     }
 

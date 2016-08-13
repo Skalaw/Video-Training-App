@@ -5,14 +5,10 @@ import com.skala.core.api.model.AuthenticationToken;
 import com.skala.core.api.model.MovieInfo;
 import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.movievideos.MovieVideoPages;
-import com.skala.core.api.net.CallApi;
 import com.skala.core.api.repository.VideoRepository;
 
 import javax.inject.Singleton;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import rx.Observable;
 
@@ -31,48 +27,18 @@ public class VideoServiceApi implements VideoRepository {
     }
 
     @Override
-    public void getRequestToken(CallApi<AuthenticationToken, String> callResponse) {
-        videoRestRepository.getRequestToken(apiKey).enqueue(new Callback<AuthenticationToken>() {
-            @Override
-            public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
-                callResponse.onSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<AuthenticationToken> call, Throwable t) {
-                callResponse.onFailed(t.getMessage());
-            }
-        });
+    public Observable<AuthenticationToken> getRequestToken() {
+        return videoRestRepository.getRequestToken(apiKey);
     }
 
     @Override
-    public void getValidateRequestToken(CallApi<AuthenticationToken, String> callResponse, String requestToken, String username, String password) {
-        videoRestRepository.getValidateRequestToken(apiKey, requestToken, username, password).enqueue(new Callback<AuthenticationToken>() {
-            @Override
-            public void onResponse(Call<AuthenticationToken> call, Response<AuthenticationToken> response) {
-                callResponse.onSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<AuthenticationToken> call, Throwable t) {
-                callResponse.onFailed(t.getMessage());
-            }
-        });
+    public Observable<AuthenticationToken> getValidateRequestToken(String requestToken, String username, String password) {
+        return videoRestRepository.getValidateRequestToken(apiKey, requestToken, username, password);
     }
 
     @Override
-    public void getSessionId(CallApi<AuthenticationSessionId, String> callResponse, String requestToken) {
-        videoRestRepository.getSessionId(apiKey, requestToken).enqueue(new Callback<AuthenticationSessionId>() {
-            @Override
-            public void onResponse(Call<AuthenticationSessionId> call, Response<AuthenticationSessionId> response) {
-                callResponse.onSuccess(response.body());  // TODO: handle errors (for example when we don't have correct apiKey)
-            }
-
-            @Override
-            public void onFailure(Call<AuthenticationSessionId> call, Throwable t) {
-                callResponse.onFailed(t.getMessage());
-            }
-        });
+    public Observable<AuthenticationSessionId> getSessionId(String requestToken) {
+        return videoRestRepository.getSessionId(apiKey, requestToken);
     }
 
     @Override
