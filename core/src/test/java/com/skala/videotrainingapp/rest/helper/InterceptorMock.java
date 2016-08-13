@@ -27,7 +27,7 @@ public class InterceptorMock implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Response response = new Response.Builder()
+        return new Response.Builder()
                 .code(RESPONSE_SUCCESS)
                 .message(responseString)
                 .request(chain.request())
@@ -35,7 +35,5 @@ public class InterceptorMock implements Interceptor {
                 .body(ResponseBody.create(MediaType.parse("application/json"), responseString.getBytes(Charset.forName("UTF-8"))))
                 .addHeader("content-type", "application/json")
                 .build();
-
-        return response;
     }
 }

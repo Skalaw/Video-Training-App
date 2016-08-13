@@ -46,9 +46,8 @@ public class MovieDescriptionUseCase {
         String secureBaseUrl = images.getSecureBaseUrl();
         String urlBackdrop = secureBaseUrl + images.getBackdropSizes().get(SIZE_IMAGE_BACKDROP) + movieInfo.getBackdropPath();
         String urlPoster = secureBaseUrl + images.getPosterSizes().get(SIZE_IMAGE_POSTER) + movieInfo.getPosterPath();
-
-        return new MovieDescriptionModelView(movieId, movieInfo.getTitle(), movieInfo.getOverview(),
-                movieInfo.getReleaseDate(), movieInfo.getVoteAverage(), urlBackdrop, urlPoster);
+        return new MovieDescriptionModelView(movieId, movieInfo.getTitle(), movieInfo.getOverview(), movieInfo.getReleaseDate(), movieInfo.getVoteAverage(),
+                urlBackdrop, urlPoster);
     }
 
     private Observable<MovieVideoPages> loadVideosMovie(int movieId) {

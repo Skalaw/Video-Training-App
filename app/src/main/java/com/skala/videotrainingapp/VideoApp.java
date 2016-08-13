@@ -3,9 +3,11 @@ package com.skala.videotrainingapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.skala.core.uithread.UiThread;
 import com.squareup.leakcanary.LeakCanary;
 
 import dagger.ObjectGraph;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * @author Skala
@@ -18,6 +20,7 @@ public class VideoApp extends Application {
         super.onCreate();
         objectGraph = ObjectGraph.create(new AndroidModule(getApplicationContext()), new AppModule());
         LeakCanary.install(this);
+        UiThread.init(AndroidSchedulers::mainThread);
     }
 
     public ObjectGraph getObjectGraph() {
