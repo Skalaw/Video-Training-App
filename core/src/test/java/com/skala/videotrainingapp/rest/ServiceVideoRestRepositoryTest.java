@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -129,22 +130,12 @@ public class ServiceVideoRestRepositoryTest {
         final ConfigurationApi[] configurationApi = new ConfigurationApi[1];
         final ConfigurationApi expected = getExpectedConfigurationApi();
 
-        configurationServiceApi.getConfiguration(new CallApi<ConfigurationApi, String>() {
-            @Override
-            public void onSuccess(ConfigurationApi config) {
-                configurationApi[0] = config;
-                lock.countDown();
-            }
-
-            @Override
-            public void onFailed(String error) {
-                System.out.print(error);
-                lock.countDown();
-            }
+        configurationServiceApi.getConfiguration().subscribe(config -> {
+            configurationApi[0] = config;
+        }, throwable -> {
+            System.out.print(throwable.toString());
         });
 
-        boolean isStillWaiting = lock.await(DURATION_LOCK_IN_MILLISECOND, TimeUnit.MILLISECONDS);
-        Assert.assertTrue(isStillWaiting);
         Assert.assertEquals("Configuration api is not parsed properly", expected, configurationApi[0]);
     }
 
@@ -216,6 +207,7 @@ public class ServiceVideoRestRepositoryTest {
                 .build();
 
         return new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .baseUrl(ENDPOINT)
                 .client(client)
