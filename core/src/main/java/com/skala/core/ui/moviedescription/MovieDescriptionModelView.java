@@ -1,7 +1,5 @@
 package com.skala.core.ui.moviedescription;
 
-import com.skala.core.api.model.movievideos.MovieVideo;
-
 import java.util.List;
 
 /**
@@ -15,10 +13,10 @@ public class MovieDescriptionModelView {
     private final Double voteAverage;
     private final String urlImageBackdrop;
     private final String urlImagePoster;
-    private final List<MovieVideo> movieVideos;
+    private final List<VideosModelView> videosModelViews;
 
     public MovieDescriptionModelView(int id, String title, String description, String releaseDate, Double voteAverage, String urlImageBackdrop,
-                                     String urlImagePoster, List<MovieVideo> movieVideos) {
+                                     String urlImagePoster, List<VideosModelView> videosModelViews) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -26,7 +24,7 @@ public class MovieDescriptionModelView {
         this.voteAverage = voteAverage;
         this.urlImageBackdrop = urlImageBackdrop;
         this.urlImagePoster = urlImagePoster;
-        this.movieVideos = movieVideos;
+        this.videosModelViews = videosModelViews;
     }
 
     public int getId() {
@@ -57,7 +55,7 @@ public class MovieDescriptionModelView {
         return urlImagePoster;
     }
 
-    public List<MovieVideo> getMovieVideos() {
-        return movieVideos;
+    public List<VideosModelView> getVideosModelViews() {
+        return videosModelViews;
     }
 }

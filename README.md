@@ -1,6 +1,6 @@
 # Video Training App
 App for training written in clean architecture.
-As API I using TheMovieDB: http://docs.themoviedb.apiary.io/
+As API I using TheMovieDB: http://docs.themoviedb.apiary.io/ & YouTube
 
 ## Permissions
 - INTERNET - needed to download data
@@ -31,3 +31,4 @@ Version 0.0.1 (2016-xx-xx):
 - Add: initial version
 - Add: DiscoverMovie
 - Add: MovieDescription
+- Add: Watch trailer in YouTube

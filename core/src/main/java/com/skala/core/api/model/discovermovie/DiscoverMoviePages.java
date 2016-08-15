@@ -40,14 +40,14 @@ public class DiscoverMoviePages {
     /**
      * @return The discoverMovies
      */
-    public List<DiscoverMovie> getResults() {
+    public List<DiscoverMovie> getDiscoverMovies() {
         return discoverMovies;
     }
 
     /**
      * @param discoverMovies The discoverMovies
      */
-    public void setResults(List<DiscoverMovie> discoverMovies) {
+    public void setDiscoverMovie(List<DiscoverMovie> discoverMovies) {
         this.discoverMovies = discoverMovies;
     }
 

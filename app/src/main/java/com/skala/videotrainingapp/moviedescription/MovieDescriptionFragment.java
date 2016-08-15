@@ -1,8 +1,13 @@
 package com.skala.videotrainingapp.moviedescription;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +33,6 @@ import butterknife.ButterKnife;
  */
 public class MovieDescriptionFragment extends BaseFragment implements MovieDescriptionUi {
     public static final String FRAGMENT_TAG = "MovieDescriptionFragment";
-
     public static final String MOVIE_ID_KEY = "MOVIE_ID";
     private static final int MOVIE_ID_ERROR = -1;
 
@@ -56,6 +60,10 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @BindView(R.id.imagePoster)
     protected ImageView imagePoster;
 
+    @BindView(R.id.videos)
+    protected RecyclerView recyclerViewVideos;
+    private AdapterVideos adapterVideos;
+
     public static MovieDescriptionFragment newInstance(int id) {
         MovieDescriptionFragment movieDescriptionFragment = new MovieDescriptionFragment();
         Bundle bundle = new Bundle();
@@ -80,6 +88,19 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewVideos.setLayoutManager(layoutManager);
+        recyclerViewVideos.setHasFixedSize(true);
+
+        adapterVideos = new AdapterVideos(imageLoader, presenter.getVideosList());
+        adapterVideos.setOnItemClickListener(this::playYoutube);
+        recyclerViewVideos.setAdapter(adapterVideos);
+    }
+
     @NonNull
     @Override
     protected Object getPresenterModule() {
@@ -100,10 +121,23 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         releaseDate.setText(getString(R.string.release_date, movieVideos.getReleaseDate()));
         imageLoader.load(movieVideos.getUrlImageBackdrop(), imageBackdrop);
         imageLoader.load(movieVideos.getUrlImagePoster(), imagePoster);
+        adapterVideos.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        adapterVideos.notifyDataSetChanged();
+    }
+
+    private void playYoutube(String url) {
+        Uri youtubeUri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, youtubeUri);
+        getActivity().startActivity(intent); // todo move to activity
     }
 
     @Override
     public void displayError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Log.d("Message", message);
     }
 }

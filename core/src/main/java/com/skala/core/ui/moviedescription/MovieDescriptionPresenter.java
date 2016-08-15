@@ -3,8 +3,12 @@ package com.skala.core.ui.moviedescription;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.uithread.UiThread;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -12,6 +16,7 @@ import rx.schedulers.Schedulers;
  */
 public class MovieDescriptionPresenter extends BasePresenter<MovieDescriptionUi> {
     private final MovieDescriptionUseCase movieDescriptionUseCase;
+    private final List<VideosModelView> videosList = new ArrayList<>();
     private int movieId;
 
     @Inject
@@ -28,14 +33,30 @@ public class MovieDescriptionPresenter extends BasePresenter<MovieDescriptionUi>
         movieDescriptionUseCase.loadInfoMovie(movieId)
                 .observeOn(UiThread.uiScheduler())
                 .subscribeOn(Schedulers.io())
-                .subscribe(movieDescriptionModelView -> {
-                    execute(ui1 -> ui1.displayMovieDescription(movieDescriptionModelView));
-                }, throwable -> {
-                    execute(ui1 -> ui1.displayError(throwable.toString()));
-                });
+                .subscribe(movieDescriptionModelView -> execute(movieDescriptionUi -> showVideoDescription(movieDescriptionUi, movieDescriptionModelView)),
+                        throwable -> execute(ui1 -> ui1.displayError(throwable.toString())));
+    }
+
+    private void showVideoDescription(MovieDescriptionUi movieDescriptionUi, MovieDescriptionModelView movieDescriptionModelView) {
+        videosList.addAll(movieDescriptionModelView.getVideosModelViews());
+        movieDescriptionUi.displayMovieDescription(movieDescriptionModelView);
+
+        movieDescriptionUseCase.loadVideosYoutubeInfo(videosList)
+                .observeOn(UiThread.uiScheduler())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action1<List<VideosModelView>>() {
+                    @Override
+                    public void call(List<VideosModelView> videosModelViews) {
+                        execute(MovieDescriptionUi::notifyDataSetChanged);
+                    }
+                }, throwable -> execute(ui -> ui.displayError(throwable.toString())));
     }
 
     public void setMovieId(int movieId) {
         this.movieId = movieId;
+    }
+
+    public List<VideosModelView> getVideosList() {
+        return videosList;
     }
 }

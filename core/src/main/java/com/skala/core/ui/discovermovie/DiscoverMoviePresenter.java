@@ -16,12 +16,12 @@ import rx.schedulers.Schedulers;
  */
 @Singleton
 public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
-    private final DiscoverMovieListUseCase discoverMovieListUseCase;
+    private final DiscoverMovieUseCase discoverMovieUseCase;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
 
     @Inject
-    public DiscoverMoviePresenter(DiscoverMovieListUseCase discoverMovieListUseCase) {
-        this.discoverMovieListUseCase = discoverMovieListUseCase;
+    public DiscoverMoviePresenter(DiscoverMovieUseCase discoverMovieUseCase) {
+        this.discoverMovieUseCase = discoverMovieUseCase;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     }
 
     public void loadDiscoverMovie() {
-        discoverMovieListUseCase.loadDiscoverMovie()
+        discoverMovieUseCase.loadDiscoverMovie()
                 .observeOn(UiThread.uiScheduler())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::showDiscoverMovie, throwable -> {

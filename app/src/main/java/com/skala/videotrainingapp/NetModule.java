@@ -5,8 +5,10 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.skala.core.api.ConfigurationServiceApi;
 import com.skala.core.api.VideoServiceApi;
+import com.skala.core.api.YoutubeServiceApi;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
+import com.skala.core.api.repository.YoutubeRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module(library = true, includes = AndroidModule.class)
 public class NetModule {
-    private static final String ENDPOINT = "http://api.themoviedb.org/3/";
+    private static final String THEMOVIEDB_ENDPOINT = "http://api.themoviedb.org/3/";
+    private static final String YOUTUBE_ENDPOINT = "https://www.youtube.com/";
     private static final int SIZE_OF_CACHE = 10 * 1024 * 1024; // 10 MiB
     private static final String CACHE_CONTROL = "Cache-Control";
     private static final int CACHE_MAX_AGE_HOURS = 12;
@@ -69,7 +72,7 @@ public class NetModule {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(ENDPOINT)
+                .baseUrl(THEMOVIEDB_ENDPOINT)
                 .client(okHttpClient)
                 .build();
     }
@@ -84,5 +87,19 @@ public class NetModule {
     @Provides
     VideoRepository provideVideoRepository(Retrofit retrofit) {
         return new VideoServiceApi(retrofit, BuildConfig.THE_MOVIE_DB_API_KEY);
+    }
+
+    @Singleton
+    @Provides
+    YoutubeRepository provideYoutubeRepository(Gson gson, OkHttpClient okHttpClient) { // todo need refactor this
+        Retrofit retrofitYoutube = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(YOUTUBE_ENDPOINT)
+                .client(okHttpClient)
+                .build();
+
+
+        return new YoutubeServiceApi(retrofitYoutube);
     }
 }

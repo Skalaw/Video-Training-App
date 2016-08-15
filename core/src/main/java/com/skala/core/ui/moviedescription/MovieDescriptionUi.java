@@ -8,5 +8,7 @@ import com.skala.core.ui.base.Ui;
 public interface MovieDescriptionUi extends Ui {
     void displayMovieDescription(MovieDescriptionModelView movieVideos);
 
+    void notifyDataSetChanged();
+
     void displayError(String error);
 }
