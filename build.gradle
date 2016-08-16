@@ -20,7 +20,7 @@ ext {
             dagger        : "1.2.5",
             leakcanary    : "1.4-beta2",
             butterKnife   : "8.2.1",
-            rxjava        : "1.1.6",
+            rxjava        : "1.1.9",
             rxandroid     : "1.2.1"
     ]
 
@@ -34,7 +34,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.1.3'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
