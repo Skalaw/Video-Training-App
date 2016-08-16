@@ -10,7 +10,6 @@ import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
 import com.skala.core.api.repository.YoutubeRepository;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -64,15 +63,16 @@ public class MovieDescriptionUseCase {
     }
 
     private List<VideosModelView> getVideosYoutube(List<MovieVideo> movieVideos) {
-        List<VideosModelView> movieVideosYoutube = new LinkedList<>();
-        int size = movieVideos.size();
-        for (int i = 0; i < size; i++) {
-            MovieVideo movieVideo = movieVideos.get(i);
-            if (YOUTUBE.equals(movieVideo.getSite())) {
-                movieVideosYoutube.add(new VideosModelView(movieVideo.getId(), YOUTUBE_ENDPOINT + movieVideo.getKey(), movieVideo.getType()));
-            }
-        }
-        return movieVideosYoutube;
+        return Observable.from(movieVideos)
+                .filter(movieVideo -> YOUTUBE.equals(movieVideo.getSite()))
+                .map(this::createVideosModelView)
+                .toList()
+                .toBlocking()
+                .first();
+    }
+
+    private VideosModelView createVideosModelView(MovieVideo movieVideo) {
+        return new VideosModelView(movieVideo.getId(), YOUTUBE_ENDPOINT + movieVideo.getKey(), movieVideo.getType());
     }
 
     public Observable<List<VideosModelView>> loadVideosYoutubeInfo(List<VideosModelView> videosModels) {

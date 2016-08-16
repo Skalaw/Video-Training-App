@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -44,12 +43,8 @@ public class MovieDescriptionPresenter extends BasePresenter<MovieDescriptionUi>
         movieDescriptionUseCase.loadVideosYoutubeInfo(videosList)
                 .observeOn(UiThread.uiScheduler())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Action1<List<VideosModelView>>() {
-                    @Override
-                    public void call(List<VideosModelView> videosModelViews) {
-                        execute(MovieDescriptionUi::notifyDataSetChanged);
-                    }
-                }, throwable -> execute(ui -> ui.displayError(throwable.toString())));
+                .subscribe(videosModelViews -> execute(MovieDescriptionUi::notifyDataSetChanged),
+                        throwable -> execute(ui -> ui.displayError(throwable.toString())));
     }
 
     public void setMovieId(int movieId) {
