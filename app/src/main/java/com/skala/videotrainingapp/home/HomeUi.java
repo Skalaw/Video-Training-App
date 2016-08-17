@@ -5,4 +5,6 @@ package com.skala.videotrainingapp.home;
  */
 public interface HomeUi {
     void openMovieDescription(int movieId);
+
+    void openYoutube(String url);
 }

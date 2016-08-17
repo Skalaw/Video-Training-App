@@ -1,6 +1,8 @@
 package com.skala.videotrainingapp.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +31,13 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     public void openMovieDescription(int movieId) {
         MovieDescriptionFragment fragment = MovieDescriptionFragment.newInstance(movieId);
         openFragmentOnContent(fragment, MovieDescriptionFragment.FRAGMENT_TAG, true);
+    }
+
+    @Override
+    public void openYoutube(String url) {
+        Uri youtubeUri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, youtubeUri);
+        startActivity(intent);
     }
 
     public void openDiscoverMovie() {

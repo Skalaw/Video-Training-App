@@ -1,7 +1,6 @@
 package com.skala.videotrainingapp.moviedescription;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +20,7 @@ import com.skala.core.ui.moviedescription.MovieDescriptionPresenter;
 import com.skala.core.ui.moviedescription.MovieDescriptionUi;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragment;
+import com.skala.videotrainingapp.home.HomeUi;
 import com.skala.videotrainingapp.image.ImageLoader;
 
 import javax.inject.Inject;
@@ -63,6 +63,7 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @BindView(R.id.videos)
     protected RecyclerView recyclerViewVideos;
     private AdapterVideos adapterVideos;
+    private HomeUi homeUi;
 
     public static MovieDescriptionFragment newInstance(int id) {
         MovieDescriptionFragment movieDescriptionFragment = new MovieDescriptionFragment();
@@ -70,6 +71,12 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         bundle.putInt(MOVIE_ID_KEY, id);
         movieDescriptionFragment.setArguments(bundle);
         return movieDescriptionFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        homeUi = (HomeUi) context;
     }
 
     @Override
@@ -97,7 +104,7 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         recyclerViewVideos.setHasFixedSize(true);
 
         adapterVideos = new AdapterVideos(imageLoader, presenter.getVideosList());
-        adapterVideos.setOnItemClickListener(this::playYoutube);
+        adapterVideos.setOnItemClickListener(url -> homeUi.openYoutube(url));
         recyclerViewVideos.setAdapter(adapterVideos);
     }
 
@@ -127,12 +134,6 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @Override
     public void notifyDataSetChanged() {
         adapterVideos.notifyDataSetChanged();
-    }
-
-    private void playYoutube(String url) {
-        Uri youtubeUri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, youtubeUri);
-        getActivity().startActivity(intent); // todo move to activity
     }
 
     @Override
