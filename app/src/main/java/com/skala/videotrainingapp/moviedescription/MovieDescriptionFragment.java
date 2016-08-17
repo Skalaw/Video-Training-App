@@ -1,6 +1,9 @@
 package com.skala.videotrainingapp.moviedescription;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +25,9 @@ import com.skala.core.ui.moviedescription.MovieDescriptionUi;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragment;
 import com.skala.videotrainingapp.home.HomeUi;
+import com.skala.videotrainingapp.image.BitmapTarget;
 import com.skala.videotrainingapp.image.ImageLoader;
+import com.skala.videotrainingapp.recyclerview.HorizontalSpaceItemDecoration;
 
 import javax.inject.Inject;
 
@@ -57,8 +63,11 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @BindView(R.id.imageBackdrop)
     protected ImageView imageBackdrop;
 
-    @BindView(R.id.imagePoster)
-    protected ImageView imagePoster;
+    @BindView(R.id.scrollMovieDescription)
+    protected ScrollView scrollView;
+
+    @BindView(R.id.imageBackground)
+    protected ImageView imageBackground;
 
     @BindView(R.id.videos)
     protected RecyclerView recyclerViewVideos;
@@ -99,8 +108,9 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewVideos.setLayoutManager(layoutManager);
+        int space = getResources().getDimensionPixelSize(R.dimen.adapter_videos_space);
+        recyclerViewVideos.addItemDecoration(new HorizontalSpaceItemDecoration(space));
+        recyclerViewVideos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewVideos.setHasFixedSize(true);
 
         adapterVideos = new AdapterVideos(imageLoader, presenter.getVideosList());
@@ -127,7 +137,7 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         voteAverage.setText(getString(R.string.vote_average, movieVideos.getVoteAverage()));
         releaseDate.setText(getString(R.string.release_date, movieVideos.getReleaseDate()));
         imageLoader.load(movieVideos.getUrlImageBackdrop(), imageBackdrop);
-        imageLoader.load(movieVideos.getUrlImagePoster(), imagePoster);
+        imageLoader.load(movieVideos.getUrlImagePoster(), imageBackground);
         adapterVideos.notifyDataSetChanged();
     }
 
@@ -139,6 +149,6 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     @Override
     public void displayError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        Log.d("Message", message);
+        Log.d("displayError", message);
     }
 }

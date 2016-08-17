@@ -9,4 +9,7 @@
     <dimen name="adapter_discover_movie_image_margin">4dp</dimen>
     <dimen name="adapter_discover_movie_title_font">24sp</dimen>
     <dimen name="adapter_discover_movie_space">16dp</dimen>
+
+    <!-- VideosAdapter -->
+    <dimen name="adapter_videos_space">8dp</dimen>
 </resources>

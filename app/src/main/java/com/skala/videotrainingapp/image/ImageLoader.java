@@ -7,4 +7,5 @@ import android.widget.ImageView;
  */
 public interface ImageLoader {
     void load(String path, ImageView target);
+    void load(String path, BitmapTarget target);
 }

@@ -9,4 +9,6 @@
 
     <!-- MovieDescription -->
     <string name="vote_average">Vote average: %1$s</string>
+    <string name="videos">Videos:</string>
+    <string name="description">Description:</string>
 </resources>
