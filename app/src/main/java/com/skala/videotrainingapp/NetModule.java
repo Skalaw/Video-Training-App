@@ -30,8 +30,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module(library = true, includes = AndroidModule.class)
 public class NetModule {
-    private static final String THEMOVIEDB_ENDPOINT = "http://api.themoviedb.org/3/";
-    private static final String YOUTUBE_ENDPOINT = "https://www.youtube.com/";
     private static final int SIZE_OF_CACHE = 10 * 1024 * 1024; // 10 MiB
     private static final String CACHE_CONTROL = "Cache-Control";
     private static final int CACHE_MAX_AGE_HOURS = 12;
@@ -64,42 +62,5 @@ public class NetModule {
                 .cache(cache)
                 .addNetworkInterceptor(interceptor)
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
-        return new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(THEMOVIEDB_ENDPOINT)
-                .client(okHttpClient)
-                .build();
-    }
-
-    @Singleton
-    @Provides
-    ConfigurationRepository provideConfigurationRepository(Retrofit retrofit) {
-        return new ConfigurationServiceApi(retrofit, BuildConfig.THE_MOVIE_DB_API_KEY);
-    }
-
-    @Singleton
-    @Provides
-    VideoRepository provideVideoRepository(Retrofit retrofit) {
-        return new VideoServiceApi(retrofit, BuildConfig.THE_MOVIE_DB_API_KEY);
-    }
-
-    @Singleton
-    @Provides
-    YoutubeRepository provideYoutubeRepository(Gson gson, OkHttpClient okHttpClient) { // todo need refactor this
-        Retrofit retrofitYoutube = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(YOUTUBE_ENDPOINT)
-                .client(okHttpClient)
-                .build();
-
-
-        return new YoutubeServiceApi(retrofitYoutube);
     }
 }

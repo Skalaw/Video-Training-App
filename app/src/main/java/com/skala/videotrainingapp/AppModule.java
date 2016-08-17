@@ -7,6 +7,6 @@ import dagger.Module;
 /**
  * @author Skala
  */
-@Module(library = true, includes = {NetModule.class, ImageModule.class})
+@Module(library = true, includes = {TheMovieDbModule.class, YoutubeModule.class, ImageModule.class})
 public class AppModule {
 }
