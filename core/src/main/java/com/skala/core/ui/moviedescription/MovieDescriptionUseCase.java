@@ -9,6 +9,7 @@ import com.skala.core.api.model.movievideos.MovieVideoPages;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
 import com.skala.core.api.repository.YoutubeRepository;
+import com.skala.core.ui.ScreenSize;
 
 import java.util.List;
 
@@ -22,20 +23,21 @@ import rx.Observable;
  */
 @Singleton
 public class MovieDescriptionUseCase {
-    private static final int SIZE_IMAGE_BACKDROP = 2; // TODO: delete this
-    private static final int SIZE_IMAGE_POSTER = 4; // TODO: delete this
     private static final String YOUTUBE = "YouTube";
     private static final String YOUTUBE_ENDPOINT = "https://www.youtube.com/watch?v=";
 
     private final VideoRepository videoRepository;
     private final ConfigurationRepository configurationRepository;
     private final YoutubeRepository youtubeRepository;
+    private final ScreenSize screenSize;
 
     @Inject
-    public MovieDescriptionUseCase(VideoRepository videoRepository, ConfigurationRepository configurationRepository, YoutubeRepository youtubeRepository) {
+    public MovieDescriptionUseCase(VideoRepository videoRepository, ConfigurationRepository configurationRepository,
+                                   YoutubeRepository youtubeRepository, ScreenSize screenSize) {
         this.videoRepository = videoRepository;
         this.configurationRepository = configurationRepository;
         this.youtubeRepository = youtubeRepository;
+        this.screenSize = screenSize;
     }
 
     public Observable<MovieDescriptionModelView> loadInfoMovie(int movieId) {
@@ -54,8 +56,8 @@ public class MovieDescriptionUseCase {
                                                                      int movieId) {
         Images images = configurationApi.getImages();
         String secureBaseUrl = images.getSecureBaseUrl();
-        String urlBackdrop = secureBaseUrl + images.getBackdropSizes().get(SIZE_IMAGE_BACKDROP) + movieInfo.getBackdropPath();
-        String urlPoster = secureBaseUrl + images.getPosterSizes().get(SIZE_IMAGE_POSTER) + movieInfo.getPosterPath();
+        String urlBackdrop = secureBaseUrl + screenSize.getBackdropSize(images.getBackdropSizes()) + movieInfo.getBackdropPath();
+        String urlPoster = secureBaseUrl + screenSize.getPosterSize(images.getPosterSizes()) + movieInfo.getPosterPath();
         List<VideosModelView> videosYoutube = getVideosYoutube(movieVideoPages.getMovieVideos());
 
         return new MovieDescriptionModelView(movieId, movieInfo.getTitle(), movieInfo.getOverview(), movieInfo.getReleaseDate(), movieInfo.getVoteAverage(),

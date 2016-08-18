@@ -14,7 +14,7 @@ ext {
     ]
 
     library = [
-            androidSupport: "24.1.1",
+            androidSupport: "24.2.0",
             retrofit      : "2.1.0",
             picasso       : "2.5.2",
             dagger        : "1.2.5",

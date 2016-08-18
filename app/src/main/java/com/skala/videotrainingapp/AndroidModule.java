@@ -1,6 +1,11 @@
 package com.skala.videotrainingapp;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.util.Log;
+import android.view.WindowManager;
+
+import com.skala.core.ui.ScreenSize;
 
 import javax.inject.Singleton;
 
@@ -22,5 +27,14 @@ public class AndroidModule {
     @Singleton
     Context provideContext() {
         return appContext;
+    }
+
+    @Provides
+    @Singleton
+    ScreenSize provideScreenSize(Context context) {
+        Point point = new Point();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(point);
+        Log.d("SizeScreen", "width: " + point.x + " height: " + point.y);
+        return new ScreenSize(point.x, point.y);
     }
 }

@@ -3,12 +3,6 @@ package com.skala.videotrainingapp;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.skala.core.api.ConfigurationServiceApi;
-import com.skala.core.api.VideoServiceApi;
-import com.skala.core.api.YoutubeServiceApi;
-import com.skala.core.api.repository.ConfigurationRepository;
-import com.skala.core.api.repository.VideoRepository;
-import com.skala.core.api.repository.YoutubeRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,9 +15,6 @@ import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author Skala

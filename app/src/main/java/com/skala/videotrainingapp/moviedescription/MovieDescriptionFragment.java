@@ -1,9 +1,6 @@
 package com.skala.videotrainingapp.moviedescription;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +22,6 @@ import com.skala.core.ui.moviedescription.MovieDescriptionUi;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragment;
 import com.skala.videotrainingapp.home.HomeUi;
-import com.skala.videotrainingapp.image.BitmapTarget;
 import com.skala.videotrainingapp.image.ImageLoader;
 import com.skala.videotrainingapp.recyclerview.HorizontalSpaceItemDecoration;
 

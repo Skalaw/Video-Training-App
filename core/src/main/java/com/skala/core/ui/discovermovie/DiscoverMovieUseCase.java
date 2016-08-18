@@ -5,6 +5,7 @@ import com.skala.core.api.model.discovermovie.DiscoverMovie;
 import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.repository.ConfigurationRepository;
 import com.skala.core.api.repository.VideoRepository;
+import com.skala.core.ui.ScreenSize;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,15 +20,15 @@ import rx.Observable;
  */
 @Singleton
 public class DiscoverMovieUseCase {
-    private static final int SIZE_IMAGE = 4; // TODO: delete this
-
     private final VideoRepository videoApi;
     private final ConfigurationRepository configurationRepository;
+    private final ScreenSize screenSize;
 
     @Inject
-    public DiscoverMovieUseCase(VideoRepository videoApi, ConfigurationRepository configurationRepository) {
+    public DiscoverMovieUseCase(VideoRepository videoApi, ConfigurationRepository configurationRepository, ScreenSize screenSize) {
         this.videoApi = videoApi;
         this.configurationRepository = configurationRepository;
+        this.screenSize = screenSize;
     }
 
     public Observable<List<DiscoverMovieModelView>> loadDiscoverMovie() {
@@ -38,7 +39,7 @@ public class DiscoverMovieUseCase {
 
     private List<DiscoverMovieModelView> getDiscoverMovieModelView(ConfigurationApi configurationApi, DiscoverMoviePages discoverMoviePages) {
         List<DiscoverMovieModelView> discoverMovieModelView = new LinkedList<>();
-        String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + configurationApi.getImages().getPosterSizes().get(SIZE_IMAGE);
+        String prefixPoster = configurationApi.getImages().getSecureBaseUrl() + screenSize.getPosterSize(configurationApi.getImages().getPosterSizes());
 
         List<DiscoverMovie> discoverMovies = discoverMoviePages.getDiscoverMovies();
         int size = discoverMovies.size();
