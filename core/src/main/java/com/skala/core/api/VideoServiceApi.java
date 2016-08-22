@@ -42,8 +42,8 @@ public class VideoServiceApi implements VideoRepository {
     }
 
     @Override
-    public Observable<DiscoverMoviePages> getDiscoverMovie() {
-        return videoRestRepository.getDiscoverMovie(apiKey);
+    public Observable<DiscoverMoviePages> getDiscoverMovie(int page) {
+        return videoRestRepository.getDiscoverMovie(apiKey, page);
     }
 
     @Override

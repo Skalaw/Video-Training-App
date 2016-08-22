@@ -70,10 +70,27 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
         Resources resources = getResources();
         int columns = resources.getInteger(R.integer.discover_movie_list_columns);
         int space = resources.getDimensionPixelSize(R.dimen.adapter_discover_movie_space);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), columns);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecorationColumns(space, columns));
 
-        swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadDiscoverMovie());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    swipeRefreshLayout.setRefreshing(true);
+                    presenter.loadNextDiscoverMovie();
+                }
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.refreshDiscoverMovie());
 
         discoverMovieAdapter = new AdapterRecyclerView(imageLoader, presenter.getDiscoverMovie());
         discoverMovieAdapter.setOnItemClickListener(discoverMovieModelView -> homeUi.openMovieDescription(discoverMovieModelView.getId()));

@@ -20,7 +20,7 @@ public interface VideoRepository {
 
     Observable<AuthenticationSessionId> getSessionId(String requestToken);
 
-    Observable<DiscoverMoviePages> getDiscoverMovie();
+    Observable<DiscoverMoviePages> getDiscoverMovie(int page);
 
     Observable<MovieInfo> getMovieInfo(int movieId);
 
