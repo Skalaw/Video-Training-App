@@ -2,10 +2,13 @@ package com.skala.videotrainingapp.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragmentActivity;
@@ -22,8 +25,29 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        getSupportFragmentManager().addOnBackStackChangedListener(this::setDefaultToolbar);
+
         if (savedInstanceState == null) {
             openDiscoverMovie();
+        }
+    }
+
+    private void setDefaultToolbar() {
+        setToolbarTitle(getString(R.string.app_name));
+        updateToolbarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public void updateToolbarColor(int colorPrimary, int colorPrimaryDark) {
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorPrimary));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(colorPrimaryDark);
         }
     }
 

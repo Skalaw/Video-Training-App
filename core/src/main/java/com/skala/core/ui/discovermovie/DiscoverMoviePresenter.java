@@ -41,6 +41,10 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         }
     }
 
+    private boolean isLoadMoviesAvailable() {
+        return !isMovieLoading && !isLastPage;
+    }
+
     private void loadDiscoverMovie(int page) {
         isMovieLoading = true;
         discoverMovieUseCase.loadDiscoverMovie(page)
@@ -71,10 +75,6 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         discoverMovieList.addAll(discoverMovieModelView);
         execute(DiscoverMovieUi::notifyDataChange);
         isMovieLoading = false;
-    }
-
-    public boolean isLoadMoviesAvailable() {
-        return !isMovieLoading && !isLastPage;
     }
 
     public List<DiscoverMovieModelView> getDiscoverMovie() {

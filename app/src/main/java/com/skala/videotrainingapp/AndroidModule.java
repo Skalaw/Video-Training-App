@@ -35,6 +35,6 @@ public class AndroidModule {
         Point point = new Point();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(point);
         Log.d("SizeScreen", "width: " + point.x + " height: " + point.y);
-        return new ScreenSize(point.x, point.y);
+        return new ScreenSize(point.x);
     }
 }

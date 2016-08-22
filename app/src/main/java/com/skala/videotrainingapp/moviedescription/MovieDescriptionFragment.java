@@ -128,12 +128,14 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
 
     @Override
     public void displayMovieDescription(MovieDescriptionModelView movieVideos) {
+        homeUi.setToolbarTitle(movieVideos.getTitle());
         title.setText(movieVideos.getTitle());
         description.setText(movieVideos.getDescription());
         voteAverage.setText(getString(R.string.vote_average, movieVideos.getVoteAverage()));
         releaseDate.setText(getString(R.string.release_date, movieVideos.getReleaseDate()));
         imageLoader.load(movieVideos.getUrlImageBackdrop(), imageBackdrop);
-        imageLoader.load(movieVideos.getUrlImagePoster(), imageBackground);
+        imageLoader.load(movieVideos.getUrlImagePoster(), new LoadBitmapFillPalette(imageBackground, homeUi));
+
         adapterVideos.notifyDataSetChanged();
     }
 

@@ -11,18 +11,15 @@ public class ScreenSize {
     private final static String PREFIX_WIDTH = "w";
 
     private final int width;
-    private final int height;
 
-    public ScreenSize(int width, int height) {
+    public ScreenSize(int width) {
         this.width = width;
-        this.height = height;
     }
 
     public String getBackdropSize(List<String> sizes) {
         return Observable.from(sizes)
                 .filter(size -> size.startsWith(PREFIX_WIDTH))
                 .takeUntil(size -> getNumber(size) > width)
-                //.filter(size -> getNumber(size) <= width)
                 .lastOrDefault(sizes.get(0))
                 .toBlocking().first();
     }
@@ -31,7 +28,6 @@ public class ScreenSize {
         return Observable.from(sizes)
                 .filter(size -> size.startsWith(PREFIX_WIDTH))
                 .takeUntil(size -> getNumber(size) > width)
-                //.filter(size -> getNumber(size) <= width)
                 .lastOrDefault(sizes.get(0))
                 .toBlocking().first();
     }
