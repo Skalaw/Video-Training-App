@@ -72,7 +72,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
         int space = resources.getDimensionPixelSize(R.dimen.adapter_discover_movie_space);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), columns);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager); // todo add scrollbar
         recyclerView.addItemDecoration(new SpacesItemDecorationColumns(space, columns));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

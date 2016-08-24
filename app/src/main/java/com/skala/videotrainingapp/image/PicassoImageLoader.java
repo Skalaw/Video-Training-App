@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.skala.videotrainingapp.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -25,12 +26,12 @@ public class PicassoImageLoader implements ImageLoader {
 
     @Override
     public void load(String path, ImageView target) {
-        picasso.load(path).into(target);
+        picasso.load(path).placeholder(R.drawable.place_holder).into(target); // todo maybe change in future place_holder - AnimationVectorDrawable ?
     }
 
     @Override
     public void load(String path, BitmapTarget target) {
-        picasso.load(path).into(new Target() {
+        picasso.load(path).placeholder(R.drawable.place_holder).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 target.onBitmapLoaded(bitmap);

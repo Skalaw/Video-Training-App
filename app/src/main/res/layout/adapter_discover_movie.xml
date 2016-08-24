@@ -45,9 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:ellipsize="end"
             android:layout_below="@+id/title"
             android:layout_toStartOf="@+id/poster"
+            android:ellipsize="end"
             tools:text="Material design is guided by print-based design elements – such as typography, grids, space, scale, color, and imagery – to create hierarchy, meaning, and focus that immerse the user in the experience. Material design adopts tools from the field of print design, like baseline grids and structural templates, encouraging consistency across environments by repeating visual elements, structural grids, and spacing across platforms and screen sizes. These layouts scale to fit any screen size, which simplifies the process of creating scalable apps."/>
 
     </RelativeLayout>
