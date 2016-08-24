@@ -5,8 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import okhttp3.OkHttpClient;
 
 /**
  * @author Skala
@@ -14,8 +17,10 @@ import com.squareup.picasso.Target;
 public class PicassoImageLoader implements ImageLoader {
     private final Picasso picasso;
 
-    public PicassoImageLoader(Context appContext) {
-        picasso = Picasso.with(appContext);
+    public PicassoImageLoader(Context appContext, OkHttpClient okHttpClient) {
+        picasso = new Picasso.Builder(appContext)
+                .downloader(new OkHttp3Downloader(okHttpClient))
+                .build();
     }
 
     @Override

@@ -23,6 +23,7 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/ & YouTube
 - checkstyle
 - pmd
 - findbugs
+- stetho
 
 ## Release notes:
 

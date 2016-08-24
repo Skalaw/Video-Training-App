@@ -2,6 +2,7 @@ package com.skala.videotrainingapp;
 
 import android.content.Context;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 
 import java.util.concurrent.TimeUnit;
@@ -51,6 +52,7 @@ public class NetModule {
         Cache cache = new Cache(context.getCacheDir(), SIZE_OF_CACHE);
         return new OkHttpClient.Builder()
                 .cache(cache)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .addNetworkInterceptor(interceptor)
                 .build();
     }

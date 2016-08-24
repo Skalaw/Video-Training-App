@@ -3,6 +3,7 @@ package com.skala.videotrainingapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
 import com.skala.core.uithread.UiThread;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -21,6 +22,7 @@ public class VideoApp extends Application {
         objectGraph = ObjectGraph.create(new AndroidModule(getApplicationContext()), new AppModule());
         LeakCanary.install(this);
         UiThread.init(AndroidSchedulers::mainThread);
+        Stetho.initializeWithDefaults(this);
     }
 
     public ObjectGraph getObjectGraph() {
