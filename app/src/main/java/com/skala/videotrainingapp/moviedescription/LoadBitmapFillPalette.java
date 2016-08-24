@@ -2,9 +2,13 @@ package com.skala.videotrainingapp.moviedescription;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.graphics.Palette;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.skala.videotrainingapp.home.HomeUi;
 import com.skala.videotrainingapp.image.BitmapTarget;
@@ -19,10 +23,12 @@ public class LoadBitmapFillPalette implements BitmapTarget {
     private final static int HSV_TABLE = 3;
 
     private final WeakReference<ImageView> imageTarget;
+    private final WeakReference<LinearLayout> container;
     private final WeakReference<HomeUi> homeUi;
 
-    public LoadBitmapFillPalette(ImageView imageTarget, HomeUi homeUi) {
+    public LoadBitmapFillPalette(ImageView imageTarget, LinearLayout container, HomeUi homeUi) {
         this.imageTarget = new WeakReference<>(imageTarget);
+        this.container = new WeakReference<>(container);
         this.homeUi = new WeakReference<>(homeUi);
     }
 
@@ -49,7 +55,8 @@ public class LoadBitmapFillPalette implements BitmapTarget {
 
     private void setColorFromPalette(Palette palette) {
         HomeUi homeUi = this.homeUi.get();
-        if (homeUi == null) {
+        LinearLayout container = this.container.get();
+        if (homeUi == null || container == null) {
             return;
         }
 
@@ -60,9 +67,21 @@ public class LoadBitmapFillPalette implements BitmapTarget {
         if (swatch != null) {
             int primaryColor = swatch.getRgb();
             int primaryDarkColor = getDarkerColor(primaryColor);
-            //int textColor = swatch.getTitleTextColor(); // todo
+            int textColor = swatch.getTitleTextColor();
 
             homeUi.updateToolbarColor(primaryColor, primaryDarkColor);
+            setTextColor(container, textColor);
+            setColorBackground(container, primaryColor);
+        }
+    }
+
+    private void setTextColor(LinearLayout linearLayout, int textColor) {
+        int size = linearLayout.getChildCount();
+        for (int i = 0; i < size; i++) {
+            View view = linearLayout.getChildAt(i);
+            if (view instanceof TextView) {
+                ((TextView) view).setTextColor(textColor);
+            }
         }
     }
 
@@ -71,5 +90,9 @@ public class LoadBitmapFillPalette implements BitmapTarget {
         Color.colorToHSV(color, hsv);
         hsv[2] *= FACTOR_DARKER;
         return Color.HSVToColor(hsv);
+    }
+
+    private void setColorBackground(LinearLayout container, int color) {
+        container.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 }

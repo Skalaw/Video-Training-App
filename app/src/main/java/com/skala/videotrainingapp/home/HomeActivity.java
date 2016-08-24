@@ -1,6 +1,7 @@
 package com.skala.videotrainingapp.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -26,16 +27,15 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         setContentView(R.layout.activity_home);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this::setDefaultToolbar);
-
         if (savedInstanceState == null) {
             openDiscoverMovie();
         }
     }
 
     private void setDefaultToolbar() {
+        Context appContext = getApplicationContext();
         setToolbarTitle(getString(R.string.app_name));
-        updateToolbarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
-                ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
+        updateToolbarColor(ContextCompat.getColor(appContext, R.color.colorPrimary), ContextCompat.getColor(appContext, R.color.colorPrimaryDark));
     }
 
     @Override

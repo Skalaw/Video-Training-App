@@ -29,49 +29,59 @@
                 android:contentDescription="@string/backdrop"
                 android:scaleType="centerCrop"/>
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/padBackground"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="clip_horizontal"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="@color/colorAccent"
-                tools:text="Title"/>
+                android:layout_margin="8dp"
+                android:background="@drawable/description_movie_pad"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <TextView
-                android:id="@+id/voteAverage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-                tools:text="Vote average: 6.1"/>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="clip_horizontal"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    tools:text="Title"/>
 
-            <TextView
-                android:id="@+id/releaseDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-                tools:text="Release date: 2016-08-03"/>
+                <TextView
+                    android:id="@+id/voteAverage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Medium"
+                    tools:text="Vote average: 6.1"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/description"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="@color/colorAccent"/>
+                <TextView
+                    android:id="@+id/releaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Medium"
+                    tools:text="Release date: 2016-08-03"/>
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Small"
-                tools:text="Description"/>
+                <TextView
+                    android:id="@+id/titleDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textAppearance="@android:style/TextAppearance.Large"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/videos"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="@color/colorAccent"/>
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    tools:text="Description"/>
+
+                <TextView
+                    android:id="@+id/titleVideos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/videos"
+                    android:textAppearance="@android:style/TextAppearance.Large"/>
+
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/videos"

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
     public static final String FRAGMENT_TAG = "MovieDescriptionFragment";
     public static final String MOVIE_ID_KEY = "MOVIE_ID";
     private static final int MOVIE_ID_ERROR = -1;
+    private static final int ALPHA_BACKGROUND = 192; // 192 from 256 = 75%
 
     @Inject
     MovieDescriptionPresenter presenter;
@@ -55,6 +57,15 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
 
     @BindView(R.id.releaseDate)
     protected TextView releaseDate;
+
+    @BindView(R.id.titleDescription)
+    protected TextView titleDescription;
+
+    @BindView(R.id.titleVideos)
+    protected TextView titleVideos;
+
+    @BindView(R.id.padBackground)
+    protected LinearLayout padBackground;
 
     @BindView(R.id.imageBackdrop)
     protected ImageView imageBackdrop;
@@ -112,6 +123,8 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         adapterVideos = new AdapterVideos(imageLoader, presenter.getVideosList());
         adapterVideos.setOnItemClickListener(url -> homeUi.openYoutube(url));
         recyclerViewVideos.setAdapter(adapterVideos);
+
+        padBackground.getBackground().setAlpha(ALPHA_BACKGROUND);
     }
 
     @NonNull
@@ -134,7 +147,7 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
         voteAverage.setText(getString(R.string.vote_average, movieVideos.getVoteAverage()));
         releaseDate.setText(getString(R.string.release_date, movieVideos.getReleaseDate()));
         imageLoader.load(movieVideos.getUrlImageBackdrop(), imageBackdrop);
-        imageLoader.load(movieVideos.getUrlImagePoster(), new LoadBitmapFillPalette(imageBackground, homeUi));
+        imageLoader.load(movieVideos.getUrlImagePoster(), new LoadBitmapFillPalette(imageBackground, padBackground, homeUi));
 
         adapterVideos.notifyDataSetChanged();
     }
