@@ -18,6 +18,8 @@ import rx.Observable;
  */
 @Singleton
 public class VideoServiceApi implements VideoRepository {
+    private final static String LANGUAGE_DEFAULT = "en";
+
     private final VideoRestRepository videoRestRepository;
     private final String apiKey;
 
@@ -43,16 +45,16 @@ public class VideoServiceApi implements VideoRepository {
 
     @Override
     public Observable<DiscoverMoviePages> getDiscoverMovie(int page) {
-        return videoRestRepository.getDiscoverMovie(apiKey, page);
+        return videoRestRepository.getDiscoverMovie(apiKey, page, LANGUAGE_DEFAULT);
     }
 
     @Override
     public Observable<MovieInfo> getMovieInfo(int movieId) {
-        return videoRestRepository.getMovieInfo(movieId, apiKey);
+        return videoRestRepository.getMovieInfo(movieId, apiKey, LANGUAGE_DEFAULT);
     }
 
     @Override
     public Observable<MovieVideoPages> getMovieVideos(int movieId) {
-        return videoRestRepository.getMovieVideos(movieId, apiKey);
+        return videoRestRepository.getMovieVideos(movieId, apiKey, LANGUAGE_DEFAULT);
     }
 }

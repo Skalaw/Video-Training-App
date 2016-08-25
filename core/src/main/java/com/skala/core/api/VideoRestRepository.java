@@ -21,6 +21,7 @@ public interface VideoRestRepository {
     String QUERY_PASSWORD = "password";
     String QUERY_MOVIE_ID = "movieId";
     String QUERY_PAGE = "page";
+    String QUERY_LANGUAGE = "language";
 
     @GET("authentication/token/new")
     Observable<AuthenticationToken> getRequestToken(@Query(QUERY_API_KEY) String apiKey);
@@ -37,13 +38,16 @@ public interface VideoRestRepository {
 
     @GET("discover/movie")
     Observable<DiscoverMoviePages> getDiscoverMovie(@Query(QUERY_API_KEY) String apiKey,
-                                                    @Query(QUERY_PAGE) int page);
+                                                    @Query(QUERY_PAGE) int page,
+                                                    @Query(QUERY_LANGUAGE) String language);
 
     @GET("movie/{movieId}")
     Observable<MovieInfo> getMovieInfo(@Path(QUERY_MOVIE_ID) int movieId,
-                                       @Query(QUERY_API_KEY) String apiKey);
+                                       @Query(QUERY_API_KEY) String apiKey,
+                                       @Query(QUERY_LANGUAGE) String language);
 
     @GET("movie/{movieId}/videos")
     Observable<MovieVideoPages> getMovieVideos(@Path(QUERY_MOVIE_ID) int movieId,
-                                               @Query(QUERY_API_KEY) String apiKey);
+                                               @Query(QUERY_API_KEY) String apiKey,
+                                               @Query(QUERY_LANGUAGE) String language);
 }
