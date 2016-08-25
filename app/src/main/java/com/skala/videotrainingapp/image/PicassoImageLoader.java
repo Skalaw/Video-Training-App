@@ -2,7 +2,9 @@ package com.skala.videotrainingapp.image;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -26,12 +28,17 @@ public class PicassoImageLoader implements ImageLoader {
 
     @Override
     public void load(String path, ImageView target) {
-        picasso.load(path).placeholder(R.drawable.place_holder).into(target); // todo maybe change in future place_holder - AnimationVectorDrawable ?
+        Drawable placeholder = ContextCompat.getDrawable(target.getContext(), R.drawable.animated_loading); // todo: fix vector drawable bellow api 21
+        picasso.load(path).placeholder(placeholder).into(target);
+        Drawable drawable = target.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
     }
 
     @Override
     public void load(String path, BitmapTarget target) {
-        picasso.load(path).placeholder(R.drawable.place_holder).into(new Target() {
+        picasso.load(path).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 target.onBitmapLoaded(bitmap);

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/backdrop"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 app:aspectRatio="0.5625"
                 app:aspectRatioEnabled="true"/>
 
