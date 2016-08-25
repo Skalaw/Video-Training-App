@@ -97,6 +97,18 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
         recyclerView.setAdapter(discoverMovieAdapter);
     }
 
+    @Override
+    public void onPause() {
+        terminateRefreshing();
+        super.onPause();
+    }
+
+    private void terminateRefreshing() {
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.destroyDrawingCache();
+        swipeRefreshLayout.clearAnimation();
+    }
+
     @NonNull
     @Override
     protected Object getPresenterModule() {
