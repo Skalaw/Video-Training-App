@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.skala.core.api.genre.Genres;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
@@ -131,5 +132,10 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     public void displayError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showGenres(Genres genres) {
+        homeUi.updateGenre(genres);
     }
 }

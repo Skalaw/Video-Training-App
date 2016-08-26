@@ -18,20 +18,23 @@ import rx.schedulers.Schedulers;
 public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     private final static int DISCOVER_FIRST_PAGE = 1;
 
-    private final DiscoverMovieUseCase discoverMovieUseCase;
+    private final MoviesUseCase moviesUseCase;
+    private final GenreMoviesUseCase genreMoviesUseCase;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
     private int page = DISCOVER_FIRST_PAGE;
     private boolean isMovieLoading = false;
     private boolean isLastPage = false; // todo check when isLastPage
 
     @Inject
-    public DiscoverMoviePresenter(DiscoverMovieUseCase discoverMovieUseCase) {
-        this.discoverMovieUseCase = discoverMovieUseCase;
+    public DiscoverMoviePresenter(MoviesUseCase moviesUseCase, GenreMoviesUseCase genreMoviesUseCase) {
+        this.moviesUseCase = moviesUseCase;
+        this.genreMoviesUseCase = genreMoviesUseCase;
     }
 
     @Override
     protected void onFirstUiAttachment() {
         loadDiscoverMovie(DISCOVER_FIRST_PAGE);
+        loadGenreMovie();
     }
 
     public void loadNextDiscoverMovie() {
@@ -41,13 +44,22 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         }
     }
 
+    private void loadGenreMovie() {
+        genreMoviesUseCase.loadGenreMovies()
+                .observeOn(UiThread.uiScheduler())
+                .subscribeOn(Schedulers.io())
+                .subscribe(genres -> {
+                    execute(discoverMovieUi -> discoverMovieUi.showGenres(genres));
+                });
+    }
+
     private boolean isLoadMoviesAvailable() {
         return !isMovieLoading && !isLastPage;
     }
 
     private void loadDiscoverMovie(int page) {
         isMovieLoading = true;
-        discoverMovieUseCase.loadDiscoverMovie(page)
+        moviesUseCase.loadDiscoverMovie(page)
                 .observeOn(UiThread.uiScheduler())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::showDiscoverMovie, throwable -> {
@@ -58,7 +70,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
     public void refreshDiscoverMovie() {
         isMovieLoading = true;
-        discoverMovieUseCase.loadDiscoverMovie(DISCOVER_FIRST_PAGE)
+        moviesUseCase.loadDiscoverMovie(DISCOVER_FIRST_PAGE)
                 .observeOn(UiThread.uiScheduler())
                 .subscribeOn(Schedulers.io())
                 .subscribe(discoverMovieModelViews -> {

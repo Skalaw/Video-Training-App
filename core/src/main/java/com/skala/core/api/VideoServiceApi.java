@@ -18,7 +18,7 @@ import rx.Observable;
  */
 @Singleton
 public class VideoServiceApi implements VideoRepository {
-    private final static String LANGUAGE_DEFAULT = "en";
+    private final static String LANGUAGE_DEFAULT = "en"; // todo move this
 
     private final VideoRestRepository videoRestRepository;
     private final String apiKey;
@@ -45,7 +45,7 @@ public class VideoServiceApi implements VideoRepository {
 
     @Override
     public Observable<DiscoverMoviePages> getDiscoverMovie(int page) {
-        return videoRestRepository.getDiscoverMovie(apiKey, page, LANGUAGE_DEFAULT);
+        return videoRestRepository.getDiscoverMovie(apiKey, page, LANGUAGE_DEFAULT, null, null);
     }
 
     @Override

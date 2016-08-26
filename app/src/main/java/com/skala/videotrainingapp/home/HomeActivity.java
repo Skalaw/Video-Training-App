@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.skala.core.api.genre.Genres;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragmentActivity;
 import com.skala.videotrainingapp.discovermovie.DiscoverMovieFragment;
@@ -101,6 +102,11 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(colorPrimaryDark);
         }
+    }
+
+    @Override
+    public void updateGenre(Genres genres) {
+
     }
 
     @Override

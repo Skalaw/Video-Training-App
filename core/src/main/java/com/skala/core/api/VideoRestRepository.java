@@ -6,6 +6,8 @@ import com.skala.core.api.model.MovieInfo;
 import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.movievideos.MovieVideoPages;
 
+import java.util.List;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -22,6 +24,8 @@ public interface VideoRestRepository {
     String QUERY_MOVIE_ID = "movieId";
     String QUERY_PAGE = "page";
     String QUERY_LANGUAGE = "language";
+    String QUERY_WITH_GENRES = "with_genres";
+    String QUERY_SORT_BY = "sort_by";
 
     @GET("authentication/token/new")
     Observable<AuthenticationToken> getRequestToken(@Query(QUERY_API_KEY) String apiKey);
@@ -39,7 +43,9 @@ public interface VideoRestRepository {
     @GET("discover/movie")
     Observable<DiscoverMoviePages> getDiscoverMovie(@Query(QUERY_API_KEY) String apiKey,
                                                     @Query(QUERY_PAGE) int page,
-                                                    @Query(QUERY_LANGUAGE) String language);
+                                                    @Query(QUERY_LANGUAGE) String language,
+                                                    @Query(QUERY_WITH_GENRES) List<Integer> genres,
+                                                    @Query(QUERY_SORT_BY) String sort);
 
     @GET("movie/{movieId}")
     Observable<MovieInfo> getMovieInfo(@Path(QUERY_MOVIE_ID) int movieId,

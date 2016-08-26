@@ -2,8 +2,10 @@ package com.skala.videotrainingapp;
 
 import com.google.gson.Gson;
 import com.skala.core.api.ConfigurationServiceApi;
+import com.skala.core.api.GenreServiceApi;
 import com.skala.core.api.VideoServiceApi;
 import com.skala.core.api.repository.ConfigurationRepository;
+import com.skala.core.api.repository.GenreRepository;
 import com.skala.core.api.repository.VideoRepository;
 
 import javax.inject.Singleton;
@@ -22,8 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TheMovieDbModule {
     private static final String THEMOVIEDB_ENDPOINT = "http://api.themoviedb.org/3/";
 
-    @Provides
     @Singleton
+    @Provides
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -43,5 +45,11 @@ public class TheMovieDbModule {
     @Provides
     VideoRepository provideVideoRepository(Retrofit retrofit) {
         return new VideoServiceApi(retrofit, BuildConfig.THE_MOVIE_DB_API_KEY);
+    }
+
+    @Singleton
+    @Provides
+    GenreRepository provideGenreRepository(Retrofit retrofit) {
+        return new GenreServiceApi(retrofit, BuildConfig.THE_MOVIE_DB_API_KEY);
     }
 }

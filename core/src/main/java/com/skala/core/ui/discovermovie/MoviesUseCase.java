@@ -19,13 +19,13 @@ import rx.Observable;
  * @author Skała
  */
 @Singleton
-public class DiscoverMovieUseCase {
+public class MoviesUseCase {
     private final VideoRepository videoApi;
     private final ConfigurationRepository configurationRepository;
     private final ScreenSize screenSize;
 
     @Inject
-    public DiscoverMovieUseCase(VideoRepository videoApi, ConfigurationRepository configurationRepository, ScreenSize screenSize) {
+    public MoviesUseCase(VideoRepository videoApi, ConfigurationRepository configurationRepository, ScreenSize screenSize) {
         this.videoApi = videoApi;
         this.configurationRepository = configurationRepository;
         this.screenSize = screenSize;
