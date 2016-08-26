@@ -41,7 +41,6 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
 
     @BindView(R.id.recyclerView)
     protected RecyclerView recyclerView;
-
     @BindView(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout swipeRefreshLayout;
 

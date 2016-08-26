@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,9 +68,6 @@ public class MovieDescriptionFragment extends BaseFragment implements MovieDescr
 
     @BindView(R.id.imageBackdrop)
     protected ImageView imageBackdrop;
-
-    @BindView(R.id.scrollMovieDescription)
-    protected ScrollView scrollView;
 
     @BindView(R.id.imageBackground)
     protected ImageView imageBackground;

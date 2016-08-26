@@ -12,7 +12,7 @@
         android:alpha="0.5"
         android:scaleType="centerCrop"/>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollMovieDescription"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -94,5 +94,5 @@
                 android:clipToPadding="false"
                 android:padding="8dp"/>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </FrameLayout>
