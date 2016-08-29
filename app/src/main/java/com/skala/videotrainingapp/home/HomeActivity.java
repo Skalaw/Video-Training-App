@@ -39,6 +39,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
 
     @BindView(R.id.fab)
     protected FloatingActionButton fab;
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,11 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         initDrawerLayout();
         initBottomSheet();
 
-        getSupportFragmentManager().addOnBackStackChangedListener(this::setDefaultToolbar);
+        getSupportFragmentManager().addOnBackStackChangedListener(this::fragmentChanged);
         if (savedInstanceState == null) {
             openDiscoverMovie();
+        } else {
+            setFabAndBottomSheet();
         }
     }
 
@@ -73,7 +76,8 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     }
 
     private void initBottomSheet() {
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
+        View bottomSheet = findViewById(R.id.bottomSheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(0);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -81,7 +85,10 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     fab.hide();
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    fab.show();
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFragment);
+                    if (fragment instanceof DiscoverMovieFragment) {
+                        fab.show();
+                    }
                 }
             }
 
@@ -122,6 +129,21 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         return super.onOptionsItemSelected(item);
     }
 
+    private void fragmentChanged() {
+        setFabAndBottomSheet();
+        setDefaultToolbar();
+    }
+
+    private void setFabAndBottomSheet() {
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFragment);
+        if (fragment instanceof DiscoverMovieFragment) {
+            fab.show();
+        } else {
+            fab.hide();
+        }
+    }
+
     private void setDefaultToolbar() {
         Context appContext = getApplicationContext();
         setToolbarTitle(getString(R.string.app_name));
@@ -148,7 +170,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
 
     @Override
     public void openMovieDescription(int movieId) {
-        MovieDescriptionFragment fragment = MovieDescriptionFragment.newInstance(movieId);
+        MovieDescriptionFragment fragment = MovieDescriptionFragment.newInstance(movieId); // todo I think better move this to new activity
         openFragmentOnContent(fragment, MovieDescriptionFragment.FRAGMENT_TAG, true);
     }
 

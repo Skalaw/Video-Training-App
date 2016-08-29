@@ -41,21 +41,30 @@
             android:src="@drawable/ic_filter_list_black_24dp"
             app:layout_behavior="com.skala.videotrainingapp.view.ScrollingFabBehaviour"/>
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/bottomSheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="vertical"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:padding="16dp"
-                android:text="ASDASDSADASDASDASDAS\ndsffsdfsdfsd\nfsdfsdfsd\nfsgdfgdfgdf\ngdfsgfdgdf\n"
+                android:text="Genre:"
                 android:textSize="16sp"/>
-        </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="16dp"
+                android:text="Sort:"
+                android:textSize="16sp"/>
+        </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <FrameLayout
