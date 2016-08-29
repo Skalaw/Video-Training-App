@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -40,6 +40,22 @@
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_filter_list_black_24dp"
             app:layout_behavior="com.skala.videotrainingapp.view.ScrollingFabBehaviour"/>
+
+        <FrameLayout
+            android:id="@+id/bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="16dp"
+                android:text="ASDASDSADASDASDASDAS\ndsffsdfsdfsd\nfsdfsdfsd\nfsgdfgdfgdf\ngdfsgfdgdf\n"
+                android:textSize="16sp"/>
+        </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <FrameLayout

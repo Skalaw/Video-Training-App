@@ -7,6 +7,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.skala.core.api.genre.Genres;
@@ -24,19 +28,27 @@ import com.skala.videotrainingapp.base.BaseFragmentActivity;
 import com.skala.videotrainingapp.discovermovie.DiscoverMovieFragment;
 import com.skala.videotrainingapp.moviedescription.MovieDescriptionFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author Skala
  */
 public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     private ActionBarDrawerToggle drawerToggle;
 
+    @BindView(R.id.fab)
+    protected FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
 
         initActionBar();
         initDrawerLayout();
+        initBottomSheet();
 
         getSupportFragmentManager().addOnBackStackChangedListener(this::setDefaultToolbar);
         if (savedInstanceState == null) {
@@ -60,6 +72,34 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         drawerToggle.syncState();
     }
 
+    private void initBottomSheet() {
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
+        bottomSheetBehavior.setPeekHeight(0);
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    fab.hide();
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    fab.show();
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // ignore
+            }
+        });
+
+        fab.setOnClickListener(v -> {
+            if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            } else {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
@@ -72,10 +112,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
             return true;
         }
         int id = item.getItemId();
-        if (id == R.id.menuFilter) {
-            Toast.makeText(getApplicationContext(), "menuFilter", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (id == R.id.menuSettings) {
+        if (id == R.id.menuSettings) {
             Toast.makeText(getApplicationContext(), "menuSettings", Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.menuAbout) {
