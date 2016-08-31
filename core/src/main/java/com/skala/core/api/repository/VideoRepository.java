@@ -6,6 +6,8 @@ import com.skala.core.api.model.MovieInfo;
 import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.movievideos.MovieVideoPages;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -20,7 +22,7 @@ public interface VideoRepository {
 
     Observable<AuthenticationSessionId> getSessionId(String requestToken);
 
-    Observable<DiscoverMoviePages> getDiscoverMovie(int page);
+    Observable<DiscoverMoviePages> getDiscoverMovie(int page, List<Integer> genreIds);
 
     Observable<MovieInfo> getMovieInfo(int movieId);
 

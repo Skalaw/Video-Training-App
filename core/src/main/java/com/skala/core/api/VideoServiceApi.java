@@ -7,6 +7,8 @@ import com.skala.core.api.model.discovermovie.DiscoverMoviePages;
 import com.skala.core.api.model.movievideos.MovieVideoPages;
 import com.skala.core.api.repository.VideoRepository;
 
+import java.util.List;
+
 import javax.inject.Singleton;
 
 import retrofit2.Retrofit;
@@ -44,8 +46,8 @@ public class VideoServiceApi implements VideoRepository {
     }
 
     @Override
-    public Observable<DiscoverMoviePages> getDiscoverMovie(int page) {
-        return videoRestRepository.getDiscoverMovie(apiKey, page, LANGUAGE_DEFAULT, null, null);
+    public Observable<DiscoverMoviePages> getDiscoverMovie(int page, List<Integer> genreIds) {
+        return videoRestRepository.getDiscoverMovie(apiKey, page, LANGUAGE_DEFAULT, genreIds, null);
     }
 
     @Override

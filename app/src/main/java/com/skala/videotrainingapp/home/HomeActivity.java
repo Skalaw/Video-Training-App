@@ -20,9 +20,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.skala.core.api.genre.Genres;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragmentActivity;
 import com.skala.videotrainingapp.discovermovie.DiscoverMovieFragment;
@@ -36,6 +36,12 @@ import butterknife.ButterKnife;
  */
 public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     private ActionBarDrawerToggle drawerToggle;
+
+    @BindView(R.id.btnGenre)
+    protected Button btnGenre;
+
+    @BindView(R.id.btnSort)
+    protected Button btnSort;
 
     @BindView(R.id.fab)
     protected FloatingActionButton fab;
@@ -108,6 +114,16 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     }
 
     @Override
+    public void onBackPressed() {
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
@@ -164,8 +180,14 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     }
 
     @Override
-    public void updateGenre(Genres genres) {
-
+    public void genresIsReady() {
+        btnGenre.setEnabled(true);
+        btnGenre.setOnClickListener(v -> {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFragment);
+            if (fragment instanceof DiscoverMovieFragment) {
+                ((DiscoverMovieFragment) fragment).showGenreList();
+            }
+        });
     }
 
     @Override

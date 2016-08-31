@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.skala.core.api.genre.Genres;
+import com.skala.core.api.genre.Genre;
 import com.skala.core.ui.base.BasePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMoviePresenter;
 import com.skala.core.ui.discovermovie.DiscoverMovieUi;
@@ -23,16 +25,22 @@ import com.skala.videotrainingapp.home.HomeUi;
 import com.skala.videotrainingapp.image.ImageLoader;
 import com.skala.videotrainingapp.recyclerview.SpacesItemDecorationColumns;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 /**
  * @author Skała
  */
 public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovieUi {
     public static final String FRAGMENT_TAG = "DiscoverMovieFragment";
+    private static final String GENRE_TITLE = "Genre";
+    private static final String GENRE_CANCEL = "Cancel";
+    private static final String GENRE_CLEAR = "Clear";
     @Inject
     DiscoverMoviePresenter presenter;
 
@@ -134,7 +142,36 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     }
 
     @Override
-    public void showGenres(Genres genres) {
-        homeUi.updateGenre(genres);
+    public void genresIsReady() {
+        homeUi.genresIsReady();
+    }
+
+    public void showGenreList() { // todo maybe move this
+        final List<Genre> genreList = presenter.getGenreList();
+        List<String> genreName = Observable.from(genreList)
+                .map(Genre::getName)
+                .toList()
+                .toBlocking()
+                .first();
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, genreName);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle(GENRE_TITLE)
+                .setAdapter(arrayAdapter, (dialog, which) -> {
+                    swipeRefreshLayout.setRefreshing(true);
+                    presenter.setAndLoadMoviesGenre(genreList.get(which).getId());
+                    dialog.dismiss();
+                })
+                .setNegativeButton(GENRE_CANCEL, null)
+                .setPositiveButton(GENRE_CLEAR, (dialog, which) -> {
+                    clearGenre();
+                    dialog.dismiss();
+                });
+        builder.show();
+    }
+
+    public void clearGenre() {
+        swipeRefreshLayout.setRefreshing(true);
+        presenter.clearMoviesGenre();
     }
 }
