@@ -31,9 +31,9 @@ public class MoviesUseCase {
         this.screenSize = screenSize;
     }
 
-    public Observable<List<DiscoverMovieModelView>> loadDiscoverMovie(int page, List<Integer> genreIds) {
+    public Observable<List<DiscoverMovieModelView>> loadDiscoverMovie(int page, List<Integer> genreIds, String sort) {
         return configurationRepository.getConfiguration()
-                .flatMap(configurationApi -> videoApi.getDiscoverMovie(page, genreIds)
+                .flatMap(configurationApi -> videoApi.getDiscoverMovie(page, genreIds, sort)
                         .map(discoverMoviePages -> getDiscoverMovieModelView(configurationApi, discoverMoviePages)));
     }
 

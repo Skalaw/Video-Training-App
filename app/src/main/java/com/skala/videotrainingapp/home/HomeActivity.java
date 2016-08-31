@@ -56,6 +56,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         initActionBar();
         initDrawerLayout();
         initBottomSheet();
+        initBtnSort();
 
         getSupportFragmentManager().addOnBackStackChangedListener(this::fragmentChanged);
         if (savedInstanceState == null) {
@@ -109,6 +110,15 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             } else {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+    }
+
+    private void initBtnSort() {
+        btnSort.setOnClickListener(v -> {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFragment);
+            if (fragment instanceof DiscoverMovieFragment) {
+                ((DiscoverMovieFragment) fragment).showSortList();
             }
         });
     }

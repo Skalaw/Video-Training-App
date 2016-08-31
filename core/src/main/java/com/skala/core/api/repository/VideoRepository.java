@@ -22,7 +22,7 @@ public interface VideoRepository {
 
     Observable<AuthenticationSessionId> getSessionId(String requestToken);
 
-    Observable<DiscoverMoviePages> getDiscoverMovie(int page, List<Integer> genreIds);
+    Observable<DiscoverMoviePages> getDiscoverMovie(int page, List<Integer> genreIds, String sort);
 
     Observable<MovieInfo> getMovieInfo(int movieId);
 

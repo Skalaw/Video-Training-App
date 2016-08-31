@@ -21,12 +21,14 @@ import rx.schedulers.Schedulers;
 public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
     private final static int DISCOVER_FIRST_PAGE = 1;
     private final static int GENRE_INVALID_ID = -1;
+    private final static String NO_SORT = null;
 
     private final MoviesUseCase moviesUseCase;
     private final GenreMoviesUseCase genreMoviesUseCase;
     private final List<DiscoverMovieModelView> discoverMovieList = new ArrayList<>();
     private Genres genres;
     private int genreId = GENRE_INVALID_ID;
+    private String sort = NO_SORT;
     private int page = DISCOVER_FIRST_PAGE;
     private boolean isMovieLoading = false;
     private boolean isLastPage = false; // todo check when isLastPage
@@ -60,19 +62,6 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                 });
     }
 
-    public List<Genre> getGenreList() {
-        return genres.getGenres();
-    }
-
-    public void clearMoviesGenre() {
-        setAndLoadMoviesGenre(GENRE_INVALID_ID);
-    }
-
-    public void setAndLoadMoviesGenre(int genreId) {
-        this.genreId = genreId;
-        refreshDiscoverMovie();
-    }
-
     private boolean isLoadMoviesAvailable() {
         return !isMovieLoading && !isLastPage;
     }
@@ -86,7 +75,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         isMovieLoading = true;
 
         List<Integer> genreIds = getGenresIds(genreId);
-        moviesUseCase.loadDiscoverMovie(page, genreIds)
+        moviesUseCase.loadDiscoverMovie(page, genreIds, sort)
                 .observeOn(UiThread.uiScheduler())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::showDiscoverMovie, throwable -> {
@@ -115,7 +104,48 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
         isMovieLoading = false;
     }
 
+    public void setAndLoadMoviesGenre(int genreId) {
+        this.genreId = genreId;
+        refreshDiscoverMovie();
+    }
+
+    public void setAndLoadMoviesSort(String sort) {
+        this.sort = sort;
+        refreshDiscoverMovie();
+    }
+
+    public void clearGenre() {
+        setAndLoadMoviesGenre(GENRE_INVALID_ID);
+    }
+
+    public void clearSort() {
+        setAndLoadMoviesSort(NO_SORT);
+    }
+
     public List<DiscoverMovieModelView> getDiscoverMovie() {
         return discoverMovieList;
+    }
+
+    public List<Genre> getGenreList() {
+        return genres.getGenres();
+    }
+
+    public List<String> getSortList() { // todo change this
+        LinkedList<String> sortList = new LinkedList<>();
+        sortList.add("popularity.asc");
+        sortList.add("popularity.desc");
+        sortList.add("release_date.asc");
+        sortList.add("release_date.desc");
+        sortList.add("revenue.asc");
+        sortList.add("revenue.desc");
+        sortList.add("primary_release_date.asc");
+        sortList.add("primary_release_date.desc");
+        sortList.add("original_title.asc");
+        sortList.add("original_title.desc");
+        sortList.add("vote_average.asc");
+        sortList.add("vote_average.desc");
+        sortList.add("vote_count.asc");
+        sortList.add("vote_count.desc");
+        return sortList;
     }
 }

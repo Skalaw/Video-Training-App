@@ -38,9 +38,10 @@ import rx.Observable;
  */
 public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovieUi {
     public static final String FRAGMENT_TAG = "DiscoverMovieFragment";
-    private static final String GENRE_TITLE = "Genre";
-    private static final String GENRE_CANCEL = "Cancel";
-    private static final String GENRE_CLEAR = "Clear";
+    private static final String DIALOG_TITLE_SORT = "Sort";
+    private static final String DIALOG_TITLE_GENRE = "Genre";
+    private static final String DIALOG_CANCEL = "Cancel";
+    private static final String DIALOG_CLEAR = "Clear";
     @Inject
     DiscoverMoviePresenter presenter;
 
@@ -156,22 +157,46 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, genreName);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                .setTitle(GENRE_TITLE)
+                .setTitle(DIALOG_TITLE_GENRE)
                 .setAdapter(arrayAdapter, (dialog, which) -> {
                     swipeRefreshLayout.setRefreshing(true);
                     presenter.setAndLoadMoviesGenre(genreList.get(which).getId());
                     dialog.dismiss();
                 })
-                .setNegativeButton(GENRE_CANCEL, null)
-                .setPositiveButton(GENRE_CLEAR, (dialog, which) -> {
+                .setNegativeButton(DIALOG_CANCEL, null)
+                .setPositiveButton(DIALOG_CLEAR, (dialog, which) -> {
                     clearGenre();
                     dialog.dismiss();
                 });
         builder.show();
     }
 
-    public void clearGenre() {
+    private void clearGenre() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.clearMoviesGenre();
+        presenter.clearGenre();
+    }
+
+    public void showSortList() { // todo maybe move this
+        final List<String> genreList = presenter.getSortList();
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, genreList);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle(DIALOG_TITLE_SORT)
+                .setAdapter(arrayAdapter, (dialog, which) -> {
+                    swipeRefreshLayout.setRefreshing(true);
+                    presenter.setAndLoadMoviesSort(genreList.get(which));
+                    dialog.dismiss();
+                })
+                .setNegativeButton(DIALOG_CANCEL, null)
+                .setPositiveButton(DIALOG_CLEAR, (dialog, which) -> {
+                    clearSort();
+                    dialog.dismiss();
+                });
+        builder.show();
+    }
+
+    private void clearSort() {
+        swipeRefreshLayout.setRefreshing(true);
+        presenter.clearSort();
     }
 }
