@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_top">
+        <item
+            android:id="@+id/drawer_item_timeline"
+            android:title="1"/> <!-- todo icons-->
+        <item
+            android:id="@+id/drawer_item_reports"
+            android:title="2"/>
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom">
+        <item
+            android:id="@+id/drawer_item_settings"
+            android:title="3" >
+        </item>
+    </group>
+</menu>
