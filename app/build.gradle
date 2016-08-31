@@ -59,8 +59,8 @@ dependencies {
     compile "com.jakewharton:butterknife:${lib.butterKnife}"
     apt "com.jakewharton:butterknife-compiler:${lib.butterKnife}"
     compile "io.reactivex:rxandroid:${lib.rxandroid}"
-    compile "com.facebook.stetho:stetho:${lib.stetho}" // todo: remove from release version
-    compile "com.facebook.stetho:stetho-okhttp3:${lib.stetho}" // network inspection
+    debugCompile "com.facebook.stetho:stetho:${lib.stetho}"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:${lib.stetho}" // network inspection
 
     debugCompile "com.squareup.leakcanary:leakcanary-android:${lib.leakcanary}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${lib.leakcanary}"
