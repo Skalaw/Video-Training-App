@@ -9,7 +9,7 @@ ext {
             compileSdk   : 23,
             minSdk       : 17,
             targetSdk    : 23,
-            versionCode  : 1,
+            versionCode  : getCodeVersion(),
             versionName  : "0.0.1"
     ]
 
@@ -51,4 +51,9 @@ allprojects {
         THE_MOVIE_DB_USERNAME = "\"${videoApi.username}\"";
         THE_MOVIE_DB_PASSWORD = "\"${videoApi.password}\"";
     }
+}
+
+def int getCodeVersion() {
+    def commitCount = 'git rev-list --count origin/develop HEAD'.execute().text.trim() as int
+    return commitCount
 }

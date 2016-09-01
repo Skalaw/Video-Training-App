@@ -20,6 +20,6 @@
     <string name="item_about">About</string>
 
     <!-- Dialog about -->
-    <string name="dialog_about_message">Author: Miłosz Skalski\nE-mail: milosz.skalski@gmail.com\nVersion: %1$s\n\nThis app uses the tmdb api</string>
+    <string name="dialog_about_message">Author: Miłosz Skalski\nE-mail: milosz.skalski@gmail.com\nVersion: %1$s\nCode number %2$s\n\nThis app uses the tmdb api</string>
     <string name="dialog_about_close">Close</string>
 </resources>
