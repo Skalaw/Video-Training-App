@@ -160,12 +160,15 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
                 .setTitle(DIALOG_TITLE_GENRE)
                 .setAdapter(arrayAdapter, (dialog, which) -> {
                     swipeRefreshLayout.setRefreshing(true);
-                    presenter.setAndLoadMoviesGenre(genreList.get(which).getId());
+                    Genre genre = genreList.get(which);
+                    homeUi.setButtonGenre(genre.getName());
+                    presenter.setAndLoadMoviesGenre(genre.getId());
                     dialog.dismiss();
                 })
                 .setNegativeButton(DIALOG_CANCEL, null)
                 .setPositiveButton(DIALOG_CLEAR, (dialog, which) -> {
                     clearGenre();
+                    homeUi.setButtonGenre(getString(R.string.none));
                     dialog.dismiss();
                 });
         builder.show();
@@ -177,19 +180,22 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
     }
 
     public void showSortList() { // todo maybe move this
-        final List<String> genreList = presenter.getSortList();
+        final List<String> sortList = presenter.getSortList();
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, genreList);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, sortList);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setTitle(DIALOG_TITLE_SORT)
                 .setAdapter(arrayAdapter, (dialog, which) -> {
                     swipeRefreshLayout.setRefreshing(true);
-                    presenter.setAndLoadMoviesSort(genreList.get(which));
+                    String sort = sortList.get(which);
+                    homeUi.setButtonSort(sort);
+                    presenter.setAndLoadMoviesSort(sort);
                     dialog.dismiss();
                 })
                 .setNegativeButton(DIALOG_CANCEL, null)
                 .setPositiveButton(DIALOG_CLEAR, (dialog, which) -> {
                     clearSort();
+                    homeUi.setButtonSort(getString(R.string.none));
                     dialog.dismiss();
                 });
         builder.show();

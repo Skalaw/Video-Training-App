@@ -10,6 +10,10 @@ public interface HomeUi {
 
     void genresIsReady();
 
+    void setButtonGenre(String genre);
+
+    void setButtonSort(String sort);
+
     void openMovieDescription(int movieId);
 
     void openYoutube(String url);

@@ -22,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rocksolidapps.movies.BuildConfig;
@@ -32,6 +34,7 @@ import com.rocksolidapps.movies.moviedescription.MovieDescriptionFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Skala
@@ -41,9 +44,16 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
 
     @BindView(R.id.btnGenre)
     protected Button btnGenre;
+    @BindView(R.id.textGenre)
+    protected TextView textGenre;
 
     @BindView(R.id.btnSort)
     protected Button btnSort;
+    @BindView(R.id.textSort)
+    protected TextView textSort;
+
+    @BindView(R.id.bottomSheetCancel)
+    protected ImageView bottomSheetCancel;
 
     @BindView(R.id.drawerLayout)
     protected DrawerLayout drawerLayout;
@@ -57,6 +67,11 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     @BindView(R.id.fab)
     protected FloatingActionButton fab;
     private BottomSheetBehavior bottomSheetBehavior;
+
+    @OnClick(R.id.bottomSheetCancel)
+    protected void bottomSheetCancelClick() {
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +250,16 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
                 ((DiscoverMovieFragment) fragment).showGenreList();
             }
         });
+    }
+
+    @Override
+    public void setButtonGenre(String genre) {
+        btnGenre.setText(genre);
+    }
+
+    @Override
+    public void setButtonSort(String sort) {
+        btnSort.setText(sort);
     }
 
     @Override
