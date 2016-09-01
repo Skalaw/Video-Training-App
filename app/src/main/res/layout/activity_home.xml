@@ -39,7 +39,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_filter_list_black_24dp"
-            app:layout_behavior="com.skala.videotrainingapp.view.ScrollingFabBehaviour"/>
+            app:layout_behavior="com.rocksolidapps.movies.view.ScrollingFabBehaviour"/>
 
         <LinearLayout
             android:id="@+id/bottomSheet"

@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.skala.videotrainingapp.view.AspectRatioImageView
+            <com.rocksolidapps.movies.view.AspectRatioImageView
                 android:id="@+id/imageBackdrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

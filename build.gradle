@@ -4,7 +4,7 @@ videoApi.load(new FileInputStream("./core/src/main/resources/video_api.propertie
 ext {
     compileSdkVersion = 19
     configuration = [
-            applicationId: "com.skala.videotrainingapp",
+            applicationId: "com.rocksolidapps.movies",
             buildTools   : "24.0.2",
             compileSdk   : 23,
             minSdk       : 17,
