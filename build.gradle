@@ -1,5 +1,7 @@
 Properties videoApi = new Properties()
 videoApi.load(new FileInputStream("./core/src/main/resources/video_api.properties"))
+Properties keystore = new Properties()
+keystore.load(new FileInputStream("./secure/keystore.properties"))
 
 ext {
     compileSdkVersion = 19
@@ -50,6 +52,11 @@ allprojects {
         THE_MOVIE_DB_API_KEY = "\"${videoApi.apiKey}\"";
         THE_MOVIE_DB_USERNAME = "\"${videoApi.username}\"";
         THE_MOVIE_DB_PASSWORD = "\"${videoApi.password}\"";
+
+        KEYSTORE_PATH = "${keystore.release_path}";
+        KEYSTORE_PASSWORD = "${keystore.password}";
+        KEYSTORE_ALIAS = "${keystore.alias}";
+        KEYSTORE_ALIAS_PASSWORD = "${keystore.alias_password}";
     }
 }
 

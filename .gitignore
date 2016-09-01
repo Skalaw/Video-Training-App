@@ -37,4 +37,8 @@ captures/
 .idea/*
 
 # Keystore files
-*.jks
+*.jks'
+
+# Secure
+secure/release.keystore
+secure/keystore.properties
