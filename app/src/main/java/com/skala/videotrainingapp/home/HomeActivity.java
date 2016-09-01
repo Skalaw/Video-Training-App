@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -17,11 +18,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragmentActivity;
@@ -42,6 +41,15 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
 
     @BindView(R.id.btnSort)
     protected Button btnSort;
+
+    @BindView(R.id.drawerLayout)
+    protected DrawerLayout drawerLayout;
+
+    @BindView(R.id.leftDrawer)
+    protected NavigationView leftDrawer;
+
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
 
     @BindView(R.id.fab)
     protected FloatingActionButton fab;
@@ -67,19 +75,40 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     }
 
     private void initActionBar() {
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
     private void initDrawerLayout() {
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        leftDrawer.setNavigationItemSelectedListener(menuItem -> {
+            int idItem = menuItem.getItemId();
+            if (menuItem.getGroupId() == R.id.menuNavigation) {
+                menuItem.setChecked(true);
+                openFragment(idItem);
+            } else if (idItem == R.id.itemSettings) {
+                // todo add settings
+            } else if (idItem == R.id.itemAbout) {
+                // todo add about
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        leftDrawer.setCheckedItem(R.id.itemDiscoverMovie); // todo refactor this when i add next fragment on menuNavigation
+    }
+
+    private void openFragment(int idItem) {
+        if (idItem == R.id.itemDiscoverMovie) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFragment);
+            if (!(fragment instanceof DiscoverMovieFragment)) {
+                openDiscoverMovie();
+            }
+        }
     }
 
     private void initBottomSheet() {
@@ -123,20 +152,27 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            return;
-        }
-
-        super.onBackPressed();
+    private void fragmentChanged() {
+        setFabAndBottomSheet();
+        setDefaultToolbar();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu, menu);
-        return true;
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(leftDrawer)) {
+            drawerLayout.closeDrawers();
+            return;
+        } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -144,20 +180,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        int id = item.getItemId();
-        if (id == R.id.menuSettings) {
-            Toast.makeText(getApplicationContext(), "menuSettings", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (id == R.id.menuAbout) {
-            Toast.makeText(getApplicationContext(), "menuAbout", Toast.LENGTH_SHORT).show();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void fragmentChanged() {
-        setFabAndBottomSheet();
-        setDefaultToolbar();
     }
 
     private void setFabAndBottomSheet() {
