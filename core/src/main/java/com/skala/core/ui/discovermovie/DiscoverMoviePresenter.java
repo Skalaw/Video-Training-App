@@ -95,6 +95,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
 
     private void clearMovieList() {
         discoverMovieList.clear();
+        execute(DiscoverMovieUi::notifyDataChange);
         page = DISCOVER_FIRST_PAGE;
     }
 
