@@ -17,11 +17,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.skala.videotrainingapp.BuildConfig;
 import com.skala.videotrainingapp.R;
 import com.skala.videotrainingapp.base.BaseFragmentActivity;
 import com.skala.videotrainingapp.discovermovie.DiscoverMovieFragment;
@@ -90,8 +93,9 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
                 openFragment(idItem);
             } else if (idItem == R.id.itemSettings) {
                 // todo add settings
+                Toast.makeText(getApplicationContext(), "As will soon be available", Toast.LENGTH_SHORT).show();
             } else if (idItem == R.id.itemAbout) {
-                // todo add about
+                showDialogAbout();
             }
             drawerLayout.closeDrawers();
             return true;
@@ -109,6 +113,16 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
                 openDiscoverMovie();
             }
         }
+    }
+
+    private void showDialogAbout() {
+        String message = getString(R.string.dialog_about_message, BuildConfig.VERSION_NAME);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.ic_launcher)
+                .setTitle(R.string.app_name)
+                .setMessage(message)
+                .setPositiveButton(R.string.dialog_about_close, null);
+        builder.show();
     }
 
     private void initBottomSheet() {
