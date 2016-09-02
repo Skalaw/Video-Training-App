@@ -38,10 +38,6 @@ import rx.Observable;
  */
 public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovieUi {
     public static final String FRAGMENT_TAG = "DiscoverMovieFragment";
-    private static final String DIALOG_TITLE_SORT = "Sort";
-    private static final String DIALOG_TITLE_GENRE = "Genre";
-    private static final String DIALOG_CANCEL = "Cancel";
-    private static final String DIALOG_CLEAR = "Clear";
     @Inject
     DiscoverMoviePresenter presenter;
 
@@ -157,7 +153,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, genreName);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                .setTitle(DIALOG_TITLE_GENRE)
+                .setTitle(R.string.genre)
                 .setAdapter(arrayAdapter, (dialog, which) -> {
                     swipeRefreshLayout.setRefreshing(true);
                     Genre genre = genreList.get(which);
@@ -165,8 +161,8 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
                     presenter.setAndLoadMoviesGenre(genre.getId());
                     dialog.dismiss();
                 })
-                .setNegativeButton(DIALOG_CANCEL, null)
-                .setPositiveButton(DIALOG_CLEAR, (dialog, which) -> {
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.clear, (dialog, which) -> {
                     clearGenre();
                     homeUi.setButtonGenre(getString(R.string.none));
                     dialog.dismiss();
@@ -184,7 +180,7 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, sortList);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                .setTitle(DIALOG_TITLE_SORT)
+                .setTitle(R.string.sort)
                 .setAdapter(arrayAdapter, (dialog, which) -> {
                     swipeRefreshLayout.setRefreshing(true);
                     String sort = sortList.get(which);
@@ -192,8 +188,8 @@ public class DiscoverMovieFragment extends BaseFragment implements DiscoverMovie
                     presenter.setAndLoadMoviesSort(sort);
                     dialog.dismiss();
                 })
-                .setNegativeButton(DIALOG_CANCEL, null)
-                .setPositiveButton(DIALOG_CLEAR, (dialog, which) -> {
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.clear, (dialog, which) -> {
                     clearSort();
                     homeUi.setButtonSort(getString(R.string.none));
                     dialog.dismiss();

@@ -105,7 +105,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
                 openFragment(idItem);
             } else if (idItem == R.id.itemSettings) {
                 // todo add settings
-                Toast.makeText(getApplicationContext(), "As will soon be available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.not_available, Toast.LENGTH_SHORT).show();
             } else if (idItem == R.id.itemAbout) {
                 showDialogAbout();
             }

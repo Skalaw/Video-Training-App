@@ -27,8 +27,13 @@
     <string name="dialog_about_message">Author: Miłosz Skalski\nE-mail: milosz.skalski@gmail.com\nVersion: %1$s\n\nThis app uses the tmdb api</string>
     <string name="dialog_about_close">Close</string>
 
+    <!-- Dialogs -->
+    <string name="clear">Clear</string>
+
     <!-- Options search -->
     <string name="genre">Genre</string>
     <string name="sort">Sort</string>
     <string name="none">None</string>
+
+    <string name="not_available">As will soon be available</string><!-- todo remove this when implement -->
 </resources>

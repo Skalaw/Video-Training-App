@@ -29,7 +29,7 @@ As API I using TheMovieDB: http://docs.themoviedb.apiary.io/ & YouTube
 
 Version 0.0.1 (2016-xx-xx):
 -------------
-- Add: initial version
 - Add: DiscoverMovie
 - Add: MovieDescription
 - Add: Watch trailer in YouTube
+- Language EN, PL

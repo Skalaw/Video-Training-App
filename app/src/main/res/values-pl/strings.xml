@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Filmy</string>
+
+    <!-- Images -->
+    <string name="poster">Plakat</string>
+    <string name="backdrop">Obrazek</string>
+    <string name="background">Tło</string>
+    <string name="cancel">Anuluj</string>
+    <string name="icon">Ikona</string>
+
+    <!-- DiscoverMovie -->
+    <string name="release_date">Data wydania: %1$s</string>
+
+    <!-- MovieDescription -->
+    <string name="vote_average">Średnia punktów: %1$s</string>
+    <string name="videos">Wideo:</string>
+    <string name="description">Opis:</string>
+
+    <!-- DrawerLayout -->
+    <string name="open">Otwórz</string>
+    <string name="close">Zamknij</string>
+    <string name="item_discover_movie">Odkryj film</string>
+    <string name="item_settings">Ustawienia</string>
+    <string name="item_about">O mnie</string>
+
+    <!-- Dialog about -->
+    <string name="dialog_about_message">Autor: Miłosz Skalski\nE-mail: milosz.skalski@gmail.com\nWersja: %1$s\n\nTa aplikacja używa the tmdb api</string>
+    <string name="dialog_about_close">Zamknij</string>
+
+    <!-- Dialogs -->
+    <string name="clear">Czyść</string>
+
+    <!-- Options search -->
+    <string name="genre">Gatunek</string>
+    <string name="sort">Sortuj</string>
+    <string name="none">Brak</string>
+
+    <string name="not_available">As will soon be available</string><!-- todo remove this when implement -->
+</resources>
