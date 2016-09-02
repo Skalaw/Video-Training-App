@@ -59,7 +59,7 @@ public class DiscoverMoviePresenter extends BasePresenter<DiscoverMovieUi> {
                 .subscribe(genres -> {
                     this.genres = genres;
                     execute(DiscoverMovieUi::genresIsReady);
-                });
+                }, throwable -> execute(discoverMovieUi -> discoverMovieUi.displayError(throwable.toString())));
     }
 
     private boolean isLoadMoviesAvailable() {
