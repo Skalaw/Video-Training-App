@@ -38,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_filter_list_black_24dp"
-            app:layout_behavior="com.rocksolidapps.movies.view.ScrollingFabBehaviour"/>
+            app:layout_behavior="com.rocksolidapps.movies.view.ScrollingFabBehaviour"
+            app:srcCompat="@drawable/ic_filter_list_black_24dp"/>
 
         <RelativeLayout
             android:id="@+id/bottomSheet"
@@ -105,7 +105,7 @@
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/cancel"
                 android:padding="8dp"
-                android:src="@drawable/ic_cancel_black_36dp"/>
+                app:srcCompat="@drawable/ic_cancel_black_36dp"/>
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 

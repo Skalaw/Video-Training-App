@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
@@ -28,7 +29,7 @@ public class PicassoImageLoader implements ImageLoader {
 
     @Override
     public void load(String path, ImageView target) {
-        Drawable placeholder = ContextCompat.getDrawable(target.getContext(), R.drawable.animated_loading); // todo: fix vector drawable bellow api 21
+        AnimatedVectorDrawableCompat placeholder = AnimatedVectorDrawableCompat.create(target.getContext(), R.drawable.animated_loading);
         picasso.load(path).placeholder(placeholder).into(target);
         Drawable drawable = target.getDrawable();
         if (drawable instanceof Animatable) {
