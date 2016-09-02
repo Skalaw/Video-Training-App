@@ -79,9 +79,9 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        initActionBar();
         initDrawerLayout();
         initBottomSheet();
+        initActionBar();
         initBtnSort();
 
         getSupportFragmentManager().addOnBackStackChangedListener(this::fragmentChanged);
@@ -94,10 +94,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
 
     private void initActionBar() {
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setHomeAsUpEnabled();
     }
 
     private void initDrawerLayout() {
@@ -187,12 +184,6 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
-
-    @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(leftDrawer)) {
             drawerLayout.closeDrawers();
@@ -226,6 +217,24 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
         Context appContext = getApplicationContext();
         setToolbarTitle(getString(R.string.app_name));
         updateToolbarColor(ContextCompat.getColor(appContext, R.color.colorPrimary), ContextCompat.getColor(appContext, R.color.colorPrimaryDark));
+        setHomeAsUpEnabled();
+    }
+
+    private void setHomeAsUpEnabled() { // todo ok now really i want to move description movie to another activity
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFragment);
+        if (fragment instanceof MovieDescriptionFragment) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            drawerToggle.syncState();
+        }
     }
 
     @Override
