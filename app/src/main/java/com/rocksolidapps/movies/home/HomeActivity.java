@@ -131,7 +131,7 @@ public class HomeActivity extends BaseFragmentActivity implements HomeUi {
     }
 
     private void showDialogAbout() {
-        String message = getString(R.string.dialog_about_message, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE);
+        String message = getString(R.string.dialog_about_message, BuildConfig.VERSION_NAME);
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setIcon(R.mipmap.ic_launcher)
                 .setTitle(R.string.app_name)

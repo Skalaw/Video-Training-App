@@ -4,6 +4,9 @@
     <!-- Images -->
     <string name="poster">Poster</string>
     <string name="backdrop">Backdrop</string>
+    <string name="background">Background</string>
+    <string name="cancel">Cancel</string>
+    <string name="icon">Icon</string>
 
     <!-- DiscoverMovie -->
     <string name="release_date">Release date: %1$s</string>
@@ -21,7 +24,7 @@
     <string name="item_about">About</string>
 
     <!-- Dialog about -->
-    <string name="dialog_about_message">Author: Miłosz Skalski\nE-mail: milosz.skalski@gmail.com\nVersion: %1$s\nCode number %2$s\n\nThis app uses the tmdb api</string>
+    <string name="dialog_about_message">Author: Miłosz Skalski\nE-mail: milosz.skalski@gmail.com\nVersion: %1$s\n\nThis app uses the tmdb api</string>
     <string name="dialog_about_close">Close</string>
 
     <!-- Options search -->
